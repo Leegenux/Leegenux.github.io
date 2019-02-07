@@ -333,7 +333,7 @@
                 
               
 
-              <time title="Created: 2019-02-07 16:33:05 / Modified: 16:33:52" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
+              <time title="Created: 2019-02-07 16:33:05 / Modified: 16:49:55" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
             
 
             
@@ -386,6 +386,9 @@
 <p>For that proble, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sol.1 </span></span><br><span class="line">result=$((a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.2</span></span><br><span class="line">result=`expr a / b`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.3</span></span><br><span class="line">((result = a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.4  </span></span><br><span class="line">result=`<span class="built_in">echo</span> <span class="string">"scale=16; <span class="variable">$a</span>/<span class="variable">$b</span>"</span> | bc<span class="string">"`</span></span><br></pre></td></tr></table></figure>
 <p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which bc is the one mostly referred to.</p>
+<blockquote>
+<p>Built-in arithmetic operation in bash only does integers.</p>
+</blockquote>
 <p>With this basic experience with arthmetic operation of bash and help of GOOGLE SEARCH, you can now solve more problems.</p>
 
           
