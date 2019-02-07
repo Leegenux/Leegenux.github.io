@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next muse use-motion" lang="English">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -102,7 +102,7 @@
 <meta property="og:url" content="http://Leegenux.github.io/index.html">
 <meta property="og:site_name" content="Leegenux Blog">
 <meta property="og:description" content="A site about geek stuffs.">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="English">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leegenux Blog">
 <meta name="twitter:description" content="A site about geek stuffs.">
@@ -163,7 +163,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="English">
 
   
   
@@ -288,6 +288,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/arithmetic-operation-in-bash/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leegenux">
+      <meta itemprop="description" content="A site about geek stuffs.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leegenux Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/07/arithmetic-operation-in-bash/" class="post-title-link" itemprop="url">Arithmetic Operation In Bash</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-07 16:33:05 / Modified: 16:33:52" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>To learn about this topic, let’s start with a problem.</p>
+<p>Snippet of code below is to be implemented:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a=13</span><br><span class="line">b=12</span><br><span class="line"></span><br><span class="line"><span class="comment"># Please calculate their quotinent (a / b)</span></span><br></pre></td></tr></table></figure></p>
+<p>As much as I have learnt about arithmetic operations, there are 4 kinds of feasible solutions for BASH.</p>
+<ul>
+<li><code>$(( expression ))</code> gives the result of the calculation</li>
+<li>Also you can do calculation using <code>`expr expression`</code></li>
+<li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code> as well as <code>((result = a + b))</code>, where result, a and b are all shell variables.</li>
+<li>Using bc calculator with pipe.</li>
+</ul>
+<p>For that proble, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sol.1 </span></span><br><span class="line">result=$((a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.2</span></span><br><span class="line">result=`expr a / b`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.3</span></span><br><span class="line">((result = a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.4  </span></span><br><span class="line">result=`<span class="built_in">echo</span> <span class="string">"scale=16; <span class="variable">$a</span>/<span class="variable">$b</span>"</span> | bc<span class="string">"`</span></span><br></pre></td></tr></table></figure>
+<p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which bc is the one mostly referred to.</p>
+<p>With this basic experience with arthmetic operation of bash and help of GOOGLE SEARCH, you can now solve more problems.</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/03/Shell-Script-Basics/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -333,12 +488,24 @@
                 
               
 
-              <time title="Created: 2019-02-03 19:27:28 / Modified: 19:28:11" itemprop="dateCreated datePublished" datetime="2019-02-03T19:27:28+08:00">2019-02-03</time>
+              <time title="Created: 2019-02-03 19:27:28" itemprop="dateCreated datePublished" datetime="2019-02-03T19:27:28+08:00">2019-02-03</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-06 00:49:29" itemprop="dateModified" datetime="2019-02-06T00:49:29+08:00">2019-02-06</time>
               
             
           </span>
@@ -558,7 +725,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
