@@ -96,23 +96,25 @@
 
 
 
-  <meta name="description" content="A site about geek stuffs.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Leegenux Blog">
-<meta property="og:url" content="http://Leegenux.github.io/index.html">
+  <meta name="description" content="Ways of Arithmatic Calculation in Shell Scripts $(()) gives the result of the calculation Also you can do calculation using `expr CALCULATION` To do calculation and assign the result directly, you can">
+<meta name="keywords" content="shell bash linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell Script Basics">
+<meta property="og:url" content="http://Leegenux.github.io/2019/02/03/Shell-Script-Basics/index.html">
 <meta property="og:site_name" content="Leegenux Blog">
-<meta property="og:description" content="A site about geek stuffs.">
+<meta property="og:description" content="Ways of Arithmatic Calculation in Shell Scripts $(()) gives the result of the calculation Also you can do calculation using `expr CALCULATION` To do calculation and assign the result directly, you can">
 <meta property="og:locale" content="English">
+<meta property="og:updated_time" content="2019-02-11T11:50:25.995Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leegenux Blog">
-<meta name="twitter:description" content="A site about geek stuffs.">
+<meta name="twitter:title" content="Shell Script Basics">
+<meta name="twitter:description" content="Ways of Arithmatic Calculation in Shell Scripts $(()) gives the result of the calculation Also you can do calculation using `expr CALCULATION` To do calculation and assign the result directly, you can">
 
 
 
 
 
 
-  <link rel="canonical" href="http://Leegenux.github.io/">
+  <link rel="canonical" href="http://Leegenux.github.io/2019/02/03/Shell-Script-Basics/">
 
 
 
@@ -122,7 +124,7 @@
   };
 </script>
 
-  <title>Leegenux Blog</title>
+  <title>Shell Script Basics | Leegenux Blog</title>
   
 
 
@@ -170,8 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -209,7 +210,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -271,349 +272,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leegenux">
-      <meta itemprop="description" content="A site about geek stuffs.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leegenux Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/07/WaysForFunctiontoReturnValue/" class="post-title-link" itemprop="url">Ways For Function to Return Value</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-11 19:50:25" itemprop="dateModified" datetime="2019-02-11T19:50:25+08:00">2019-02-11</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
-<p>The basic function declaration syntax is like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">funcIdentifier</span></span>() &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>or this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">funcIdentifier</span></span> () &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>After the declaration, you can invoke the function like this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funcIdentifier param1 param2</span><br></pre></td></tr></table></figure></p>
-<p>And inside of the function, you can easily get the parameters using <code>$1</code>, <code>$2</code>, <code>$3</code> ,etc. </p>
-<p>But how to get the result value ? There are a few ways to do the trick.</p>
-<ul>
-<li>Using <code>echo</code> inside of function and with the help of command substitution you get the result</li>
-</ul>
-<ul>
-<li><code>eval</code> command’ll be evaluated twice. First is of the contents at both side of equal sign, the second one is the actual value assignment</li>
-<li>Global variables</li>
-</ul>
-<p>In order to get stuffs across intuitively, I provide examples for first two approaches :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> `expr <span class="variable">$1</span> + <span class="variable">$2</span>`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">result=$(sum 12 13)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="variable">$1</span>=<span class="string">'`'</span> <span class="string">"expr <span class="variable">$2</span> + <span class="variable">$3</span>"</span> <span class="string">'`'</span></span><br><span class="line">&#125;</span><br><span class="line">result=0</span><br><span class="line">sum result 12 13</span><br></pre></td></tr></table></figure>
-<p>Understanding these two techniques of returning values from functions will help you understand more about the shell interpreter.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/arithmetic-operation-in-bash/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leegenux">
-      <meta itemprop="description" content="A site about geek stuffs.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leegenux Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/07/arithmetic-operation-in-bash/" class="post-title-link" itemprop="url">Arithmetic Operation In Bash</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-11 19:50:25" itemprop="dateModified" datetime="2019-02-11T19:50:25+08:00">2019-02-11</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>To learn about this topic, let’s start with a problem.</p>
-<p>Snippet of code below is to be implemented:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a=13</span><br><span class="line">b=12</span><br><span class="line"></span><br><span class="line"><span class="comment"># Please calculate their quotinent (a / b)</span></span><br></pre></td></tr></table></figure></p>
-<p>As much as I have learnt about arithmetic operations, there are 4 kinds of feasible solutions for BASH.</p>
-<ul>
-<li><code>$(( expression ))</code> gives the result of the calculation</li>
-<li>Also you can do calculation using <code>`expr expression`</code></li>
-<li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code> as well as <code>((result = a + b))</code>, where result, a and b are all shell variables.</li>
-<li>Using bc calculator with pipe.</li>
-</ul>
-<p>For that proble, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sol.1 </span></span><br><span class="line">result=$((a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.2</span></span><br><span class="line">result=`expr a / b`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.3</span></span><br><span class="line">((result = a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.4  </span></span><br><span class="line">result=`<span class="built_in">echo</span> <span class="string">"scale=16; <span class="variable">$a</span>/<span class="variable">$b</span>"</span> | bc<span class="string">"`</span></span><br></pre></td></tr></table></figure>
-<p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which bc is the one mostly referred to.</p>
-<blockquote>
-<p>Built-in arithmetic operation in bash only does integers.</p>
-</blockquote>
-<p>With this basic experience with arthmetic operation of bash and help of GOOGLE SEARCH, you can now solve more problems.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -645,10 +306,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/03/Shell-Script-Basics/" class="post-title-link" itemprop="url">Shell Script Basics</a>
+          <h1 class="post-title" itemprop="name headline">Shell Script Basics
+
               
             
           </h1>
@@ -724,9 +383,7 @@
       
 
       
-        
-          
-            <h2 id="Ways-of-Arithmatic-Calculation-in-Shell-Scripts"><a href="#Ways-of-Arithmatic-Calculation-in-Shell-Scripts" class="headerlink" title="Ways of Arithmatic Calculation in Shell Scripts"></a>Ways of Arithmatic Calculation in Shell Scripts</h2><ul>
+        <h2 id="Ways-of-Arithmatic-Calculation-in-Shell-Scripts"><a href="#Ways-of-Arithmatic-Calculation-in-Shell-Scripts" class="headerlink" title="Ways of Arithmatic Calculation in Shell Scripts"></a>Ways of Arithmatic Calculation in Shell Scripts</h2><ul>
 <li><code>$(())</code> gives the result of the calculation</li>
 <li>Also you can do calculation using <code>`expr CALCULATION`</code></li>
 <li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code></li>
@@ -827,8 +484,6 @@
 <h4 id="Do-Case-insensitive-Match"><a href="#Do-Case-insensitive-Match" class="headerlink" title="Do Case-insensitive Match"></a>Do Case-insensitive Match</h4><p>The default behaviour of sed is case-sensitive. To activate case-insensitive manner in terms of sed substitution. You just need to add a letter “I” in the last part of script just like this: <code>sed -E &quot;s/the/this/gI&quot;</code></p>
 <h2 id="Single-Quote-and-Double-Quote"><a href="#Single-Quote-and-Double-Quote" class="headerlink" title="Single Quote and Double Quote"></a>Single Quote and Double Quote</h2><p>Single quotes won’t interpolate anything, but double quotes will. For example: variables, backticks, certain \ escapes, etc. Enclosing characters in single quotes ( ‘ ) preserves the literal value of each character within the quotes. A single quote may not occur between single quotes, even when preceded by a backslash.</p>
 
-          
-        
       
     </div>
 
@@ -849,14 +504,36 @@
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/shell-bash-linux/" rel="tag"># shell bash linux</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/07/arithmetic-operation-in-bash/" rel="prev" title="Arithmetic Operation In Bash">
+                Arithmetic Operation In Bash <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -866,14 +543,15 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -894,8 +572,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -952,6 +639,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ways-of-Arithmatic-Calculation-in-Shell-Scripts"><span class="nav-number">1.</span> <span class="nav-text">Ways of Arithmatic Calculation in Shell Scripts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ways-For-Function-to-Return-Value"><span class="nav-number">2.</span> <span class="nav-text">Ways For Function to Return Value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage-of-AWK"><span class="nav-number">3.</span> <span class="nav-text">Usage of AWK</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Basic-Understanding"><span class="nav-number">3.0.1.</span> <span class="nav-text">Basic Understanding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-do-Regular-Expressions"><span class="nav-number">3.0.2.</span> <span class="nav-text">How to do Regular Expressions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-do-Conditionals"><span class="nav-number">3.0.3.</span> <span class="nav-text">How to do Conditionals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-Specify-Column-Seperator"><span class="nav-number">3.0.4.</span> <span class="nav-text">How to Specify Column Seperator</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Cut-command"><span class="nav-number">4.</span> <span class="nav-text">Cut command</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Specifying-Delimiter"><span class="nav-number">4.0.1.</span> <span class="nav-text">Specifying Delimiter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Specifying-LSIT"><span class="nav-number">4.0.2.</span> <span class="nav-text">Specifying LSIT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Specify-Range"><span class="nav-number">4.0.3.</span> <span class="nav-text">Specify Range</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tail-and-head"><span class="nav-number">5.</span> <span class="nav-text">tail and head</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Specifying-Units"><span class="nav-number">5.0.1.</span> <span class="nav-text">Specifying Units</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage-of-tr"><span class="nav-number">6.</span> <span class="nav-text">Usage of tr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-sort"><span class="nav-number">7.</span> <span class="nav-text">Command sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-heredoc-and-here-string-syntax"><span class="nav-number">8.</span> <span class="nav-text">The heredoc and here string syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#heredoc-syntax"><span class="nav-number">8.0.1.</span> <span class="nav-text">heredoc syntax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#here-string-syntax"><span class="nav-number">8.0.2.</span> <span class="nav-text">here string syntax</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-escape-with-Backslash-in-Shell-Script"><span class="nav-number">9.</span> <span class="nav-text">How to escape with Backslash in Shell Script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-Uniq"><span class="nav-number">10.</span> <span class="nav-text">Command Uniq</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Other-possible-options"><span class="nav-number">10.0.1.</span> <span class="nav-text">Other possible options</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-Paste"><span class="nav-number">11.</span> <span class="nav-text">Command Paste</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Paste-Between-Multiple-Files"><span class="nav-number">11.0.1.</span> <span class="nav-text">Paste Between Multiple Files</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Paste-For-One-File"><span class="nav-number">11.0.2.</span> <span class="nav-text">Paste For One File</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Check-If-String-Contains-Part"><span class="nav-number">12.</span> <span class="nav-text">How to Check If String Contains Part</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Append-Component-to-Array"><span class="nav-number">13.</span> <span class="nav-text">How to Append Component to Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Slice-an-String"><span class="nav-number">14.</span> <span class="nav-text">How to Slice an String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem-Lonely-Integer"><span class="nav-number">15.</span> <span class="nav-text">Problem:Lonely Integer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep-Tutorial"><span class="nav-number">16.</span> <span class="nav-text">grep Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Basics"><span class="nav-number">16.0.1.</span> <span class="nav-text">Basics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gt-lt-and-b"><span class="nav-number">16.0.2.</span> <span class="nav-text">\&gt; \&lt; and \b</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Back-Reference"><span class="nav-number">16.0.3.</span> <span class="nav-text">Back Reference</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sed-tutorial"><span class="nav-number">17.</span> <span class="nav-text">sed tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#About-the-Last-Digit"><span class="nav-number">17.0.1.</span> <span class="nav-text">About the Last Digit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference-Of-the-Match"><span class="nav-number">17.0.2.</span> <span class="nav-text">Reference Of the Match</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Do-Case-insensitive-Match"><span class="nav-number">17.0.3.</span> <span class="nav-text">Do Case-insensitive Match</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-Quote-and-Double-Quote"><span class="nav-number">18.</span> <span class="nav-text">Single Quote and Double Quote</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1079,6 +783,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
 
   
 
@@ -1089,6 +797,8 @@
 
   
 
+
+  
 
 
   
