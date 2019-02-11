@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Leegenux Blog">
 <meta property="og:description" content="To learn about this topic, let’s start with a problem. Snippet of code below is to be implemented:1234a=13b=12# Please calculate their quotinent (a / b) As much as I have learnt about arithmetic opera">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2019-02-11T11:50:25.999Z">
+<meta property="og:updated_time" content="2019-02-11T12:19:56.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arithmetic Operation In Bash">
 <meta name="twitter:description" content="To learn about this topic, let’s start with a problem. Snippet of code below is to be implemented:1234a=13b=12# Please calculate their quotinent (a / b) As much as I have learnt about arithmetic opera">
@@ -348,7 +348,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-11 19:50:25" itemprop="dateModified" datetime="2019-02-11T19:50:25+08:00">2019-02-11</time>
+                <time title="Modified: 2019-02-11 20:19:56" itemprop="dateModified" datetime="2019-02-11T20:19:56+08:00">2019-02-11</time>
               
             
           </span>
@@ -388,12 +388,12 @@
 <ul>
 <li><code>$(( expression ))</code> gives the result of the calculation</li>
 <li>Also you can do calculation using <code>`expr expression`</code></li>
-<li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code> as well as <code>((result = a + b))</code>, where result, a and b are all shell variables.</li>
+<li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code> as well as <code>((result = a + b))</code>, where result, <code>a</code> and <code>b</code> are all shell variables.</li>
 <li>Using bc calculator with pipe.</li>
 </ul>
-<p>For that proble, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
+<p>For that problem, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sol.1 </span></span><br><span class="line">result=$((a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.2</span></span><br><span class="line">result=`expr a / b`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.3</span></span><br><span class="line">((result = a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.4  </span></span><br><span class="line">result=`<span class="built_in">echo</span> <span class="string">"scale=16; <span class="variable">$a</span>/<span class="variable">$b</span>"</span> | bc<span class="string">"`</span></span><br></pre></td></tr></table></figure>
-<p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which bc is the one mostly referred to.</p>
+<p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which <code>bc</code> is the one mostly referred to.</p>
 <blockquote>
 <p>Built-in arithmetic operation in bash only does integers.</p>
 </blockquote>
@@ -501,7 +501,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -518,7 +518,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

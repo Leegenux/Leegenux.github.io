@@ -288,6 +288,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/11/usagesOfAWK/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leegenux">
+      <meta itemprop="description" content="A site about geek stuffs.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leegenux Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/11/usagesOfAWK/" class="post-title-link" itemprop="url">Usages of AWK</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-11 19:55:30 / Modified: 20:24:12" itemprop="dateCreated datePublished" datetime="2019-02-11T19:55:30+08:00">2019-02-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="Basic-Understanding"><a href="#Basic-Understanding" class="headerlink" title="Basic Understanding"></a>Basic Understanding</h4><p>The common template of using <code>awk</code> is like this: <code>awk &#39; { actions } &#39; textFile</code>.</p>
+<p>Say I have a text file containing lines:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">------ test.txt</span><br><span class="line">hello world</span><br><span class="line">heLLoWorld ha</span><br><span class="line">London Paris</span><br><span class="line">Changsha Wuhan</span><br><span class="line">Beijing NewYork</span><br><span class="line">Hell Nowhere</span><br></pre></td></tr></table></figure>
+<p>This command <code>awk &#39;BEGIN{IGNORECASE=1} /^hel/ { print $2 }&#39; test.txt</code> emits result:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">world</span><br><span class="line">ha</span><br><span class="line">Nowhere</span><br></pre></td></tr></table></figure>
+<p>So basically, <code>awk</code> just processes every line in the text file respectively and gives out the combined result.</p>
+<h4 id="How-to-Do-Regular-Expressions"><a href="#How-to-Do-Regular-Expressions" class="headerlink" title="How to Do Regular Expressions"></a>How to Do Regular Expressions</h4><p>According to the example above as well as the following one, you can easily get the point of doing regex with <code>awk</code>.</p>
+<p>Let’s say we have a text file called <code>test.txt</code> whose content is as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test 123</span><br><span class="line">TEd show</span><br><span class="line">Howday Tom</span><br><span class="line">Hahahha</span><br><span class="line">testing, take it easy</span><br></pre></td></tr></table></figure>
+<p>To grab every line where there is word “test”, try this: <code>awk &quot; /test/ { print } &quot; test.txt</code>. The part specifying the regular expression is <code>/test/</code></p>
+<h4 id="How-to-do-Conditionals"><a href="#How-to-do-Conditionals" class="headerlink" title="How to do Conditionals"></a>How to do Conditionals</h4><p>For example, <code>awk &#39; { if ( $1 ~ /test/ ) print } &#39; test.txt</code> will find out every line whose first column is word “test” (case-sensitive).</p>
+<h4 id="How-to-Specify-Column-Seperator"><a href="#How-to-Specify-Column-Seperator" class="headerlink" title="How to Specify Column Seperator"></a>How to Specify Column Seperator</h4><p>with <code>-F</code> option, you can denote the separator in place of white space, which is the default. Look at the example : <code>awk -F, &#39; { print $1 } &#39; test.txt</code> will print out the first column of each line separated by commas.</p>
+<p>Please refer to GOOGLE SEARCH for more in-depth insights.</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -350,7 +505,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-11 19:50:25" itemprop="dateModified" datetime="2019-02-11T19:50:25+08:00">2019-02-11</time>
+                <time title="Modified: 2019-02-11 19:51:13" itemprop="dateModified" datetime="2019-02-11T19:51:13+08:00">2019-02-11</time>
               
             
           </span>
@@ -520,7 +675,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-11 19:50:25" itemprop="dateModified" datetime="2019-02-11T19:50:25+08:00">2019-02-11</time>
+                <time title="Modified: 2019-02-11 20:19:56" itemprop="dateModified" datetime="2019-02-11T20:19:56+08:00">2019-02-11</time>
               
             
           </span>
@@ -562,12 +717,12 @@
 <ul>
 <li><code>$(( expression ))</code> gives the result of the calculation</li>
 <li>Also you can do calculation using <code>`expr expression`</code></li>
-<li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code> as well as <code>((result = a + b))</code>, where result, a and b are all shell variables.</li>
+<li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code> as well as <code>((result = a + b))</code>, where result, <code>a</code> and <code>b</code> are all shell variables.</li>
 <li>Using bc calculator with pipe.</li>
 </ul>
-<p>For that proble, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
+<p>For that problem, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sol.1 </span></span><br><span class="line">result=$((a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.2</span></span><br><span class="line">result=`expr a / b`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.3</span></span><br><span class="line">((result = a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.4  </span></span><br><span class="line">result=`<span class="built_in">echo</span> <span class="string">"scale=16; <span class="variable">$a</span>/<span class="variable">$b</span>"</span> | bc<span class="string">"`</span></span><br></pre></td></tr></table></figure>
-<p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which bc is the one mostly referred to.</p>
+<p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which <code>bc</code> is the one mostly referred to.</p>
 <blockquote>
 <p>Built-in arithmetic operation in bash only does integers.</p>
 </blockquote>
@@ -690,7 +845,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-11 19:50:25" itemprop="dateModified" datetime="2019-02-11T19:50:25+08:00">2019-02-11</time>
+                <time title="Modified: 2019-02-11 19:51:13" itemprop="dateModified" datetime="2019-02-11T19:51:13+08:00">2019-02-11</time>
               
             
           </span>
@@ -910,7 +1065,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -927,7 +1082,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

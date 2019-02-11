@@ -96,24 +96,25 @@
 
 
 
-  <meta name="description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
+  <meta name="description" content="Basic UnderstandingThe common template of using awk is like this: awk &amp;#39; { actions } &amp;#39; textFile. Say I have a text file containing lines: 1234567------ test.txthello worldheLLoWorld haLondon Pa">
+<meta name="keywords" content="awk,linux,shell,bash">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ways For Function to Return Value">
-<meta property="og:url" content="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/index.html">
+<meta property="og:title" content="Usages of AWK">
+<meta property="og:url" content="http://Leegenux.github.io/2019/02/11/usagesOfAWK/index.html">
 <meta property="og:site_name" content="Leegenux Blog">
-<meta property="og:description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
+<meta property="og:description" content="Basic UnderstandingThe common template of using awk is like this: awk &amp;#39; { actions } &amp;#39; textFile. Say I have a text file containing lines: 1234567------ test.txthello worldheLLoWorld haLondon Pa">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2019-02-11T11:51:13.212Z">
+<meta property="og:updated_time" content="2019-02-11T12:24:12.179Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ways For Function to Return Value">
-<meta name="twitter:description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
+<meta name="twitter:title" content="Usages of AWK">
+<meta name="twitter:description" content="Basic UnderstandingThe common template of using awk is like this: awk &amp;#39; { actions } &amp;#39; textFile. Say I have a text file containing lines: 1234567------ test.txthello worldheLLoWorld haLondon Pa">
 
 
 
 
 
 
-  <link rel="canonical" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
+  <link rel="canonical" href="http://Leegenux.github.io/2019/02/11/usagesOfAWK/">
 
 
 
@@ -123,7 +124,7 @@
   };
 </script>
 
-  <title>Ways For Function to Return Value | Leegenux Blog</title>
+  <title>Usages of AWK | Leegenux Blog</title>
   
 
 
@@ -288,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
+    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/11/usagesOfAWK/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Leegenux">
@@ -305,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Ways For Function to Return Value
+          <h1 class="post-title" itemprop="name headline">Usages of AWK
 
               
             
@@ -331,24 +332,12 @@
                 
               
 
-              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
+              <time title="Created: 2019-02-11 19:55:30 / Modified: 20:24:12" itemprop="dateCreated datePublished" datetime="2019-02-11T19:55:30+08:00">2019-02-11</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-11 19:51:13" itemprop="dateModified" datetime="2019-02-11T19:51:13+08:00">2019-02-11</time>
               
             
           </span>
@@ -382,22 +371,19 @@
       
 
       
-        <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
-<p>The basic function declaration syntax is like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">funcIdentifier</span></span>() &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>or this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">funcIdentifier</span></span> () &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>After the declaration, you can invoke the function like this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funcIdentifier param1 param2</span><br></pre></td></tr></table></figure></p>
-<p>And inside of the function, you can easily get the parameters using <code>$1</code>, <code>$2</code>, <code>$3</code> ,etc. </p>
-<p>But how to get the result value ? There are a few ways to do the trick.</p>
-<ul>
-<li>Using <code>echo</code> inside of function and with the help of command substitution you get the result</li>
-</ul>
-<ul>
-<li><code>eval</code> command’ll be evaluated twice. First is of the contents at both side of equal sign, the second one is the actual value assignment</li>
-<li>Global variables</li>
-</ul>
-<p>In order to get stuffs across intuitively, I provide examples for first two approaches :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> `expr <span class="variable">$1</span> + <span class="variable">$2</span>`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">result=$(sum 12 13)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="variable">$1</span>=<span class="string">'`'</span> <span class="string">"expr <span class="variable">$2</span> + <span class="variable">$3</span>"</span> <span class="string">'`'</span></span><br><span class="line">&#125;</span><br><span class="line">result=0</span><br><span class="line">sum result 12 13</span><br></pre></td></tr></table></figure>
-<p>Understanding these two techniques of returning values from functions will help you understand more about the shell interpreter.</p>
+        <h4 id="Basic-Understanding"><a href="#Basic-Understanding" class="headerlink" title="Basic Understanding"></a>Basic Understanding</h4><p>The common template of using <code>awk</code> is like this: <code>awk &#39; { actions } &#39; textFile</code>.</p>
+<p>Say I have a text file containing lines:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">------ test.txt</span><br><span class="line">hello world</span><br><span class="line">heLLoWorld ha</span><br><span class="line">London Paris</span><br><span class="line">Changsha Wuhan</span><br><span class="line">Beijing NewYork</span><br><span class="line">Hell Nowhere</span><br></pre></td></tr></table></figure>
+<p>This command <code>awk &#39;BEGIN{IGNORECASE=1} /^hel/ { print $2 }&#39; test.txt</code> emits result:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">world</span><br><span class="line">ha</span><br><span class="line">Nowhere</span><br></pre></td></tr></table></figure>
+<p>So basically, <code>awk</code> just processes every line in the text file respectively and gives out the combined result.</p>
+<h4 id="How-to-Do-Regular-Expressions"><a href="#How-to-Do-Regular-Expressions" class="headerlink" title="How to Do Regular Expressions"></a>How to Do Regular Expressions</h4><p>According to the example above as well as the following one, you can easily get the point of doing regex with <code>awk</code>.</p>
+<p>Let’s say we have a text file called <code>test.txt</code> whose content is as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test 123</span><br><span class="line">TEd show</span><br><span class="line">Howday Tom</span><br><span class="line">Hahahha</span><br><span class="line">testing, take it easy</span><br></pre></td></tr></table></figure>
+<p>To grab every line where there is word “test”, try this: <code>awk &quot; /test/ { print } &quot; test.txt</code>. The part specifying the regular expression is <code>/test/</code></p>
+<h4 id="How-to-do-Conditionals"><a href="#How-to-do-Conditionals" class="headerlink" title="How to do Conditionals"></a>How to do Conditionals</h4><p>For example, <code>awk &#39; { if ( $1 ~ /test/ ) print } &#39; test.txt</code> will find out every line whose first column is word “test” (case-sensitive).</p>
+<h4 id="How-to-Specify-Column-Seperator"><a href="#How-to-Specify-Column-Seperator" class="headerlink" title="How to Specify Column Seperator"></a>How to Specify Column Seperator</h4><p>with <code>-F</code> option, you can denote the separator in place of white space, which is the default. Look at the example : <code>awk -F, &#39; { print $1 } &#39; test.txt</code> will print out the first column of each line separated by commas.</p>
+<p>Please refer to GOOGLE SEARCH for more in-depth insights.</p>
 
       
     </div>
@@ -419,6 +405,18 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/awk/" rel="tag"># awk</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
+          
+            <a href="/tags/bash/" rel="tag"># bash</a>
+          
+        </div>
+      
 
       
       
@@ -428,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/07/arithmetic-operation-in-bash/" rel="next" title="Arithmetic Operation In Bash">
-                <i class="fa fa-chevron-left"></i> Arithmetic Operation In Bash
+              <a href="/2019/02/07/WaysForFunctiontoReturnValue/" rel="next" title="Ways For Function to Return Value">
+                <i class="fa fa-chevron-left"></i> Ways For Function to Return Value
               </a>
             
           </div>
@@ -437,10 +435,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/11/usagesOfAWK/" rel="prev" title="Usages of AWK">
-                Usages of AWK <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -485,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -551,6 +554,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Basic-Understanding"><span class="nav-number">1.</span> <span class="nav-text">Basic Understanding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-Do-Regular-Expressions"><span class="nav-number">2.</span> <span class="nav-text">How to Do Regular Expressions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-do-Conditionals"><span class="nav-number">3.</span> <span class="nav-text">How to do Conditionals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-to-Specify-Column-Seperator"><span class="nav-number">4.</span> <span class="nav-text">How to Specify Column Seperator</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
