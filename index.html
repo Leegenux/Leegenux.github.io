@@ -333,7 +333,7 @@
                 
               
 
-              <time title="Created: 2019-02-11 19:55:30 / Modified: 23:17:03" itemprop="dateCreated datePublished" datetime="2019-02-11T19:55:30+08:00">2019-02-11</time>
+              <time title="Created: 2019-02-11 19:55:30 / Modified: 23:24:36" itemprop="dateCreated datePublished" datetime="2019-02-11T19:55:30+08:00">2019-02-11</time>
             
 
             
@@ -387,176 +387,6 @@
 <h4 id="How-to-do-Conditionals"><a href="#How-to-do-Conditionals" class="headerlink" title="How to do Conditionals"></a>How to do Conditionals</h4><p>For example, <code>awk &#39; { if ( $1 ~ /test/ ) print } &#39; test.txt</code> will find out every line whose first column is word “test” (case-sensitive).</p>
 <h4 id="How-to-Specify-Column-Seperator"><a href="#How-to-Specify-Column-Seperator" class="headerlink" title="How to Specify Column Seperator"></a>How to Specify Column Seperator</h4><p>with <code>-F</code> option, you can denote the separator in place of white space, which is the default. Look at the example : <code>awk -F, &#39; { print $1 } &#39; test.txt</code> will print out the first column of each line separated by commas.</p>
 <p>Please refer to GOOGLE SEARCH for more in-depth insights.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leegenux">
-      <meta itemprop="description" content="A site about geek stuffs.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leegenux Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/07/WaysForFunctiontoReturnValue/" class="post-title-link" itemprop="url">Ways For Function to Return Value</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-11 23:17:03" itemprop="dateModified" datetime="2019-02-11T23:17:03+08:00">2019-02-11</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
-<p>The basic function declaration syntax is like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">funcIdentifier</span></span>() &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>or this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">funcIdentifier</span></span> () &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>After the declaration, you can invoke the function like this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funcIdentifier param1 param2</span><br></pre></td></tr></table></figure></p>
-<p>And inside of the function, you can easily get the parameters using <code>$1</code>, <code>$2</code>, <code>$3</code> ,etc. </p>
-<p>But how to get the result value ? There are a few ways to do the trick.</p>
-<ul>
-<li>Using <code>echo</code> inside of function and with the help of command substitution you get the result</li>
-</ul>
-<ul>
-<li><code>eval</code> command’ll be evaluated twice. First is of the contents at both side of equal sign, the second one is the actual value assignment</li>
-<li>Global variables</li>
-</ul>
-<p>In order to get stuffs across intuitively, I provide examples for first two approaches :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> `expr <span class="variable">$1</span> + <span class="variable">$2</span>`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">result=$(sum 12 13)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="variable">$1</span>=<span class="string">'`'</span> <span class="string">"expr <span class="variable">$2</span> + <span class="variable">$3</span>"</span> <span class="string">'`'</span></span><br><span class="line">&#125;</span><br><span class="line">result=0</span><br><span class="line">sum result 12 13</span><br></pre></td></tr></table></figure>
-<p>Understanding these two techniques of returning values from functions will help you understand more about the shell interpreter.</p>
 
           
         
@@ -675,7 +505,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-11 23:17:03" itemprop="dateModified" datetime="2019-02-11T23:17:03+08:00">2019-02-11</time>
+                <time title="Modified: 2019-02-11 23:24:36" itemprop="dateModified" datetime="2019-02-11T23:24:36+08:00">2019-02-11</time>
               
             
           </span>
@@ -727,6 +557,176 @@
 <p>Built-in arithmetic operation in bash only does integers.</p>
 </blockquote>
 <p>With this basic experience with arthmetic operation of bash and help of GOOGLE SEARCH, you can now solve more problems.</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leegenux">
+      <meta itemprop="description" content="A site about geek stuffs.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leegenux Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/07/WaysForFunctiontoReturnValue/" class="post-title-link" itemprop="url">Ways For Function to Return Value</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-11 23:24:36" itemprop="dateModified" datetime="2019-02-11T23:24:36+08:00">2019-02-11</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
+<p>The basic function declaration syntax is like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">funcIdentifier</span></span>() &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>or this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">funcIdentifier</span></span> () &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>After the declaration, you can invoke the function like this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funcIdentifier param1 param2</span><br></pre></td></tr></table></figure></p>
+<p>And inside of the function, you can easily get the parameters using <code>$1</code>, <code>$2</code>, <code>$3</code> ,etc. </p>
+<p>But how to get the result value ? There are a few ways to do the trick.</p>
+<ul>
+<li>Using <code>echo</code> inside of function and with the help of command substitution you get the result</li>
+</ul>
+<ul>
+<li><code>eval</code> command’ll be evaluated twice. First is of the contents at both side of equal sign, the second one is the actual value assignment</li>
+<li>Global variables</li>
+</ul>
+<p>In order to get stuffs across intuitively, I provide examples for first two approaches :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> `expr <span class="variable">$1</span> + <span class="variable">$2</span>`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">result=$(sum 12 13)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="variable">$1</span>=<span class="string">'`'</span> <span class="string">"expr <span class="variable">$2</span> + <span class="variable">$3</span>"</span> <span class="string">'`'</span></span><br><span class="line">&#125;</span><br><span class="line">result=0</span><br><span class="line">sum result 12 13</span><br></pre></td></tr></table></figure>
+<p>Understanding these two techniques of returning values from functions will help you understand more about the shell interpreter.</p>
 
           
         
