@@ -19,10 +19,10 @@ As much as I have learnt about arithmetic operations, there are 4 kinds of feasi
 
 - `$(( expression ))` gives the result of the calculation
 - Also you can do calculation using `` `expr expression` ``
-- To do calculation and assign the result directly, you can try this: `((result = $a + $b))` as well as `((result = a + b))`, where result, a and b are all shell variables.
+- To do calculation and assign the result directly, you can try this: `((result = $a + $b))` as well as `((result = a + b))`, where result, `a` and `b` are all shell variables.
 - Using bc calculator with pipe.
 
-For that proble, and with the help of the hints, we can provide 4 structurally different solutions respectively.
+For that problem, and with the help of the hints, we can provide 4 structurally different solutions respectively.
 
 ```bash
 # Sol.1 
@@ -39,7 +39,7 @@ result=`echo "scale=16; $a/$b" | bc"`
 
 ```
 
-If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which bc is the one mostly referred to.
+If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which `bc` is the one mostly referred to.
 
 > Built-in arithmetic operation in bash only does integers.
 
