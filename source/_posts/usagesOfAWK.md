@@ -1,5 +1,5 @@
 ---
-title: Usages of AWK
+title: Usages of awk
 date: 2019-02-11 19:55:30
 tags: [awk, linux, shell, bash]
 ---
