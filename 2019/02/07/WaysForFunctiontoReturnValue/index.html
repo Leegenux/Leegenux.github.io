@@ -1,5 +1,40 @@
 <!DOCTYPE html>
 
+<html lang="English">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.2
+    -->
+    <script>
+window.lsVersion = "1.3.2",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
 
 
 
@@ -8,18 +43,11 @@
 
 
 
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="English">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
 
 
 
@@ -27,362 +55,455 @@
 
 
 
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>Ways For Function to Return Value | Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="shortcut icon" type="image/ico" href="/img/suka-favicon.ico">
 
 
 
 
 
 
+<!-- Android Chrome Color -->
 
 
 
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploita...">
+
+<!-- Keywords -->
+<meta name="keywords" content="">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
 
 
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+<style>
+    body {
+        background-color: #f8f9fa;
     }
-  };
-</script>
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
 
 
-  
 
 
 
 
-  <meta name="description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Ways For Function to Return Value">
-<meta property="og:url" content="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/index.html">
+
+
+
+    <!-- Prettify Theme -->
+    
+    
+        <link rel="stylesheet" href="/css/highlight/github.min.css">
+    
+
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="Ways For Function to Return Value | Leegenux Blog">
 <meta property="og:site_name" content="Leegenux Blog">
-<meta property="og:description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
+
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2019-02-11T15:24:36.398Z">
+
+<meta property="og:url" content="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploita...">
+
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ways For Function to Return Value">
-<meta name="twitter:description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
+
+
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2019-02-07T08:33:05.000Z">
+    <meta property="article:modified_time" content="2019-02-07T08:33:05.000Z">
+    <meta property="article:author" content="Leegenux">
+    <meta property="og:article:tag" content=""> 
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
 
 
 
 
 
 
-  <link rel="canonical" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
+
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
+
+    <!-- ### Structured Data ### -->
+    
 
 
 
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/",
+    "@type": "BlogPosting",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/"
+    },
+    "headline": "Ways For Function to Return Value | Leegenux Blog",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    
+    "datePublished": "2019-02-07T08:33:05.000Z",
+    "dateModified": "2019-02-11T15:24:36.398Z",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "Hi, nice to meet you."
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "",
+    "description": "Modularization design of code has many advantages. As an essential role regarding to code modularization, exploita..."
+}
 </script>
 
-  <title>Ways For Function to Return Value | Leegenux Blog</title>
-  
 
 
+    <!-- ### Custom Head ### -->
+    
 
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="English">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Leegenux Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-    
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
+    <body>
         
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
         
+            
+                Hi, nice to meet you.
+            
         
-          
-          <li class="menu-item menu-item-home">
+    </p>
 
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search" class="navbar-link">Search</a>
     
     
     
-      
-    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
 
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
-
-  </li>
+        <!-- Share Weibo -->
         
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
         
+
+        <!-- Share Twitter -->
         
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
 
-    
-    
-    
-      
-    
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
 
-    
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=Ways For Function to Return Value" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
 
-  </li>
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Ways For Function to Return Value&summary=A site about geek stuffs.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
 
-      
-      
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=Ways For Function to Return Value" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACN0lEQVR42u2aQW7DMAwE/f9Pp6cCTmFxh4mLpuL4khSVpXFgSsslj8c/uA4hhRRSyA+APIrr+//nsed7Vt/P9zwtuhh7ta6QsyFXE+IX/McDrRa9GlutK+RsSBIwKQguFwrfy3WFFPJicPWip417dWAIKeRdkFcBQoKmGiekkF2BkV72alOvBMutKkjI7SBJIvYbn7dni0JuAUmSLLKxE1FSBdZbrpqQW0FWCyUDaiVu099lsJATR8hRkES4roImGavkPhQ4Qm4NSV/oTtKW5q0SOSGFXE1aLbQaT0wAasQKORuym3gRIZHAqg1fyNmQlZGUCk5kA08b91vKXMhtIUmDSLcQRY39yjQQci4kKVySjTg1hHTnEXImJJmwK2Dppl4VtIScC9lpWqoCpGuitl01IcdAkiQpFQA6CRsR2ELOhuw0zlHR2mkiQYaVkKMgabNIpwBFDoTqHiFnQ6YCEzU+U3MSFShCCpmK6J1iZtu4Tz+OkGMhk7AggUSK7PSBhJwNSYtLJBBosoWNWCHHQyYDlRajug/VLjYJuTUkSdS7zSKdolRZQBVyNCQRE8lIeKVRtAw+IUdCvipsaUGqa1gJKWS6kpnaaeIkRat44gi5PWTH1EfNHeAhUpFJSCErAUxELUmwqsBZHhxCjoZMk1abbjKqqMAQUkgC2TFbaTMJNQqEFDKJBmK4dgr8UXALORqyfIHDxKlAn4qfsaFOyHGQKRG7S4xQ4SvkbMhPvoQUUkgh//D6AqD9lrWijVGIAAAAAElFTkSuQmCC" alr="QRCode">
+        </li>
+        
+
     </ul>
-  
-
-  
-    
-
-  
-
-  
-</nav>
-
-
-
-  
-
-
-
 </div>
-    </header>
-
     
+    
+</nav>
+</header>
 
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+    <!-- ## Post ## -->
+    
     
 
-  
 
-  
-  
-  
+<div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">Ways For Function to Return Value</h1>
 
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leegenux">
-      <meta itemprop="description" content="A site about geek stuffs.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leegenux Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <span>2019-02-07</span>
         
         
-          <h1 class="post-title" itemprop="name headline">Ways For Function to Return Value
-
-              
-            
-          </h1>
+            <!-- Busuanzi Post Views -->
+<span id="busuanzi_container_page_pv" hidden>
+    <span class="suka-devide-dot"></span>
+    <span></span>
+    <span id="busuanzi_value_page_pv"></span>
+    <span>Views</span>
+</span>
         
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-11 23:24:36" itemprop="dateModified" datetime="2019-02-11T23:24:36+08:00">2019-02-11</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=Ways For Function to Return Value&url=http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
     
 
+    <!-- Share Twitter -->
     
+    <li class="menu-item">
+        <a href="https://twitter.com/intent/tweet?text=Ways For Function to Return Value&url=http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+    </li>
     
-    
-    <div class="post-body" itemprop="articleBody">
 
-      
-      
+    <!-- Share Facebook -->
+    
+    <li class="menu-item">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+    </li>
+    
 
-      
-        <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+    <li class="menu-item">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/&title=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+    </li>
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Leegenux Blog&summary=A site about geek stuffs.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/&text=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+    <li class="menu-item">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACN0lEQVR42u2aQW7DMAwE/f9Pp6cCTmFxh4mLpuL4khSVpXFgSsslj8c/uA4hhRRSyA+APIrr+//nsed7Vt/P9zwtuhh7ta6QsyFXE+IX/McDrRa9GlutK+RsSBIwKQguFwrfy3WFFPJicPWip417dWAIKeRdkFcBQoKmGiekkF2BkV72alOvBMutKkjI7SBJIvYbn7dni0JuAUmSLLKxE1FSBdZbrpqQW0FWCyUDaiVu099lsJATR8hRkES4roImGavkPhQ4Qm4NSV/oTtKW5q0SOSGFXE1aLbQaT0wAasQKORuym3gRIZHAqg1fyNmQlZGUCk5kA08b91vKXMhtIUmDSLcQRY39yjQQci4kKVySjTg1hHTnEXImJJmwK2Dppl4VtIScC9lpWqoCpGuitl01IcdAkiQpFQA6CRsR2ELOhuw0zlHR2mkiQYaVkKMgabNIpwBFDoTqHiFnQ6YCEzU+U3MSFShCCpmK6J1iZtu4Tz+OkGMhk7AggUSK7PSBhJwNSYtLJBBosoWNWCHHQyYDlRajug/VLjYJuTUkSdS7zSKdolRZQBVyNCQRE8lIeKVRtAw+IUdCvipsaUGqa1gJKWS6kpnaaeIkRat44gi5PWTH1EfNHeAhUpFJSCErAUxELUmwqsBZHhxCjoZMk1abbjKqqMAQUkgC2TFbaTMJNQqEFDKJBmK4dgr8UXALORqyfIHDxKlAn4qfsaFOyHGQKRG7S4xQ4SvkbMhPvoQUUkgh//D6AqD9lrWijVGIAAAAAElFTkSuQmCC" alt="QRCode">
+    </li>
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                    
+                    <article id="post-content">
+                        <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
 <p>The basic function declaration syntax is like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">funcIdentifier</span></span>() &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>or this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">funcIdentifier</span></span> () &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>After the declaration, you can invoke the function like this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funcIdentifier param1 param2</span><br></pre></td></tr></table></figure></p>
@@ -399,234 +520,144 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> `expr <span class="variable">$1</span> + <span class="variable">$2</span>`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">result=$(sum 12 13)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="variable">$1</span>=<span class="string">'`'</span> <span class="string">"expr <span class="variable">$2</span> + <span class="variable">$3</span>"</span> <span class="string">'`'</span></span><br><span class="line">&#125;</span><br><span class="line">result=0</span><br><span class="line">sum result 12 13</span><br></pre></td></tr></table></figure>
 <p>Understanding these two techniques of returning values from functions will help you understand more about the shell interpreter.</p>
 
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/07/arithmetic-operation-in-bash/" rel="prev" title="Arithmetic Operation In Bash">
-                Arithmetic Operation In Bash <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+                    </article>
+                    
 
 
-  </div>
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+        var dateUpdate = Date.parse("2019-02-11");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    </script>
 
 
-          </div>
-          
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-02-07T08:33:05.000Z" itemprop="datePublished">2019-02-07</time>
 
-  
+    , Updated at&nbsp;<time datetime="2019-02-11T15:24:36.398Z" itemprop="dateModified">2019-02-11</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
 
 
 
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
+</p>
 
-      
-
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Leegenux</p>
-              <p class="site-description motion-element" itemprop="description">A site about geek stuffs.</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">3</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
                 </div>
-              
-
-              
-
-              
                 
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">4</span>
-                    <span class="site-state-item-name">tags</span>
-                  
-                </div>
-              
-            </nav>
-          
+<div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2019/02/11/usagesOfAWK/">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Usages of AWK</div>
+            </a>
+        </li>
+    
 
-          
-
-          
-
-          
-
-          
-          
-
-          
-            
-          
-          
-
-        </div>
-      </div>
-
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Leegenux</span>
-
-  
-
-  
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/02/07/arithmetic-operation-in-bash/">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Arithmetic Operation In Bash</div>
+            </a>
+        </li>
+    
+</ul>
 </div>
 
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
-
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
 
 
 
         
-
-
-
-
-
-
-
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="noopener">Suka</a>
+    </p>
+</footer>
 
         
-      </div>
-    </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
-  </div>
-
-  
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
 
 <script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightContent.textContent = copyrightNow
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
 </script>
 
+<!-- vanilla-lazyload -->
 
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
 
 
 
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
 
 
+<!-- Offset -->
 
 
 
@@ -634,94 +665,15 @@
 
 
 
+<!-- gallery.js -->
 
 
+<!-- Comment -->
 
 
+<!-- ### Custom Footer ### -->
 
 
+    </body>
 
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
-
-
-
-  
-  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
-<script src="/js/src/post-details.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-  
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-</body>
 </html>

@@ -1,5 +1,40 @@
 <!DOCTYPE html>
 
+<html lang="English">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.2
+    -->
+    <script>
+window.lsVersion = "1.3.2",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
 
 
 
@@ -8,18 +43,11 @@
 
 
 
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="English">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
 
 
 
@@ -27,920 +55,515 @@
 
 
 
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="shortcut icon" type="image/ico" href="/img/suka-favicon.ico">
 
 
 
 
 
 
+<!-- Android Chrome Color -->
 
 
 
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="A site about geek stuffs.">
+
+<!-- Keywords -->
+<meta name="keywords" content="">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
 
 
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.0.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+<style>
+    body {
+        background-color: #f8f9fa;
     }
-  };
-</script>
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
 
 
-  
 
 
 
 
-  <meta name="description" content="A site about geek stuffs.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Leegenux Blog">
-<meta property="og:url" content="http://Leegenux.github.io/index.html">
+
+
+
+    <!-- Prettify Theme -->
+    
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="Leegenux Blog">
 <meta property="og:site_name" content="Leegenux Blog">
-<meta property="og:description" content="A site about geek stuffs.">
+
 <meta property="og:locale" content="English">
+
+<meta property="og:url" content="http://Leegenux.github.io/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="A site about geek stuffs.">
+
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leegenux Blog">
-<meta name="twitter:description" content="A site about geek stuffs.">
+
+
+    <meta property="og:type" content="blog">
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
 
 
 
 
 
 
-  <link rel="canonical" href="http://Leegenux.github.io/">
 
 
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/">
 
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
+    <!-- ### Structured Data ### -->
+    
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Blog",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "Hi, nice to meet you."
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    "url": "http://Leegenux.github.io",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io"
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "",
+    "description": "A site about geek stuffs."
+}
 </script>
 
-  <title>Leegenux Blog</title>
-  
 
 
 
 
+    <!-- ### Custom Head ### -->
+    
 
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="English">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Leegenux Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-    
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
+    <body>
         
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
         
+            
+                Hi, nice to meet you.
+            
         
-          
-          <li class="menu-item menu-item-home menu-item-active">
+    </p>
 
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search" class="navbar-link">Search</a>
     
     
     
-      
-    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
 
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
-
-  </li>
+        <!-- Share Weibo -->
         
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
         
+
+        <!-- Share Twitter -->
         
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
 
-    
-    
-    
-      
-    
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
 
-    
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
 
-  </li>
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=&summary=A site about geek stuffs.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
 
-      
-      
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAAAAABx8Un7AAABOklEQVR42u3ayw7DIAxE0fz/T7erSlVqxmMKDoubTV8RB6mWDSbX64HrAgUFnUIvcX1+/743eu+MA9qLhn96gN6B7L6fiYK2oqMAioLnHiDOOKDnoCp4osmBno/ev1MBBHoWKhO1KO5bqgzo36izMHNel68GQadQe/MTJIkoWSzdtYFOoSoJREGlCoJK/KD9qLMgUwVgNGkZSKBb0GywDHAmAtqPOoGhmh5uQQDtQ0eA+qyKfLrYBt2KZo3lUaHPNsnhOKCPodmCuhJ0diCBLkWdhkX1kMHumIG2oJVNlHMfaC9aaXCo5F9K+KBb0UpDMjsESicJ2oY6SdxtSMqCAdqKZgHkNqvkJgv0GDR7uCIr8qBnoc7DFVkCAX0GzQ7iVYPKbXaB9qEzB/HOhnj5wxWgFtp5gYKClq43YBdSYiTGo8gAAAAASUVORK5CYII=" alr="QRCode">
+        </li>
+        
+
     </ul>
-  
-
-  
+</div>
     
-
-  
-
-  
+    
 </nav>
+</header>
 
-
-
-  
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/11/usagesOfAWK/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leegenux">
-      <meta itemprop="description" content="A site about geek stuffs.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leegenux Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+            <div class="container">
+    <div class="main-container">
+        <main>
+            <div class="post-stream-container">
+                <!-- # Post List # -->
                 
-                
-                <a href="/2019/02/11/usagesOfAWK/" class="post-title-link" itemprop="url">Usages of AWK</a>
-              
+                    
+                        <article class="post-entry container px-0 card">
+        <div class="columns col-gapless">
             
-          </h1>
+                <div class="column col-12">
+                    
+    <h2 class="h5 mb-0 card-header"><a class="card-title" href="/2019/02/11/usagesOfAWK/">Usages of AWK</a></h2>
+
+
+<p class="mb-0 card-body">
+    
+        Basic ...
+    <a href="/2019/02/11/usagesOfAWK/">Read more</a>
+</p>
+
+
+    <!-- Date & Category -->
+    <div class="card-footer post-entry-info text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <time>2019-02-11</time>
         
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-11 19:55:30 / Modified: 23:24:36" itemprop="dateCreated datePublished" datetime="2019-02-11T19:55:30+08:00">2019-02-11</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         
-          
-            <h4 id="Basic-Understanding"><a href="#Basic-Understanding" class="headerlink" title="Basic Understanding"></a>Basic Understanding</h4><p>The common template of using <code>awk</code> is like this: <code>awk &#39; { actions } &#39; textFile</code>.</p>
-<p>Say I have a text file containing lines:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">------ test.txt</span><br><span class="line">hello world</span><br><span class="line">heLLoWorld ha</span><br><span class="line">London Paris</span><br><span class="line">Changsha Wuhan</span><br><span class="line">Beijing NewYork</span><br><span class="line">Hell Nowhere</span><br></pre></td></tr></table></figure>
-<p>This command <code>awk &#39;BEGIN{IGNORECASE=1} /^hel/ { print $2 }&#39; test.txt</code> emits result:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">world</span><br><span class="line">ha</span><br><span class="line">Nowhere</span><br></pre></td></tr></table></figure>
-<p>So basically, <code>awk</code> just processes every line in the text file respectively and gives out the combined result.</p>
-<h4 id="How-to-Do-Regular-Expressions"><a href="#How-to-Do-Regular-Expressions" class="headerlink" title="How to Do Regular Expressions"></a>How to Do Regular Expressions</h4><p>According to the example above as well as the following one, you can easily get the point of doing regex with <code>awk</code>.</p>
-<p>Let’s say we have a text file called <code>test.txt</code> whose content is as follows:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test 123</span><br><span class="line">TEd show</span><br><span class="line">Howday Tom</span><br><span class="line">Hahahha</span><br><span class="line">testing, take it easy</span><br></pre></td></tr></table></figure>
-<p>To grab every line where there is word “test”, try this: <code>awk &quot; /test/ { print } &quot; test.txt</code>. The part specifying the regular expression is <code>/test/</code></p>
-<h4 id="How-to-do-Conditionals"><a href="#How-to-do-Conditionals" class="headerlink" title="How to do Conditionals"></a>How to do Conditionals</h4><p>For example, <code>awk &#39; { if ( $1 ~ /test/ ) print } &#39; test.txt</code> will find out every line whose first column is word “test” (case-sensitive).</p>
-<h4 id="How-to-Specify-Column-Seperator"><a href="#How-to-Specify-Column-Seperator" class="headerlink" title="How to Specify Column Seperator"></a>How to Specify Column Seperator</h4><p>with <code>-F</code> option, you can denote the separator in place of white space, which is the default. Look at the example : <code>awk -F, &#39; { print $1 } &#39; test.txt</code> will print out the first column of each line separated by commas.</p>
-<p>Please refer to GOOGLE SEARCH for more in-depth insights.</p>
-
-          
-        
-      
     </div>
 
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/arithmetic-operation-in-bash/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leegenux">
-      <meta itemprop="description" content="A site about geek stuffs.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leegenux Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/07/arithmetic-operation-in-bash/" class="post-title-link" itemprop="url">Arithmetic Operation In Bash</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-11 23:24:36" itemprop="dateModified" datetime="2019-02-11T23:24:36+08:00">2019-02-11</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>To learn about this topic, let’s start with a problem.</p>
-<p>Snippet of code below is to be implemented:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a=13</span><br><span class="line">b=12</span><br><span class="line"></span><br><span class="line"><span class="comment"># Please calculate their quotinent (a / b)</span></span><br></pre></td></tr></table></figure></p>
-<p>As much as I have learnt about arithmetic operations, there are 4 kinds of feasible solutions for BASH.</p>
-<ul>
-<li><code>$(( expression ))</code> gives the result of the calculation</li>
-<li>Also you can do calculation using <code>`expr expression`</code></li>
-<li>To do calculation and assign the result directly, you can try this: <code>((result = $a + $b))</code> as well as <code>((result = a + b))</code>, where result, <code>a</code> and <code>b</code> are all shell variables.</li>
-<li>Using bc calculator with pipe.</li>
-</ul>
-<p>For that problem, and with the help of the hints, we can provide 4 structurally different solutions respectively.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Sol.1 </span></span><br><span class="line">result=$((a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.2</span></span><br><span class="line">result=`expr a / b`</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.3</span></span><br><span class="line">((result = a / b))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sol.4  </span></span><br><span class="line">result=`<span class="built_in">echo</span> <span class="string">"scale=16; <span class="variable">$a</span>/<span class="variable">$b</span>"</span> | bc<span class="string">"`</span></span><br></pre></td></tr></table></figure>
-<p>If you try them all out, you will find that only the last solution gives float number as result. So one thing you should bear in mind is that built-in calculation of bash only does integers. To do float points, you must get the assistanse of external tools, in which <code>bc</code> is the one mostly referred to.</p>
-<blockquote>
-<p>Built-in arithmetic operation in bash only does integers.</p>
-</blockquote>
-<p>With this basic experience with arthmetic operation of bash and help of GOOGLE SEARCH, you can now solve more problems.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Leegenux.github.io/2019/02/07/WaysForFunctiontoReturnValue/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Leegenux">
-      <meta itemprop="description" content="A site about geek stuffs.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Leegenux Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/07/WaysForFunctiontoReturnValue/" class="post-title-link" itemprop="url">Ways For Function to Return Value</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-07 16:33:05" itemprop="dateCreated datePublished" datetime="2019-02-07T16:33:05+08:00">2019-02-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-11 23:24:36" itemprop="dateModified" datetime="2019-02-11T23:24:36+08:00">2019-02-11</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
-<p>The basic function declaration syntax is like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">funcIdentifier</span></span>() &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>or this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">funcIdentifier</span></span> () &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>After the declaration, you can invoke the function like this<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funcIdentifier param1 param2</span><br></pre></td></tr></table></figure></p>
-<p>And inside of the function, you can easily get the parameters using <code>$1</code>, <code>$2</code>, <code>$3</code> ,etc. </p>
-<p>But how to get the result value ? There are a few ways to do the trick.</p>
-<ul>
-<li>Using <code>echo</code> inside of function and with the help of command substitution you get the result</li>
-</ul>
-<ul>
-<li><code>eval</code> command’ll be evaluated twice. First is of the contents at both side of equal sign, the second one is the actual value assignment</li>
-<li>Global variables</li>
-</ul>
-<p>In order to get stuffs across intuitively, I provide examples for first two approaches :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> `expr <span class="variable">$1</span> + <span class="variable">$2</span>`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">result=$(sum 12 13)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="variable">$1</span>=<span class="string">'`'</span> <span class="string">"expr <span class="variable">$2</span> + <span class="variable">$3</span>"</span> <span class="string">'`'</span></span><br><span class="line">&#125;</span><br><span class="line">result=0</span><br><span class="line">sum result 12 13</span><br></pre></td></tr></table></figure>
-<p>Understanding these two techniques of returning values from functions will help you understand more about the shell interpreter.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-
-
-          </div>
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Leegenux</p>
-              <p class="site-description motion-element" itemprop="description">A site about geek stuffs.</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">3</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
                 </div>
-              
-
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">4</span>
-                    <span class="site-state-item-name">tags</span>
-                  
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
             
-          
-          
-
         </div>
-      </div>
+</article>
 
-      
+                    
+                
+                    
+                        <article class="post-entry container px-0 card">
+        <div class="columns col-gapless">
+            
+                <div class="column col-12">
+                    
+    <h2 class="h5 mb-0 card-header"><a class="card-title" href="/2019/02/07/WaysForFunctiontoReturnValue/">Ways For Function to Return Value</a></h2>
 
-      
+
+<p class="mb-0 card-body">
+    
+        Modularization design of code has many advantages. As an essential role regarding to code modularization, exploita...
+    <a href="/2019/02/07/WaysForFunctiontoReturnValue/">Read more</a>
+</p>
+
+
+    <!-- Date & Category -->
+    <div class="card-footer post-entry-info text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <time>2019-02-07</time>
+        
+        
+    </div>
+
+                </div>
+            
+        </div>
+</article>
+
+                    
+                
+                    
+                        <article class="post-entry container px-0 card">
+        <div class="columns col-gapless">
+            
+                <div class="column col-12">
+                    
+    <h2 class="h5 mb-0 card-header"><a class="card-title" href="/2019/02/07/arithmetic-operation-in-bash/">Arithmetic Operation In Bash</a></h2>
+
+
+<p class="mb-0 card-body">
+    
+        To learn about this topic, let’s start with a problem.
+Snippet of code below is to be implemented:
+    <a href="/2019/02/07/arithmetic-operation-in-bash/">Read more</a>
+</p>
+
+
+    <!-- Date & Category -->
+    <div class="card-footer post-entry-info text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <time>2019-02-07</time>
+        
+        
+    </div>
+
+                </div>
+            
+        </div>
+</article>
+
+                    
+                
+            </div>
+        </main>
+        
 
     </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Leegenux</span>
-
-  
-
-  
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
-
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
 
 
 
         
-
-
-
-
-
-
-
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="noopener">Suka</a>
+    </p>
+</footer>
 
         
-      </div>
-    </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-
-    
-  </div>
-
-  
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
 
 <script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightContent.textContent = copyrightNow
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
 </script>
 
+<!-- vanilla-lazyload -->
 
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
 
 
 
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
 
 
+<!-- Offset -->
 
 
 
@@ -948,88 +571,15 @@
 
 
 
+<!-- gallery.js -->
 
 
+<!-- Comment -->
 
 
+<!-- ### Custom Footer ### -->
 
 
+    </body>
 
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=7.0.0"></script>
-
-  <script src="/js/src/motion.js?v=7.0.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
-
-
-
-  
-
-  
-
-
-  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-</body>
 </html>
