@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+
+<html lang="English">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.2
+    -->
+    <script>
+window.lsVersion = "1.3.2",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
+
+
+
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>Code Your Own Server/Client Software With C socket APIs | Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="shortcut icon" type="image/ico" href="/img/suka-favicon.ico">
+
+
+
+
+
+
+<!-- Android Chrome Color -->
+
+
+
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="In this article I’m gonna show you how to code a simple echo server and corresponding client from scratch. 
+">
+
+<!-- Keywords -->
+<meta name="keywords" content="">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
+
+
+
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    
+        <link rel="stylesheet" href="/css/highlight/github.min.css">
+    
+
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="Code Your Own Server/Client Software With C socket APIs | Leegenux Blog">
+<meta property="og:site_name" content="Leegenux Blog">
+
+<meta property="og:locale" content="English">
+
+<meta property="og:url" content="http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="In this article I’m gonna show you how to code a simple echo server and corresponding client from scratch. 
+">
+
+<meta name="twitter:card" content="summary">
+
+
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2019-02-15T15:39:07.000Z">
+    <meta property="article:modified_time" content="2019-02-15T15:39:07.000Z">
+    <meta property="article:author" content="Leegenux">
+    <meta property="og:article:tag" content=""> 
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/">
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/",
+    "@type": "BlogPosting",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/"
+    },
+    "headline": "Code Your Own Server/Client Software With C socket APIs | Leegenux Blog",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    
+    "datePublished": "2019-02-15T15:39:07.000Z",
+    "dateModified": "2019-02-15T15:48:23.503Z",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "Hi, nice to meet you."
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "",
+    "description": "In this article I’m gonna show you how to code a simple echo server and corresponding client from scratch. 
+"
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+
+
+</head>
+
+    <body>
+        
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                Hi, nice to meet you.
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search" class="navbar-link">Search</a>
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
+
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=Code Your Own Server/Client Software With C socket APIs" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Code Your Own Server/Client Software With C socket APIs&summary=A site about geek stuffs.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=Code Your Own Server/Client Software With C socket APIs" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACPElEQVR42u2aQQ7CMAwE+/9Pw4lL1XjWBQStJxckWpoJImG93u1xgbEJKaSQQv4B5FaM1/X96/69/bMOJ1zcu5pXyNmQ1UMJmhZSPZcWI+RsyApmD3T0I68WQAtb3iOkkI2Dujr86ZqQQr67cWgTHIEnAkNIIc8IjNU1EgqpGPmIChLydpDdQuxTr1+tFoW8LORpMwmEQ2IYfN1VE/KSkCRkyWhKTCkq7FbiRMjZkB2xmopjMhXwCxFyJGR3wyQiobqfiralwBByDCQV9GQOrMDIODitzIW8PeTyRxscuonYPRIT6Z+HkHMhq4mT5nwiijt/EkIKSUZ7cnDTfcn9eJgLORayEhjdgEn12coYEHIuJDUm6cefGKWpIIlMVCFHQFaTVWDlBLBRkoarkDMh0yKsmjgJlSRGA1aLQo6B7Jr7iaFFX0ArKCLkOMjEUKJgcmWS0kZaAgs5FjINHXfCxp3nRgJDyDGQ3aBbt7GUGlzYABVyDCQF5c5srtTAwsa9kCMh05ARFVods4GuCSlkt0HZbW6WYZAqqCLkWMikuV4V/bSwjmCJDnMhbw+ZilAy6elzJLAjZS7kGEgKwqULIGFLI+7SCnlbSBpdI7XzvMpAFXIuZCoAklBJZ7NFISchx0JS4CgxCLoN/KjBJeRoyLTB2SnGUqMAw/BCCvngcHAneJyYVnFHTMjxkIlZfyZsF5kNQo6G7ExKm4uKsNQgEHIuZBJMogWQCUCNhLerRSFvA/nPQ0ghhRTyh+MJUp9WBEEy4MgAAAAASUVORK5CYII=" alr="QRCode">
+        </li>
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    
+    
+
+
+<div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">Code Your Own Server/Client Software With C socket APIs</h1>
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <span>2019-02-15</span>
+        
+        
+            <!-- Busuanzi Post Views -->
+<span id="busuanzi_container_page_pv" hidden>
+    <span class="suka-devide-dot"></span>
+    <span></span>
+    <span id="busuanzi_value_page_pv"></span>
+    <span>Views</span>
+</span>
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=Code Your Own Server/Client Software With C socket APIs&url=http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+    <li class="menu-item">
+        <a href="https://twitter.com/intent/tweet?text=Code Your Own Server/Client Software With C socket APIs&url=http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+    </li>
+    
+
+    <!-- Share Facebook -->
+    
+    <li class="menu-item">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+    </li>
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+    <li class="menu-item">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/&title=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+    </li>
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Leegenux Blog&summary=A site about geek stuffs.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/&text=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+    <li class="menu-item">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACPElEQVR42u2aQQ7CMAwE+/9Pw4lL1XjWBQStJxckWpoJImG93u1xgbEJKaSQQv4B5FaM1/X96/69/bMOJ1zcu5pXyNmQ1UMJmhZSPZcWI+RsyApmD3T0I68WQAtb3iOkkI2Dujr86ZqQQr67cWgTHIEnAkNIIc8IjNU1EgqpGPmIChLydpDdQuxTr1+tFoW8LORpMwmEQ2IYfN1VE/KSkCRkyWhKTCkq7FbiRMjZkB2xmopjMhXwCxFyJGR3wyQiobqfiralwBByDCQV9GQOrMDIODitzIW8PeTyRxscuonYPRIT6Z+HkHMhq4mT5nwiijt/EkIKSUZ7cnDTfcn9eJgLORayEhjdgEn12coYEHIuJDUm6cefGKWpIIlMVCFHQFaTVWDlBLBRkoarkDMh0yKsmjgJlSRGA1aLQo6B7Jr7iaFFX0ArKCLkOMjEUKJgcmWS0kZaAgs5FjINHXfCxp3nRgJDyDGQ3aBbt7GUGlzYABVyDCQF5c5srtTAwsa9kCMh05ARFVods4GuCSlkt0HZbW6WYZAqqCLkWMikuV4V/bSwjmCJDnMhbw+ZilAy6elzJLAjZS7kGEgKwqULIGFLI+7SCnlbSBpdI7XzvMpAFXIuZCoAklBJZ7NFISchx0JS4CgxCLoN/KjBJeRoyLTB2SnGUqMAw/BCCvngcHAneJyYVnFHTMjxkIlZfyZsF5kNQo6G7ExKm4uKsNQgEHIuZBJMogWQCUCNhLerRSFvA/nPQ0ghhRTyh+MJUp9WBEEy4MgAAAAASUVORK5CYII=" alt="QRCode">
+    </li>
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                            <div id="post-toc">
+                                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Prerequisite"><span class="post-toc-number">1.</span> <span class="post-toc-text">Prerequisite</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Commonly-Seen-Structures"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Commonly Seen Structures</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-struct-hostent"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">1. struct hostent</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-struct-in-addr"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">2. struct in_addr</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-struct-sockaddr-in"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">3. struct sockaddr_in</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Commonly-Seen-Functions"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Commonly Seen Functions</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#One-Parameter-Functions"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">One Parameter Functions</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Multi-parameter-Functions"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Multi-parameter Functions</span></a></li></ol></li></ol></li></ol>
+                            </div>
+                        
+                    
+                    <article id="post-content">
+                        <p>In this article I’m gonna show you how to code a simple echo server and corresponding client from scratch. </p>
+<h2 id="Prerequisite"><a href="#Prerequisite" class="headerlink" title="Prerequisite"></a>Prerequisite</h2><p>To achieve the goal, we should first learn about some basic C APIs.</p>
+<h3 id="Commonly-Seen-Structures"><a href="#Commonly-Seen-Structures" class="headerlink" title="Commonly Seen Structures"></a>Commonly Seen Structures</h3><h4 id="1-struct-hostent"><a href="#1-struct-hostent" class="headerlink" title="1. struct hostent"></a>1. <code>struct hostent</code></h4><p><code>hostent</code> is abbreviation of <code>host entry</code>. Its instance is usally used to store the return value of <code>gethostbyname()</code> function. It’s imported by including <code>&lt;netdb.h&gt;</code></p>
+<p>This is its declaration:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">hostent</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> * h_name;</span><br><span class="line">    <span class="keyword">char</span> ** h_aliases;</span><br><span class="line">    <span class="keyword">short</span> h_addrtype;</span><br><span class="line">    <span class="keyword">short</span> h_length;</span><br><span class="line">    <span class="keyword">char</span> ** h_addr_list;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> h_addr h_addr_list[0];</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-struct-in-addr"><a href="#2-struct-in-addr" class="headerlink" title="2. struct in_addr"></a>2. <code>struct in_addr</code></h4><p>This data structure contains just one member <code>in_addr_t s_addr;</code>. Its header file is <code>&lt;arpa/inet.h&gt;</code></p>
+<p>Its declaration is as follows:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> &#123;</span></span><br><span class="line">    <span class="keyword">in_addr_t</span> s_addr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>The type <code>in_addr_t</code> is in most cases alias of 32 bits <code>unsigned int</code>.</p>
+<h4 id="3-struct-sockaddr-in"><a href="#3-struct-sockaddr-in" class="headerlink" title="3. struct sockaddr_in"></a>3. <code>struct sockaddr_in</code></h4><p>Before introducing this structure, you should scan through declaration below:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span>  <span class="keyword">short</span>  sa_family;     <span class="comment">/* address family, AF_xxx */</span></span><br><span class="line">    <span class="keyword">char</span>  sa_data[<span class="number">14</span>];                 <span class="comment">/* 14 bytes of protocol address */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Structure above usually serves as parameter of functions <code>bind</code>, <code>connect</code>, <code>recvfrom</code> and <code>sendto</code>, etc. Its second member is not much readable for human, so developers introduced its equivalent structure. Cast between their pointers is secure.</p>
+<p>Let’s look at the equivalent structure’s declaration:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> &#123;</span></span><br><span class="line">    <span class="keyword">short</span> <span class="keyword">int</span> sin_family; <span class="comment">/* Address family */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> sin_port; <span class="comment">/* Port number */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span> <span class="comment">/* Internet address */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> sin_zero[<span class="number">8</span>]; <span class="comment">/* Same size as struct sockaddr */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Code above suggests that <code>struct sockaddr</code> in fact contains information about address-family, port and address. </p>
+<p>The header for <code>sockaddr</code> is <code>&lt;sys/socket.h&gt;</code>, <code>&lt;netinet/in.h&gt;</code> for <code>sockaddr_in</code>.</p>
+<h3 id="Commonly-Seen-Functions"><a href="#Commonly-Seen-Functions" class="headerlink" title="Commonly Seen Functions"></a>Commonly Seen Functions</h3><h4 id="One-Parameter-Functions"><a href="#One-Parameter-Functions" class="headerlink" title="One Parameter Functions"></a>One Parameter Functions</h4><ul>
+<li><code>gethostbyname</code> : Literally understood.</li>
+<li><code>inet_ntoa</code>: Transfer <code>in_addr</code> into human-readable format.</li>
+<li><code>inet_addr</code>: Do reverse transformation of <code>inet_ntoa</code>.<br>-<code>htonl</code>: Host-to-Net Long conversion.</li>
+<li><code>htons</code>: Host-to-Net Short conversion.</li>
+<li><code>close</code>: Close the socket handle.</li>
+</ul>
+<p><code>gethostbyname</code>, <code>inet_ntoa</code>, <code>inet_addr</code>, <code>htonl</code> and <code>htons</code> all take just one parameter. </p>
+<p>Here <code>htox</code> functions mainly focus on adapting endianness, while <code>inet_xxxx</code> functions on transformation between machine presentation and human-readable format.</p>
+<h4 id="Multi-parameter-Functions"><a href="#Multi-parameter-Functions" class="headerlink" title="Multi-parameter Functions"></a>Multi-parameter Functions</h4><ul>
+<li><code>socket</code>: Create socket instance.</li>
+<li><code>connect</code></li>
+<li><code>send</code></li>
+<li><code>recv</code></li>
+<li><code>listen</code></li>
+<li><code>accept</code></li>
+</ul>
+<p>These functions take multiple parameters. If you compare each one with another, you can reveal a pattern of parameters for them all. Here I won’t talk too much about this.</p>
+<p>If you are struggling figuring out the meanings of terms like “send”, “listen” and so on, I recommend you to first learn some basics about <a href="https://www.studytonight.com/computer-networks/tcp-ip-reference-model" target="_blank" rel="noopener">IP/TCP</a> and <a href="https://medium.com/@chathuranga94/introduction-to-socket-io-600025322cd2" target="_blank" rel="noopener">socket</a>.</p>
+<p><strong>…To Be Continued</strong></p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+        var dateUpdate = Date.parse("2019-02-15");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-02-15T15:39:07.000Z" itemprop="datePublished">2019-02-15</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+
+</p>
+
+                </div>
+                
+<div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/02/14/usages-of-tr/">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Usages of tr</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
+
+
+
+        
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="noopener">Suka</a>
+    </p>
+</footer>
+
+        
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightContent.textContent = copyrightNow
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+</script>
+
+<!-- vanilla-lazyload -->
+
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+<!-- Offset -->
+
+
+
+
+
+
+
+<!-- gallery.js -->
+
+
+<!-- Comment -->
+
+
+<!-- ### Custom Footer ### -->
+
+
+    </body>
+
+</html>
