@@ -96,4 +96,15 @@ These functions take multiple parameters. If you compare each one with another, 
 If you are struggling figuring out the meanings of terms like "send", "listen" and so on, I recommend you to first learn some basics about [IP/TCP](https://www.studytonight.com/computer-networks/tcp-ip-reference-model) and [socket](https://medium.com/@chathuranga94/introduction-to-socket-io-600025322cd2).
 
 
+
+
+
+## Hands-on Coding
+
+[Here](https://github.com/Leegenux/C_socket_client_server) you can preview the result we are going to achieve.
+
+
+
+
+
 **...To Be Continued**
