@@ -1,7 +1,7 @@
 ---
 title: Code Your Own Server/Client Software With C socket APIs
 date: 2019-02-15 23:39:07
-tags:
+tags: [linux, socket, C]
 ---
 
 In this article I'm gonna show you how to code a simple echo server and corresponding client from scratch. 
@@ -101,10 +101,73 @@ If you are struggling figuring out the meanings of terms like "send", "listen" a
 
 ## Hands-on Coding
 
-[Here](https://github.com/Leegenux/C_socket_client_server) you can preview the result we are going to achieve.
+[Here](https://github.com/Leegenux/C_socket_client_server) you can preview the result we are going to produce.
+
+
+
+### nslookup
+
+First, let's start with retrieving basic information using system-provided APIs. Say getting IP of a given URL. 
+
+In Unix-like systems, there is tool named `nslookup` which does the job mentioned above. Here is an example:
+
+```
+$ nslookup google.com
+Server:         127.0.0.53
+Address:        127.0.0.53#53
+
+Non-authoritative answer:
+Name:   google.com
+Address: 172.217.160.110
+Name:   google.com
+Address: 2404:6800:4008:802::200e
+```
+
+We can code our own simpler version using APIs provided by operating system.
+
+According to the prerequisite section, we can use the `gethostbyname` to finish the code.
+
+
+
+First part. The includes :
+
+```C
+#include <stdio.h>          /* stderr, stdout */
+#include <netdb.h>          /* hostent struct, gethostbyname() */
+#include <arpa/inet.h>      /* inet_ntoa() to format IP address */
+#include <netinet/in.h>     /* in_addr structure *
+```
+
+Then here comes the main body :
+
+```C
+int main(int argc, char **argv) {
+    struct hostent *host;     /* host information */
+    struct in_addr h_addr;    /* Internet address */
+    if (argc != 2) {
+        fprintf(stderr, "USAGE: nslookup <inet_address>\n");
+        return 1;
+    }
+    if ((host = gethostbyname(argv[1])) == NULL) {
+        fprintf(stderr, "(mini) nslookup failed on '%s'\n", argv[1]);
+        return 1;
+    }
+    h_addr.s_addr = *((unsigned long *) host->h_addr_list[0]);
+    fprintf(stdout, "%s\n", inet_ntoa(h_addr));
+    return 0;
+}
+```
+
+`gethostbyname` takes a C-string parameter, returns the information in the format of `struct hostent`. The member `h_addr_list` stores all results we want. To make things simpler, we just fetch and print the first IP we get. If no result is available, `gethostbyname` returns NULL.
+
+
+
+### tcp-client
 
 
 
 
 
-**...To Be Continued**
+
+
+...To Be Continued**
