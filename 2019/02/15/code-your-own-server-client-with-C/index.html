@@ -168,6 +168,12 @@ window.oldVersion = [
 
 
 
+    
+        <!-- Import DisqusJS Default Theme -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqusjs.css">
+
+    
+
 
 
 
@@ -274,7 +280,7 @@ window.oldVersion = [
             "@type": "ImageObject",
             "url": "http://Leegenux.github.io/img/default_avatar.png"
         },
-        "description": "Hi, nice to meet you."
+        "description": "No man is an island"
     },
     "publisher": {
         "@type": "Organization",
@@ -318,7 +324,7 @@ window.oldVersion = [
     <p class="text-center header-slogan">
         
             
-                Hi, nice to meet you.
+                No man is an island
             
         
     </p>
@@ -618,6 +624,28 @@ window.oldVersion = [
                 
                     <!-- # Comment # -->
                     
+                        <div class="card-footer post-comment">
+                            <div id="disqus_thread"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqus.js"></script>
+
+<script>
+var dsqjs = new DisqusJS({
+    shortname: 'leegenux',
+    
+    identifier: 'http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/',
+    url: 'http://Leegenux.github.io/2019/02/15/code-your-own-server-client-with-C/',
+    api: 'https://disqus.skk.moe/disqus/',
+    apikey: '60KKUCrM7Sv1Qk5YkbjKRC7o4H6ZtO9bDCvt3dZX1D6fZAm6r9Y5AtNzajqGOInF',
+    
+    admin: 'leegenux',
+    
+    
+});
+</script>
+
+                        </div>
+                    
                 
             </div>
         </div>
@@ -675,7 +703,12 @@ window.lazyLoadOptions = {
     var copyrightNow = new Date().getFullYear();
     var copyrightContent = document.querySelector('span[data-year]')
     
-        copyrightContent.textContent = copyrightNow
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
     
 
 
@@ -707,6 +740,10 @@ console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c 
 
 
 <!-- Comment -->
+
+    
+        <!-- No need for DisqusJS -->
+    
 
 
 <!-- ### Custom Footer ### -->

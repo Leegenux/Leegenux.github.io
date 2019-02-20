@@ -167,6 +167,8 @@ window.oldVersion = [
 
 
 
+    
+
 
 
 
@@ -258,7 +260,7 @@ window.oldVersion = [
     <p class="text-center header-slogan">
         
             
-                Hi, nice to meet you.
+                No man is an island
             
         
     </p>
@@ -436,7 +438,12 @@ window.lazyLoadOptions = {
     var copyrightNow = new Date().getFullYear();
     var copyrightContent = document.querySelector('span[data-year]')
     
-        copyrightContent.textContent = copyrightNow
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
     
 
 
@@ -468,6 +475,8 @@ console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c 
 
 
 <!-- Comment -->
+
+    
 
 
 <!-- ### Custom Footer ### -->

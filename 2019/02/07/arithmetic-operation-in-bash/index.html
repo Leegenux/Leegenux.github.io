@@ -168,6 +168,12 @@ Snippet of code below is to be implemented:">
 
 
 
+    
+        <!-- Import DisqusJS Default Theme -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqusjs.css">
+
+    
+
 
 
 
@@ -274,7 +280,7 @@ Snippet of code below is to be implemented:">
             "@type": "ImageObject",
             "url": "http://Leegenux.github.io/img/default_avatar.png"
         },
-        "description": "Hi, nice to meet you."
+        "description": "No man is an island"
     },
     "publisher": {
         "@type": "Organization",
@@ -318,7 +324,7 @@ Snippet of code below is to be implemented:"
     <p class="text-center header-slogan">
         
             
-                Hi, nice to meet you.
+                No man is an island
             
         
     </p>
@@ -561,20 +567,49 @@ Snippet of code below is to be implemented:"
     <!-- Prev Nav -->
     
         <li class="page-item page-prev">
-            <a href="/2019/02/07/WaysForFunctiontoReturnValue/">
+            <a href="/2019/02/11/usagesOfAWK/">
                 <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
-                <div class="page-item-subtitle">Ways For Function to Return Value</div>
+                <div class="page-item-subtitle">Usages of awk</div>
             </a>
         </li>
     
 
     <!-- Next Nav -->
     
+        <li class="page-item page-next">
+            <a href="/2019/02/07/WaysForFunctiontoReturnValue/">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Ways For Function to Return Value</div>
+            </a>
+        </li>
+    
 </ul>
 </div>
 
                 
                     <!-- # Comment # -->
+                    
+                        <div class="card-footer post-comment">
+                            <div id="disqus_thread"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqus.js"></script>
+
+<script>
+var dsqjs = new DisqusJS({
+    shortname: 'leegenux',
+    
+    identifier: 'http://Leegenux.github.io/2019/02/07/arithmetic-operation-in-bash/',
+    url: 'http://Leegenux.github.io/2019/02/07/arithmetic-operation-in-bash/',
+    api: 'https://disqus.skk.moe/disqus/',
+    apikey: '60KKUCrM7Sv1Qk5YkbjKRC7o4H6ZtO9bDCvt3dZX1D6fZAm6r9Y5AtNzajqGOInF',
+    
+    admin: 'leegenux',
+    
+    
+});
+</script>
+
+                        </div>
                     
                 
             </div>
@@ -633,7 +668,12 @@ window.lazyLoadOptions = {
     var copyrightNow = new Date().getFullYear();
     var copyrightContent = document.querySelector('span[data-year]')
     
-        copyrightContent.textContent = copyrightNow
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
     
 
 
@@ -665,6 +705,10 @@ console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c 
 
 
 <!-- Comment -->
+
+    
+        <!-- No need for DisqusJS -->
+    
 
 
 <!-- ### Custom Footer ### -->
