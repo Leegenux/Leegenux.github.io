@@ -5,7 +5,7 @@
 # Site
 title: Leegenux Blog
 subtitle:
-description: A site about geek stuffs.
+description: A site about geek stuff.
 keywords:
 author: Leegenux
 language: English
@@ -91,6 +91,6 @@ suka_theme:
     path: search.json
     field: all # Page | Post | All. Default post
   prism:
-    enable: false
+    enable: true
     line_number: true
     theme: default
