@@ -164,7 +164,103 @@ int main(int argc, char **argv) {
 
 ### tcp-client
 
+First part is still includes:
 
+```C
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+```
+
+Then the main function:
+
+```C
+#define BUFFSIZE 32
+
+int main(int argc, char *argv[]) {
+```
+
+Check the command line parameters and print the help-string if necessary: 
+
+```C
+// Check the command line parameters
+if (argc != 4) {
+    fprint(stderr, "Usage: tcp-client <server-ip> <port> <data>\n4)
+}
+```
+
+Then create the socket, the first parameter of `socket` is mostly set to `PF_INET` or `AF_INET`. Note that in Linux implementation, `AF_INET` is totally same as `PF_INET`. The second and third parameters are type and protocol. In this condition, we set `type = SOCK_STREAM` and `protocol = IPPROTO_TCP`. With these setups, we create a tcp socket. And the function returns a socket handle for later use. The handle normally should be greater than 0.
+
+```C
+// Create the socket
+int sock;
+if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
+    fprintf(stderr, "Failed to create socket\n");
+    return 1;
+}``
+```
+
+After that, let's construct the server address object using command line parameters. The member `sin_family` is usually either set to `AF_INET` or ` PF_INET` . And the member `sin_addr.s_addr` is actually integer as inner presentation. But you can easily get the presentation using provided function `inet_addr`. The last member `sin_zero` is intended for main memory alignment optimization, and should be set 0 manually.
+
+```C
+// Construct server address object
+struct sockaddr_in echoServer;
+echoServer.sin_family = AF_INET;
+echoServer.sin_addr.s_addr = inet_addr(argv[1]);
+echoServer.sin_port = htons(atoi(argv[2]));
+memset(&(echoServer.sin_zero), 0, sizeof(echoServer.sin_zero));
+```
+
+Then, we shall try to establish the connection and send the data. You should look closely at the parameters of two functions `connect` and `send`, as well as how the socket is related.
+
+```C
+// Establish connection
+if (connect(sock, 
+    (struct sockaddr*) &echoServer,
+    sizeof(echoServer)) < 0) {
+    fprintf(stderr, "Failed to connect.\n");
+    return 1;
+}
+
+// Send the data
+unsigned char dataLen = strlen(argv[3]);
+if (send(sock, argv[3], dataLen, 0) != dataLen) {
+    fprintf(stderr, "Data check failure.\n");
+    return 1;
+}
+```
+
+At last, if everything goes fine, we are now at the final step. The return value of the `recv` function is the number of the bytes received. It is not guaranteed that `recv` function can get the whole echo result through one time execution. What is guaranteed is that normally when there are data to receive, `packSize` will not be 0. 
+
+You should answer yourself why `BUFFSIZE - 1` in the third parameter position.
+
+```C
+// Receive the echo
+short received = 0;
+char buffer[BUFFSIZE];
+
+printf("Echo: \n");
+while (received < dataLen) {
+    short packSize = 0;
+    if ((packSize = recv(sock, buffer, BUFFSIZE-1, 0)) < 1) {
+        fprintf(stderr, "Failed to receive byte.");
+        return 1;
+    }
+    received += packSize;
+}
+
+// Print the echo
+buffer[received] = '\0';
+printf("%s\n", buffer);
+
+return 0;
+}
+```
 
 
 
