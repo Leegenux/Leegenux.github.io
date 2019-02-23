@@ -202,7 +202,7 @@ int sock;
 if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
     fprintf(stderr, "Failed to create socket\n");
     return 1;
-}``
+}
 ```
 
 After that, let's construct the server address object using command line parameters. The member `sin_family` is usually either set to `AF_INET` or ` PF_INET` . And the member `sin_addr.s_addr` is actually integer as inner presentation. But you can easily get the presentation using provided function `inet_addr`. The last member `sin_zero` is intended for main memory alignment optimization, and should be set 0 manually.
@@ -331,8 +331,69 @@ After the socket is created, we should bind it to some port of the machine and l
     }
 ```
 
+At last, after work done above, we are truly "serving" when executing code following. `accept` function fetches the connection on the top of the pending list out and start a conversation. It returns the handle of the client socket. After that, we ought to do echo. Its a loop of `receive` and `send`.
+
+Answer yourself why `BUFFSIZE` and not `BUFFSIZE - 1`.
+
+```c
+    // Handle the requests
+    int clientSock;
+    struct sockaddr_in echoClient;
+    unsigned int clientLen = sizeof(echoClient);
+
+    while (1) {
+        if ((clientSock = accept(serverSock,
+                            (struct sockaddr*) &echoClient,
+                            &clientLen)) < 0) {
+            fprintf(stderr, "Failed to accept the connection.\n");
+            return 1;
+        }
+        printf("Client connected: %s\n", inet_ntoa(echoClient.sin_addr));
+
+        // Do the echo
+        char buffer[BUFFSIZE];
+        int received = -1;
+        if ((received = recv(clientSock, buffer, BUFFSIZE, 0)) < 0) {
+            fprintf(stderr, "Failed to receive data.\n");
+            return 1;
+        }
+
+        while (received > 0) {
+            if (send(clientSock, buffer, received, 0) != received) {
+                fprintf(stderr, "Failed to echo back.\n");
+                return 1;
+            }
+            if ((received = recv(clientSock, buffer, BUFFSIZE, 0)) < 0) {
+                fprintf(stderr, "Failed to receive data.\n");
+            }
+        }
+        close(clientSock);
+    }
+
+    return 0; // Never get here
+}
+```
 
 
 
+If you have finished the code above, you can build 3 executables. Given that you name them after the sources, you can test your code like this:
 
-**...To Be Continued**
+open one terminal and type `./tcp-server 12334`. 
+
+In another terminal, type `./tcp-client 127.0.0.1 12334 'Hello world' && ./tcp-client 127.0.0.1 12334 'I like you'`
+
+```
+$ ./tcp-server 12334
+Client connected: 127.0.0.1
+Client connected: 127.0.0.1
+```
+
+```
+$ ./tcp-client 127.0.0.1 12334 'Hello world' && ./tcp-client 127.0.0.1 12334 'I like you'                                 
+Echo:
+Hello world
+Echo:
+I like you
+```
+
+Above shows the result of execution on my laptop.
