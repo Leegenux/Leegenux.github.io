@@ -376,7 +376,7 @@ Answer yourself why `BUFFSIZE` and not `BUFFSIZE - 1`.
 
 
 
-If you have finished the code above, you can build 3 executables. Given that you name them after the sources, you can test your code like this:
+If you have finished the code above, you can build 3 executables. Given that you name them after the sources, you can test your server and client code like this:
 
 open one terminal and type `./tcp-server 12334`. 
 
