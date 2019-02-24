@@ -16,7 +16,7 @@ To achieve the goal, we should first learn about some basic C APIs.
 
 `hostent` is abbreviation of `host entry`. Its instance is usally used to store the return value of `gethostbyname()` function. It's imported by including `<netdb.h>`
 
-This is its declaration:
+This is its definition:
 ```C
 struct hostent{
     char * h_name;
@@ -42,7 +42,7 @@ The type `in_addr_t` is in most cases alias of 32 bits `unsigned int`.
 
 #### 3. `struct sockaddr_in`
 
-Before introducing this structure, you should scan through declaration below:
+Before introducing this structure, you should scan through definition below:
 ```C
 struct sockaddr {
     unsigned  short  sa_family;     /* address family, AF_xxx */
@@ -52,7 +52,7 @@ struct sockaddr {
 
 Structure above usually serves as parameter of functions `bind`, `connect`, `recvfrom` and `sendto`, etc. Its second member is not much readable for human, so developers introduced its equivalent structure. Cast between their pointers is secure.
 
-Let's look at the equivalent structure's declaration:
+Let's look at the equivalent structure's definition:
 ```C
 struct sockaddr_in {
     short int sin_family; /* Address family */
@@ -64,7 +64,7 @@ struct sockaddr_in {
 
 Code above suggests that `struct sockaddr` in fact contains information about address-family, port and address. 
 
-The header for `sockaddr` is `<sys/socket.h>`, `<netinet/in.h>` for `sockaddr_in`.
+The header for `sockaddr` is `<sys/socket.h>`, and `<netinet/in.h>` for structure `sockaddr_in`.
 
 ### Commonly Seen Functions
 
@@ -73,7 +73,7 @@ The header for `sockaddr` is `<sys/socket.h>`, `<netinet/in.h>` for `sockaddr_in
 - `gethostbyname` : Literally understood.
 - `inet_ntoa`: Transfer `in_addr` into human-readable format.
 - `inet_addr`: Do reverse transformation of `inet_ntoa`.
-  -`htonl`: Host-to-Net Long conversion.
+- `htonl`: Host-to-Net Long conversion.
 - `htons`: Host-to-Net Short conversion.
 - `close`: Close the socket handle.
 
@@ -93,7 +93,7 @@ Here `htox` functions mainly focus on adapting endianness, while `inet_xxxx` fun
 
 These functions take multiple parameters. If you compare each one with another, you can reveal a pattern of parameters for them all. Here I won't talk too much about this.
 
-If you are struggling figuring out the meanings of terms like "send", "listen" and so on, I recommend you to first learn some basics about [IP/TCP](https://www.studytonight.com/computer-networks/tcp-ip-reference-model) and [socket](https://medium.com/@chathuranga94/introduction-to-socket-io-600025322cd2).
+If you are struggling figuring out the meanings of terms like "send", "listen" and so on, I recommend you to first learn some basics about [TCP/IP](https://searchnetworking.techtarget.com/definition/TCP-IP) and socket.
 
 
 
@@ -158,7 +158,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-`gethostbyname` takes a C-string parameter, returns the information in the format of `struct hostent`. The member `h_addr_list` stores all results we want. To make things simpler, we just fetch and print the first IP we get. If no result is available, `gethostbyname` returns NULL.
+`gethostbyname` takes a C-string parameter, and returns the information in the format of `struct hostent`. The member `h_addr_list` stores all results we want. To make things simpler, we just fetch and print the first IP we get. If no result is available, `gethostbyname` returns `NULL`.
 
 
 
@@ -194,7 +194,7 @@ if (argc != 4) {
 }
 ```
 
-Then create the socket, the first parameter of `socket` is mostly set to `PF_INET` or `AF_INET`. Note that in Linux implementation, `AF_INET` is totally same as `PF_INET`. The second and third parameters are type and protocol. In this condition, we set `type = SOCK_STREAM` and `protocol = IPPROTO_TCP`. With these setups, we create a tcp socket. And the function returns a socket handle for later use. The handle normally should be greater than 0.
+Then create the socket, the first parameter of `socket` is often set to `PF_INET` or `AF_INET`. Note that in Linux implementation, `AF_INET` is totally same as `PF_INET`. The second and third parameters are type and protocol. In this condition, we set `type = SOCK_STREAM` and `protocol = IPPROTO_TCP`. With these setups, we create a tcp socket. And the function returns a socket handle for later use, which normally should be greater than 0.
 
 ```C
 // Create the socket
@@ -205,7 +205,7 @@ if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
 }
 ```
 
-After that, let's construct the server address object using command line parameters. The member `sin_family` is usually either set to `AF_INET` or ` PF_INET` . And the member `sin_addr.s_addr` is actually integer as inner presentation. But you can easily get the presentation using provided function `inet_addr`. The last member `sin_zero` is intended for main memory alignment optimization, and should be set 0 manually.
+After that, let's construct the server address object with command line parameters. The member `sin_family` is usually either set to `AF_INET` or ` PF_INET` . And the member `sin_addr.s_addr` is actually integer as inner presentation. But you can easily get the presentation using function `inet_addr`. The last member `sin_zero` is intended for main memory alignment optimization, and should be set 0 manually.
 
 ```C
 // Construct server address object
@@ -216,7 +216,7 @@ echoServer.sin_port = htons(atoi(argv[2]));
 memset(&(echoServer.sin_zero), 0, sizeof(echoServer.sin_zero));
 ```
 
-Then, we shall try to establish the connection and send the data. You should look closely at the parameters of two functions `connect` and `send`, as well as how the socket is related.
+Then, we shall try to establish the connection and send the data. Look closely at the parameters of two functions `connect` and `send`, as well as how the socket is related.
 
 ```C
 // Establish connection
@@ -293,7 +293,7 @@ int main(int argc, char *argv[]) {
     }
 ```
 
-Create the socket. The arguments of function `socket` and setup of `echoServer` have been explained in the last section. 
+Create the socket. The arguments of function `socket` and setup of `echoServer` have been explained in section `tcp-client`. 
 
 ```c
     // Create main socket
@@ -313,7 +313,7 @@ Create the socket. The arguments of function `socket` and setup of `echoServer` 
     memset(&(echoServer.sin_zero), 0, sizeof(echoServer.sin_zero));
 ```
 
-After the socket is created, we should bind it to some port of the machine and listen to it so as to serve as server. Note that the `bind` function has same parameters as  `connect` function. There is an important attribute for socket when listening. That is the number of pending requests. Here the second parameter stands for that attribute. 
+After the socket is created, we should bind it to some port of the machine and listen to it so as to work as server. Note that the `bind` function has same parameters as `connect` function. There is an important attribute for socket when listening. That is the number of pending requests. Here the second parameter of `listen` stands for that attribute. 
 
 ```c
     // Bind the main socket
@@ -331,7 +331,7 @@ After the socket is created, we should bind it to some port of the machine and l
     }
 ```
 
-At last, after work done above, we are truly "serving" when executing code following. `accept` function fetches the connection on the top of the pending list out and start a conversation. It returns the handle of the client socket. After that, we ought to do echo. Its a loop of `receive` and `send`.
+At last, after work done above, we are truly "serving" when executing code following. `accept` function fetches the connection on the top of the pending list out and starts a conversation. It returns the handle of the client socket. After that, we ought to do echo. It's just a loop of `receive` and `send`.
 
 Answer yourself why `BUFFSIZE` and not `BUFFSIZE - 1`.
 
@@ -396,4 +396,4 @@ Echo:
 I like you
 ```
 
-Above shows the result of execution on my laptop.
+Above shows the result of execution on my laptop, and yours should be alike.
