@@ -4,9 +4,11 @@ date: 2019-03-03 23:56:27
 tags: [linux, shell, bash, uniq]
 ---
 
-#### Important Options
-
 `uniq` is just an abbreviation of word unique. It's capable of performing actions about finding unique or duplicated elements. It usually works with `sort` command because it  **does not detect repeated lines unless they are adjacent.**
+
+
+
+##  Important Options
 
 Some important options are listed below:
 
@@ -14,7 +16,9 @@ Some important options are listed below:
 - `-c`: Count the occurrences of lines
 - `-u` and `-d` : With `-u` you get only unique lines and `-d` duplicated ones.
 
-#### Other Possible Options
+
+
+## Other Possible Options
 
 1. To limit comparison between lines to only the first N characters, use `-w`
 2. Avoid comparing the first N characters with `-s` option
@@ -23,7 +27,7 @@ Some important options are listed below:
 
 
 
-#### Examples
+## Examples
 
 With a simple example you can figure out how it works, say I have a **sorted** text file `colors.txt`:
 
