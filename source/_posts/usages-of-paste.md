@@ -1,5 +1,5 @@
 ---
-title: usages-of-paste
+title: Usages of paste
 date: 2019-03-12 00:04:20
 tags: [linux, paste, shell]
 ---
