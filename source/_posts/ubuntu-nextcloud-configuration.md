@@ -4,7 +4,7 @@ date: 2019-03-20 8:10
 tags: [ubuntu, linux, nextcloud, apache]
 ---
 
-This article breaks the installation and configuration of the NextCloud into 3 parts, and show you the path. These 4 parts are:
+This article breaks the installation and configuration of the NextCloud into 4 parts, and show you the path. These 4 parts are:
 
 - PHP
 - NextCloud tarball installation
