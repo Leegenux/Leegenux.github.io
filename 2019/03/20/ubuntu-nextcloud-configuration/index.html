@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.2
+    -->
+    <script>
+window.lsVersion = "1.3.2",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
+
+
+
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>Ubuntu 18.04 NextCloud Installation Guide | Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="shortcut icon" type="image/ico" href="/img/suka-favicon.ico">
+
+
+
+
+
+
+<!-- Android Chrome Color -->
+
+
+
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="This article breaks the installation and configuration of the NextCloud into 3 parts, and show you the path. These...">
+
+<!-- Keywords -->
+<meta name="keywords" content=", linux, ubuntu, nextcloud, apache">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
+
+
+
+    
+        <!-- Import DisqusJS Default Theme -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqusjs.css">
+
+    
+
+
+
+    <!-- prism.css -->
+    
+    <!-- prism.line_number -->
+    
+        
+            <link rel="stylesheet" href="/lib/prism/prism-line-numbers.min.css">
+        
+    
+    <!-- prism.theme -->
+    
+        <link rel="stylesheet" href="/lib/prism/prism-default.min.css">
+    
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    
+        <link rel="stylesheet" href="/css/highlight/github.min.css">
+    
+
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="Ubuntu 18.04 NextCloud Installation Guide | Leegenux Blog">
+<meta property="og:site_name" content="Leegenux Blog">
+
+<meta property="og:locale" content="en">
+
+<meta property="og:url" content="http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="This article breaks the installation and configuration of the NextCloud into 3 parts, and show you the path. These...">
+
+<meta name="twitter:card" content="summary">
+
+
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2019-03-20T00:10:00.000Z">
+    <meta property="article:modified_time" content="2019-03-20T00:10:00.000Z">
+    <meta property="article:author" content="Leegenux">
+    <meta property="og:article:tag" content=", linux, ubuntu, nextcloud, apache"> 
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/">
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/",
+    "@type": "BlogPosting",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/"
+    },
+    "headline": "Ubuntu 18.04 NextCloud Installation Guide | Leegenux Blog",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    
+    "datePublished": "2019-03-20T00:10:00.000Z",
+    "dateModified": "2019-03-20T00:22:15.020Z",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "No man is an island"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": ", linux, ubuntu, nextcloud, apache",
+    "description": "This article breaks the installation and configuration of the NextCloud into 3 parts, and show you the path. These..."
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+
+
+</head>
+
+    <body>
+        
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                No man is an island
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search/" class="navbar-link">Search</a>
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
+
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=Ubuntu 18.04 NextCloud Installation Guide" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Ubuntu 18.04 NextCloud Installation Guide&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=Ubuntu 18.04 NextCloud Installation Guide" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACMUlEQVR42u2aQW7DMAwE/f9Pt9eiELlD10USaXQJ4jjSCDDl5ZLX1weMS0ghhRTyDSCvZtDff8/18/rqPjKvkGdDLh/axSLLiQqwCo6uK6SQVUCsHvhyUhg0ZF0hhexuJkGSDn8SkEIKOQmctNjqnu66kELeFRgUpAuuTrg8ooKE3A6SJFr/8flotijkNpAjA2kxETEFukB73FUT8uMhVwf1VLh2omEiVJBhJeT2kBUgFbfd79TYKjct5JGQ6SGeGPmr73SjOBETcntI8odqkWpDKUG7JXqFPAaSHOIT6IkJkOYR8lzIlGQR87PbdBdYbbAJeSRkd9jGRKl4CXSbIgUqIYVMD3ZalM5VJWpCCpnMASJ0iaClQqIsTAl5JCQ9wFtjqTnE7xT8hRSyEw/p0KXNn938ZaAKKeTQ9Ewg5H+3HQwht4YkhcmJGRob5YIoFlLITojSppB0oKf5xypIyK0hO1MpFdGpSUUL++0bR8hjINMiKdEihQEiUFDngJDbQ6YieWr6JE15E5NVSCGJYZVMqmkDHS3eC3kuZBIY1BSdGgkp0IQ8F7ILHFqUokkdNVOFFPIpMzQBpAKWkEKmQYtJKeAmxXghz4a8mpEKlSTpSi+KVsgIeSxkSvzviIi/NuwJKeS0wSgFFDXE2uRPSCGBaCBNxcQASGJFSCFJYwdp6OwM/1QIFVJIIjBo8b1L4miSNyrKC7k15NRIosFBN/ZItijkNpDvPIQUUkghXzi+AZCQNxU0X+PmAAAAAElFTkSuQmCC" alr="QRCode">
+        </li>
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    
+    
+
+
+<div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">Ubuntu 18.04 NextCloud Installation Guide</h1>
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <span>2019-03-20</span>
+        
+        
+            <!-- Busuanzi Post Views -->
+<span id="busuanzi_container_page_pv" hidden>
+    <span class="suka-devide-dot"></span>
+    <span></span>
+    <span id="busuanzi_value_page_pv"></span>
+    <span>Views</span>
+</span>
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=Ubuntu 18.04 NextCloud Installation Guide&url=http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+    <li class="menu-item">
+        <a href="https://twitter.com/intent/tweet?text=Ubuntu 18.04 NextCloud Installation Guide&url=http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+    </li>
+    
+
+    <!-- Share Facebook -->
+    
+    <li class="menu-item">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+    </li>
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+    <li class="menu-item">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/&title=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+    </li>
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Leegenux Blog&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/&text=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+    <li class="menu-item">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACMUlEQVR42u2aQW7DMAwE/f9Pt9eiELlD10USaXQJ4jjSCDDl5ZLX1weMS0ghhRTyDSCvZtDff8/18/rqPjKvkGdDLh/axSLLiQqwCo6uK6SQVUCsHvhyUhg0ZF0hhexuJkGSDn8SkEIKOQmctNjqnu66kELeFRgUpAuuTrg8ooKE3A6SJFr/8flotijkNpAjA2kxETEFukB73FUT8uMhVwf1VLh2omEiVJBhJeT2kBUgFbfd79TYKjct5JGQ6SGeGPmr73SjOBETcntI8odqkWpDKUG7JXqFPAaSHOIT6IkJkOYR8lzIlGQR87PbdBdYbbAJeSRkd9jGRKl4CXSbIgUqIYVMD3ZalM5VJWpCCpnMASJ0iaClQqIsTAl5JCQ9wFtjqTnE7xT8hRSyEw/p0KXNn938ZaAKKeTQ9Ewg5H+3HQwht4YkhcmJGRob5YIoFlLITojSppB0oKf5xypIyK0hO1MpFdGpSUUL++0bR8hjINMiKdEihQEiUFDngJDbQ6YieWr6JE15E5NVSCGJYZVMqmkDHS3eC3kuZBIY1BSdGgkp0IQ8F7ILHFqUokkdNVOFFPIpMzQBpAKWkEKmQYtJKeAmxXghz4a8mpEKlSTpSi+KVsgIeSxkSvzviIi/NuwJKeS0wSgFFDXE2uRPSCGBaCBNxcQASGJFSCFJYwdp6OwM/1QIFVJIIjBo8b1L4miSNyrKC7k15NRIosFBN/ZItijkNpDvPIQUUkghXzi+AZCQNxU0X+PmAAAAAElFTkSuQmCC" alt="QRCode">
+    </li>
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                            <div id="post-toc">
+                                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PHP-installation"><span class="post-toc-number">1.</span> <span class="post-toc-text">PHP installation</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NextCloud-Tarball-Installation"><span class="post-toc-number">2.</span> <span class="post-toc-text">NextCloud Tarball Installation</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DB-server"><span class="post-toc-number">3.</span> <span class="post-toc-text">DB server</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Installation"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Installation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DB-Configurations-For-NextCloud"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">DB Configurations For NextCloud</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Apache-Server-Installation-and-Configurations"><span class="post-toc-number">4.</span> <span class="post-toc-text">Apache Server Installation and Configurations</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Trouble-Shooting-Tips"><span class="post-toc-number">5.</span> <span class="post-toc-text">Trouble Shooting Tips</span></a></li></ol>
+                            </div>
+                        
+                    
+                    <article id="post-content">
+                        <p>This article breaks the installation and configuration of the NextCloud into 3 parts, and show you the path. These 4 parts are:</p>
+<ul>
+<li>PHP</li>
+<li>NextCloud tarball installation</li>
+<li>DB server</li>
+<li>Apache / Nginx server</li>
+</ul>
+<h2 id="PHP-installation"><a href="#PHP-installation" class="headerlink" title="PHP installation"></a>PHP installation</h2><p>According to the official document, for Ubuntu server user, we can type the commands below to fetch and install the PHP modules supporting the core NextCloud server hosting.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt-get install apache2 mariadb-server libapache2-mod-php7.2</span></span><br><span class="line"><span class="comment"># apt-get install php7.2-gd php7.2-json php7.2-mysql php7.2-curl php7.2-mbstring</span></span><br><span class="line"><span class="comment"># apt-get install php7.2-intl php-imagick php7.2-xml php7.2-zip</span></span><br></pre></td></tr></table></figure>
+<p>And if you need some PHP extensions, you should also install the <code>libapache2-mod-php7.2</code>. For more information, please refer to <a href="https://docs.nextcloud.com/server/15/admin_manual/installation/source_installation.html#prerequisites-label" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="NextCloud-Tarball-Installation"><a href="#NextCloud-Tarball-Installation" class="headerlink" title="NextCloud Tarball Installation"></a>NextCloud Tarball Installation</h2><p>Up to the day the note is finished, the latest tarball available can be downloaded through this <a href="https://docs.nextcloud.com/server/15/admin_manual/installation/source_installation.html#prerequisites-label" target="_blank" rel="noopener">link</a>.</p>
+<p>After validations, unzip it and move it to the document root of your web server. For example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># unzip nextcloud-15.0.5.1.zip -d nextCloudInstall</span></span><br><span class="line"><span class="comment"># cp nextCloudInstall /var/www/nextcloud</span></span><br><span class="line"><span class="comment"># chown -R www-data:www-data /var/www/nextCloud</span></span><br></pre></td></tr></table></figure>
+<h2 id="DB-server"><a href="#DB-server" class="headerlink" title="DB server"></a>DB server</h2><p>Let take mariaDB for an example.</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><p>Its installation is quite straightforward:</p>
+<ol>
+<li><p>Add the MariaDB signing key:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Download and execute the script:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Update your sources list:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Install MariaDB:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install mariadb-server</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>On finishing the installation, a prompt of setting the primary password is supposed to pop up. But under some special circumstances, it won’t. So you are not able to login into the server. To solve this, you can try either reinstalling the <code>mariadb-server</code> or solution below:</p>
+<ol>
+<li>Restart the service in <code>nopass</code> mode:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl restart mariadb &amp;&amp; mysql_safe --skip-grant-tables &amp;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Update your password</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">update user set authentication_string=PASSWORD(&quot;&quot;) where User=&apos;root&apos;;</span><br><span class="line">update user set plugin=&quot;mysql_native_password&quot; where User=&apos;root&apos;;  # THIS LINE</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line">quit;</span><br></pre></td></tr></table></figure>
+<p>or if non-updatable, try followings:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span><br><span class="line">USE mysql;</span><br><span class="line">ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;new_password&apos;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<p>Then you can log in with password <code>&#39;&#39;</code> now. It’s recommended that you reset a stronger password rather than <code>&#39;&#39;</code>.</p>
+<h3 id="DB-Configurations-For-NextCloud"><a href="#DB-Configurations-For-NextCloud" class="headerlink" title="DB Configurations For NextCloud"></a>DB Configurations For NextCloud</h3><p>Make sure that you can log into the mysql as root before doing followings.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &apos;nextcloud&apos;@&apos;localhost&apos; identified by &apos;StrongPassword&apos;;</span><br><span class="line">CREATE DATABASE nextcloud;</span><br><span class="line">GRANT ALL PRIVILEGES ON nextcloud.* TO &apos;nextcloud&apos;@&apos;localhost&apos;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<p>After that, set the transcation isolation level to avoid problems. Also it’s recommended to set the binlog_format:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">transaction_isolation = READ-COMMITTED</span><br><span class="line">binlog_format = ROW</span><br></pre></td></tr></table></figure>
+<p>(If not present, you can just create the file and add these lines.)</p>
+<p>Since I am using mysql, there are other configurations necessary under <code>/etc/php/7.2/apache2/conf.d/mysql.ini</code>, this configuration activates the connection between mysql and apache, where option <code>extension</code>  and <code>mysql.default_socket</code> are crucial : </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># configuration for PHP MySQL module</span></span><br><span class="line">extension=pdo_mysql.so</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">mysql.allow_local_infile=On</span><br><span class="line">mysql.allow_persistent=On</span><br><span class="line">mysql.cache_size=<span class="number">2000</span></span><br><span class="line">mysql.max_persistent=<span class="number">-1</span></span><br><span class="line">mysql.max_links=<span class="number">-1</span></span><br><span class="line">mysql.default_port=</span><br><span class="line">mysql.default_socket=/<span class="keyword">var</span>/lib/mysql/mysql.sock  <span class="comment"># Debian squeeze: /var/run/mysqld/mysqld.sock</span></span><br><span class="line">mysql.default_host=</span><br><span class="line">mysql.default_user=</span><br><span class="line">mysql.default_password=</span><br><span class="line">mysql.connect_timeout=<span class="number">60</span></span><br><span class="line">mysql.trace_mode=Off</span><br></pre></td></tr></table></figure>
+<h2 id="Apache-Server-Installation-and-Configurations"><a href="#Apache-Server-Installation-and-Configurations" class="headerlink" title="Apache Server Installation and Configurations"></a>Apache Server Installation and Configurations</h2><p>On Debian, Ubuntu, and their derivatives, Apache installs with a useful configuration so all you have to do is create a <code>/etc/apache2/sites-available/nextcloud.conf</code> file with these lines in it, replacing the Directory and other filepaths with your own filepaths:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Alias</span> /nextcloud <span class="string">"/var/www/nextcloud/"</span></span><br><span class="line"></span><br><span class="line">&lt;Directory /var/www/nextcloud/&gt;</span><br><span class="line">  Options +FollowSymlinks</span><br><span class="line">  AllowOverride All</span><br><span class="line">  Satisfy Any</span><br><span class="line"></span><br><span class="line"> &lt;IfModule mod_dav.c&gt;</span><br><span class="line">  Dav <span class="literal">off</span></span><br><span class="line"> &lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line"> SetEnv HOME /var/www/nextcloud</span><br><span class="line"> SetEnv HTTP_HOME /var/www/nextcloud</span><br><span class="line"></span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<p>Then enable the newly created site: <code># a2ensite nextcloud.conf</code>.</p>
+<p>Also, you should enable the module <code>mod_rewrite</code>: <code># a2enmod rewrite</code></p>
+<p>Other recommended modules are:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a2enmod headers</span></span><br><span class="line"><span class="comment"># a2enmod env</span></span><br><span class="line"><span class="comment"># a2enmod dir</span></span><br><span class="line"><span class="comment"># a2enmod mime</span></span><br></pre></td></tr></table></figure>
+<p>You must disable any server-configured authentication for Nextcloud, as it uses Basic authenticationi internally for DAV services. Following the above example configuration file, add the following line in the <directory> section of in <code>nextcloud.conf</code>:</directory></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Satisfy Any</span><br></pre></td></tr></table></figure>
+<p>After all above, renable the apache server:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a2enmod rewrite dir mime env headers</span></span><br><span class="line"><span class="comment"># systemctl restart apache2</span></span><br></pre></td></tr></table></figure>
+<p>Now your site is reachable. Note that the firewall might block outer connections.</p>
+<h2 id="Trouble-Shooting-Tips"><a href="#Trouble-Shooting-Tips" class="headerlink" title="Trouble Shooting Tips"></a>Trouble Shooting Tips</h2><p>If you get Internal Server Error at your first access to the site. Find some  information from <code>/var/log/apache2/error.log</code> and <code>/var/log/php*</code>. </p>
+<p>For example, if you found <code>chmod()</code> related error. You may solve it with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chown -R www-data:www-data /var/www/html &amp;&amp; chown -R www-data:www-data /var/www/nextcloud</span><br></pre></td></tr></table></figure>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+        var dateUpdate = Date.parse("2019-03-20");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-03-20T00:10:00.000Z" itemprop="datePublished">2019-03-20</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+
+<a class="post-tags-list-item" href="/tags/linux/">#&nbsp;linux</a>
+
+<a class="post-tags-list-item" href="/tags/ubuntu/">#&nbsp;ubuntu</a>
+
+<a class="post-tags-list-item" href="/tags/nextcloud/">#&nbsp;nextcloud</a>
+
+<a class="post-tags-list-item" href="/tags/apache/">#&nbsp;apache</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                
+<div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/03/12/usages-of-paste/">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Usages of paste</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                        <div class="card-footer post-comment">
+                            <div id="disqus_thread"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqus.js"></script>
+
+<script>
+var dsqjs = new DisqusJS({
+    shortname: 'leegenux',
+    
+    identifier: 'http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/',
+    url: 'http://Leegenux.github.io/2019/03/20/ubuntu-nextcloud-configuration/',
+    api: 'https://disqus.skk.moe/disqus/',
+    apikey: '60KKUCrM7Sv1Qk5YkbjKRC7o4H6ZtO9bDCvt3dZX1D6fZAm6r9Y5AtNzajqGOInF',
+    
+    
+});
+</script>
+
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
+
+
+
+        
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="noopener">Suka</a>
+    </p>
+</footer>
+
+        
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+</script>
+
+<!-- vanilla-lazyload -->
+
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+<!-- Offset -->
+
+
+
+
+
+
+
+<!-- gallery.js -->
+
+
+<!-- Comment -->
+
+    
+        <!-- No need for DisqusJS -->
+    
+
+
+<!-- ### Custom Footer ### -->
+
+
+    </body>
+
+</html>
