@@ -4,14 +4,14 @@ date: 2019-03-20 8:10
 tags: [ubuntu, linux, nextcloud, apache]
 ---
 
-This article breaks the installation and configuration of the NextCloud into 4 parts, and show you the path. These 4 parts are:
+This article breaks the installation and configuration of the NextCloud into 4 parts, and shows you the path to your own private cloud storage. These 4 parts are:
 
 - PHP
 - NextCloud tarball installation
 - DB server
 - Apache / Nginx server
 
-
+Though this guide is Ubuntu-titled, all is applicable to other Linux distributions but the package management with `apt` part.
 
 ## PHP installation
 
@@ -55,7 +55,7 @@ Its installation is quite straightforward:
    apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
    ```
 
-2. Download and execute the script:
+2. Download and execute the script to set up the mariadb apt repository:
 
    ```bash
    curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
@@ -92,12 +92,12 @@ flush privileges;
 quit;
 ```
 
-or if non-updatable, try followings:
+or if you encounter non-updatable warning, try followings:
 
 ```mysql
 FLUSH PRIVILEGES;
 USE mysql;
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '';
 FLUSH PRIVILEGES;
 ```
 
@@ -116,7 +116,7 @@ GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-After that, set the transcation isolation level to avoid problems. Also it's recommended to set the binlog_format:
+After that, set the transcation isolation level to avoid problems. Also it's recommended to set the `binlog_format`:
 
 ```
 [mysqld]
@@ -126,7 +126,7 @@ binlog_format = ROW
 
 (If not present, you can just create the file and add these lines.)
 
-Since I am using mysql, there are other configurations necessary under `/etc/php/7.2/apache2/conf.d/mysql.ini`, this configuration activates the connection between mysql and apache, where option `extension`  and `mysql.default_socket` are crucial : 
+Since I am using mariadb, which is an fork of mysqldb, there are other configurations necessary under `/etc/php/7.2/apache2/conf.d/mysql.ini`. Configuration below activates the connection between mariadb and apache, where option `extension`  and `mysql.default_socket` are crucial : 
 
 ```php
 # configuration for PHP MySQL module
