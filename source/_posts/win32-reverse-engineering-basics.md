@@ -87,25 +87,25 @@ It jumps to the password section. Before it there are `MSVCR120.__winitenv` and 
 
 ### Crack the Password Section
 
-After the password `scanf` related code. There are lines:
+After the password `scanf` related code. There are lines
 
 ```assembly
 TEST EAX, EAX
 JE SHORT Test1.011C419
 ```
 
-implementing the logic that when two string matches, you can get to the next.
+implementing the logic that when two string matches, jump to `Test1.011C419`. Here `EAX` is set to 0 when two strcmp finds two strings match.
 
 `TEST` sets the zero flag, `ZF`, when the result of the `AND` operation is 0. So only if `EAX` is 0 will `JE` statement do the jump.
 
-To do the hack, try change them into this:
+To do the hack, try changing them into this:
 
 ```assembly
 CMP EAX, EAX
 JE SHORT Test1.011C419
 ```
 
-This modification makes the `JE` statement directly jumps to the `string matches` logic branch. Save and rerun, you get to the next stage.
+This modification makes the `JE` statement directly jumps to the `string matches` logic branch. Save and rerun, you now get to the next stage.
 
 ### Reveal the Encryption
 
