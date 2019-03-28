@@ -4,6 +4,8 @@ date: 2019-03-28 14:36:33
 tags: [reverse, crack, win32, pe]
 ---
 
+This post consists of my learning notes, insights, my experience of cracking a executable as well as answers to the assignments.
+
 ## Primary Usages of OllyDbg
 
 ### Keyboard Shortcuts
