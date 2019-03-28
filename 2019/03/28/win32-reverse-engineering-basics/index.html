@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.2
+    -->
+    <script>
+window.lsVersion = "1.3.2",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
+
+
+
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>Win32 Reverse Engineering Basics | Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="shortcut icon" type="image/ico" href="/img/suka-favicon.ico">
+
+
+
+
+
+
+<!-- Android Chrome Color -->
+
+
+
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="This post consists of my learning notes, insights, my experience of cracking a executable as well as answers to th...">
+
+<!-- Keywords -->
+<meta name="keywords" content=", reverse, crack, win32, pe">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
+
+
+
+    
+        <!-- Import DisqusJS Default Theme -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqusjs.css">
+
+    
+
+
+
+    <!-- prism.css -->
+    
+    <!-- prism.line_number -->
+    
+        
+            <link rel="stylesheet" href="/lib/prism/prism-line-numbers.min.css">
+        
+    
+    <!-- prism.theme -->
+    
+        <link rel="stylesheet" href="/lib/prism/prism-default.min.css">
+    
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    
+        <link rel="stylesheet" href="/css/highlight/github.min.css">
+    
+
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="Win32 Reverse Engineering Basics | Leegenux Blog">
+<meta property="og:site_name" content="Leegenux Blog">
+
+<meta property="og:locale" content="en">
+
+<meta property="og:url" content="http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="This post consists of my learning notes, insights, my experience of cracking a executable as well as answers to th...">
+
+<meta name="twitter:card" content="summary">
+
+
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2019-03-28T06:36:33.000Z">
+    <meta property="article:modified_time" content="2019-03-28T06:36:33.000Z">
+    <meta property="article:author" content="Leegenux">
+    <meta property="og:article:tag" content=", reverse, crack, win32, pe"> 
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/">
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/",
+    "@type": "BlogPosting",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/"
+    },
+    "headline": "Win32 Reverse Engineering Basics | Leegenux Blog",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    
+    "datePublished": "2019-03-28T06:36:33.000Z",
+    "dateModified": "2019-03-28T09:34:35.144Z",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "No man is an island"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": ", reverse, crack, win32, pe",
+    "description": "This post consists of my learning notes, insights, my experience of cracking a executable as well as answers to th..."
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+
+
+</head>
+
+    <body>
+        
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                No man is an island
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search/" class="navbar-link">Search</a>
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
+
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=Win32 Reverse Engineering Basics" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Win32 Reverse Engineering Basics&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=Win32 Reverse Engineering Basics" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACM0lEQVR42u3b0U7DMAxG4b3/S8MV0tQ1/o9DJ0Z9eoPEWPpNqjPbMY+vf3A9RIoUKfIDkI/i+nn9+W+Pvzv+fvXe59fJfUXORp4+tCe4M9AZ/niz1QeK9xU5Gpke+gr48sCHAKP3FSlyFQyrDbhMDg6gtL5IkV1kShY6wSFSJEGSRGCZnC4SjVUgXZ4FibwdkhRi7/h5ebUo8hbI2DQK6CrYqi+AS7tqIm+FJM2ntLGnIExrLxMUkSORnQKqKsKqhkH13rLpKnI0stqIE6oKwgQs7yFyPDIlD2kzpoFVrSlSJG3WVwFWJgkhmMqmg8ixyHST1cNND6RoMxYNiogcgSTNAHJw1E1AElTkTGRn4e6hfBoeieuIFBmGj0jiQAeUVl8SIkUSFGlGpQQkNV1jw0rkGCRtvqfDKDocQgbvRIokC3WGPlLSkQo+kbORpAnfHfIgGzoq5kSORKZ/pkiFFG36dwo9kbORKTklzat0cEqa+TG6RY5Ekk07FW5kaA4Pn4gciaQbdAoqkhCT4SaRIumwMDlY6gyMbh2AihyBJBsuGXIiB1CdAU+RImmjvnOlwi42uUSORKaDI5rskiZs98OJnIkkm3q3idVtMGx/44i8JZI06VeJb7eRXzUgUKdX5BjkTsDQAqtT6JXfOCLHIatFdwfsuo3ZlzVFigSF/28T3tYHFylyo1lKA6M72CRS5E6CkQImYWJRJ3IskhRi3SSi0wjAXTWRI5CffIkUKVLkH17f4cvVhNI0MNAAAAAASUVORK5CYII=" alr="QRCode">
+        </li>
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    
+    
+
+
+<div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">Win32 Reverse Engineering Basics</h1>
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <span>2019-03-28</span>
+        
+        
+            <!-- Busuanzi Post Views -->
+<span id="busuanzi_container_page_pv" hidden>
+    <span class="suka-devide-dot"></span>
+    <span></span>
+    <span id="busuanzi_value_page_pv"></span>
+    <span>Views</span>
+</span>
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=Win32 Reverse Engineering Basics&url=http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+    <li class="menu-item">
+        <a href="https://twitter.com/intent/tweet?text=Win32 Reverse Engineering Basics&url=http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+    </li>
+    
+
+    <!-- Share Facebook -->
+    
+    <li class="menu-item">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+    </li>
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+    <li class="menu-item">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/&title=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+    </li>
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Leegenux Blog&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/&text=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+    <li class="menu-item">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAAAAAA83tqdAAACM0lEQVR42u3b0U7DMAxG4b3/S8MV0tQ1/o9DJ0Z9eoPEWPpNqjPbMY+vf3A9RIoUKfIDkI/i+nn9+W+Pvzv+fvXe59fJfUXORp4+tCe4M9AZ/niz1QeK9xU5Gpke+gr48sCHAKP3FSlyFQyrDbhMDg6gtL5IkV1kShY6wSFSJEGSRGCZnC4SjVUgXZ4FibwdkhRi7/h5ebUo8hbI2DQK6CrYqi+AS7tqIm+FJM2ntLGnIExrLxMUkSORnQKqKsKqhkH13rLpKnI0stqIE6oKwgQs7yFyPDIlD2kzpoFVrSlSJG3WVwFWJgkhmMqmg8ixyHST1cNND6RoMxYNiogcgSTNAHJw1E1AElTkTGRn4e6hfBoeieuIFBmGj0jiQAeUVl8SIkUSFGlGpQQkNV1jw0rkGCRtvqfDKDocQgbvRIokC3WGPlLSkQo+kbORpAnfHfIgGzoq5kSORKZ/pkiFFG36dwo9kbORKTklzat0cEqa+TG6RY5Ekk07FW5kaA4Pn4gciaQbdAoqkhCT4SaRIumwMDlY6gyMbh2AihyBJBsuGXIiB1CdAU+RImmjvnOlwi42uUSORKaDI5rskiZs98OJnIkkm3q3idVtMGx/44i8JZI06VeJb7eRXzUgUKdX5BjkTsDQAqtT6JXfOCLHIatFdwfsuo3ZlzVFigSF/28T3tYHFylyo1lKA6M72CRS5E6CkQImYWJRJ3IskhRi3SSi0wjAXTWRI5CffIkUKVLkH17f4cvVhNI0MNAAAAAASUVORK5CYII=" alt="QRCode">
+    </li>
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                            <div id="post-toc">
+                                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Primary-Usages-of-OllyDbg"><span class="post-toc-number">1.</span> <span class="post-toc-text">Primary Usages of OllyDbg</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Keyboard-Shortcuts"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Keyboard Shortcuts</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ways-to-Modify-Strings-in-Binaries"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Ways to Modify Strings in Binaries</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IA32-Registers"><span class="post-toc-number">2.</span> <span class="post-toc-text">IA32 Registers</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Register-Types"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Register Types</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Stack-Establishment-and-Destruction"><span class="post-toc-number">3.</span> <span class="post-toc-text">Stack Establishment and Destruction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Important-Information-About-Cracking-VB-Binaries"><span class="post-toc-number">4.</span> <span class="post-toc-text">Important Information About Cracking VB Binaries</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#X86-Calling-Conventions"><span class="post-toc-number">5.</span> <span class="post-toc-text">X86 Calling Conventions</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PE-File-Format"><span class="post-toc-number">6.</span> <span class="post-toc-text">PE File Format</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hands-on-Cracking"><span class="post-toc-number">7.</span> <span class="post-toc-text">Hands-on Cracking</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Find-the-Main-Function"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">Find the Main Function</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Crack-the-Password-Section"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">Crack the Password Section</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Reveal-the-Encryption"><span class="post-toc-number">7.3.</span> <span class="post-toc-text">Reveal the Encryption</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Store-the-Decryped-Code"><span class="post-toc-number">7.4.</span> <span class="post-toc-text">Store the Decryped Code</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Assignments-and-Answers"><span class="post-toc-number">8.</span> <span class="post-toc-text">Assignments and Answers</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#What’s-the-Calling-Convention-of-this-executable"><span class="post-toc-number">8.1.</span> <span class="post-toc-text">What’s the Calling Convention of this executable ?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#What-API-does-the-program-calls-during-storing-the-decrypted-data"><span class="post-toc-number">8.2.</span> <span class="post-toc-text">What API does the program calls during storing the decrypted data ?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Where-is-the-main-entry-and-how-is-the-code-decrypted"><span class="post-toc-number">8.3.</span> <span class="post-toc-text">Where is the main entry and how is the code decrypted ?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Write-a-PE-header-scanner"><span class="post-toc-number">8.4.</span> <span class="post-toc-text">Write a PE header scanner ?</span></a></li></ol></li></ol>
+                            </div>
+                        
+                    
+                    <article id="post-content">
+                        <p>This post consists of my learning notes, insights, my experience of cracking a executable as well as answers to the assignments.</p>
+<h2 id="Primary-Usages-of-OllyDbg"><a href="#Primary-Usages-of-OllyDbg" class="headerlink" title="Primary Usages of OllyDbg"></a>Primary Usages of OllyDbg</h2><h3 id="Keyboard-Shortcuts"><a href="#Keyboard-Shortcuts" class="headerlink" title="Keyboard Shortcuts"></a>Keyboard Shortcuts</h3><p>With these 4 shortcuts, you are able to do some reverse engineering on easy crackmes like one that I’m gonna show you.</p>
+<ul>
+<li><strong>Restart</strong> ——————- <code>Ctrl</code> + <code>F2</code></li>
+<li><strong>Step Into</strong> —————– <code>F7</code></li>
+<li><strong>Step Over</strong> —————  <code>F8</code></li>
+<li><strong>Execute till Return</strong> — <code>Ctrl</code>+ <code>F9</code></li>
+</ul>
+<h3 id="Ways-to-Modify-Strings-in-Binaries"><a href="#Ways-to-Modify-Strings-in-Binaries" class="headerlink" title="Ways to Modify Strings in Binaries"></a>Ways to Modify Strings in Binaries</h3><ul>
+<li>Directly modification : That’s directly making changes in the <strong>Disassembler Window</strong>.</li>
+<li>Create a new string somewhere else and make it work instead of the original one.</li>
+</ul>
+<blockquote>
+<p>To know more details about the GUI. Refer to <a href="https://www.oreilly.com/library/view/practical-malware-analysis/9781593272906/ch10s02.html" target="_blank" rel="noopener">here</a></p>
+</blockquote>
+<p>Two points above reveals two fundamental approaches of patching a binary. The patch mentioned are both intuitively achievable in terms of OllyDbg’s software operations. </p>
+<p>What need to be emphasized is that don’t forget to save your changes to the binary.</p>
+<h2 id="IA32-Registers"><a href="#IA32-Registers" class="headerlink" title="IA32 Registers"></a>IA32 Registers</h2><h3 id="Register-Types"><a href="#Register-Types" class="headerlink" title="Register Types"></a>Register Types</h3><ul>
+<li>General purpose registers</li>
+<li>Segment registers</li>
+<li>Program status and control registers</li>
+<li>Instruction pointer registers</li>
+</ul>
+<h2 id="Stack-Establishment-and-Destruction"><a href="#Stack-Establishment-and-Destruction" class="headerlink" title="Stack Establishment and Destruction"></a>Stack Establishment and Destruction</h2><p>The routine of conventional Win32 programs regarding stack’s establishment and destruction can be elaborated in a simple way:</p>
+<ol>
+<li>push EBP to store the old stack base value</li>
+<li>mov EBP, ESP to create a brand new stack for subprogram</li>
+</ol>
+<p>And the destruction is quite the opposite.</p>
+<h2 id="Important-Information-About-Cracking-VB-Binaries"><a href="#Important-Information-About-Cracking-VB-Binaries" class="headerlink" title="Important Information About Cracking VB Binaries"></a>Important Information About Cracking VB Binaries</h2><ul>
+<li>VB program can be compiled into P code(<strong>Pseudo Code</strong>) or N code(<strong>Native code</strong>)</li>
+<li>VB program operates in an event-driven manner, in which Windows mainly works.</li>
+<li>VB program ‘s fundamental information resides in the executables in the form of structures.</li>
+<li></li>
+</ul>
+<h2 id="X86-Calling-Conventions"><a href="#X86-Calling-Conventions" class="headerlink" title="X86 Calling Conventions"></a>X86 Calling Conventions</h2><ul>
+<li><strong>cdecl</strong> </li>
+<li><strong>stdcall</strong></li>
+<li><strong>fastcall</strong></li>
+</ul>
+<p>The <code>cdecl</code> features callers’ responsibility to clean up the callee’s stack which makes calling with mutable amount of parameters possible. And <code>stdcall</code> works differently. The callee clears the stack so that the program have better compatibility against other languages. So Win32 development chooses the latter convention. There are also <code>fastcal</code> which makes use of registers for faster calling (However things don’t always act as expected).</p>
+<h2 id="PE-File-Format"><a href="#PE-File-Format" class="headerlink" title="PE File Format"></a>PE File Format</h2><p>Portable Executables are known as PE file. There are essential information across different aspects including memory location, compatibility code, CPU family etc stored in the header part of the PE file. You can check them out by clicking <a href="https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format" target="_blank" rel="noopener">here</a>. Also I will upload a post containing the important points later.</p>
+<h2 id="Hands-on-Cracking"><a href="#Hands-on-Cracking" class="headerlink" title="Hands-on Cracking"></a>Hands-on Cracking</h2><p>The test executable can be downloaded <a href="">here</a></p>
+<h3 id="Find-the-Main-Function"><a href="#Find-the-Main-Function" class="headerlink" title="Find the Main Function"></a>Find the Main Function</h3><p>Before debugging, you should first take a glance at what this file is about. It turns out that a password is required or you get nothing. Then load it in the debugger. Do step over until you see the prompt <code>What&#39;s your password?</code>. You are already in the main function. Trace back and at some point you see this: <img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1ilhjin0aj30iy0bvgls.jpg" alt=""></p>
+<p>It jumps to the password section. Before it there are <code>MSVCR120.__winitenv</code> and <code>MSVCR120.exit</code>. So we can assure that this is the main function entry.</p>
+<h3 id="Crack-the-Password-Section"><a href="#Crack-the-Password-Section" class="headerlink" title="Crack the Password Section"></a>Crack the Password Section</h3><p>After the password <code>scanf</code> related code. There are lines:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">TEST EAX, EAX</span><br><span class="line">JE SHORT Test1.011C419</span><br></pre></td></tr></table></figure>
+<p>implementing the logic that when two string matches, you can get to the next.</p>
+<p><code>TEST</code> sets the zero flag, <code>ZF</code>, when the result of the <code>AND</code> operation is 0. So only if <code>EAX</code> is 0 will <code>JE</code> statement do the jump.</p>
+<p>To do the hack, try change them into this:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CMP EAX, EAX</span><br><span class="line">JE SHORT Test1.011C419</span><br></pre></td></tr></table></figure>
+<p>This modification makes the <code>JE</code> statement directly jumps to the <code>string matches</code> logic branch. Save and rerun, you get to the next stage.</p>
+<h3 id="Reveal-the-Encryption"><a href="#Reveal-the-Encryption" class="headerlink" title="Reveal the Encryption"></a>Reveal the Encryption</h3><p>The second input in the format of <code>%d</code> is stored on the <code>SS:[EBP-48]</code> and a least significant byte in the <code>EAX</code> as what this screenshot tells us:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1im1uk8lrj30im0brwer.jpg" alt=""></p>
+<p>Execution of <code>CALL Test1.011C11A4</code> leads us to the initiation of an array:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1im4pztg2j30im0bz74p.jpg" alt=""></p>
+<p>After that there is a loop where the encryption goes:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1im87ylenj30iv03v0sp.jpg" alt=""></p>
+<p>Procedures above can be translated into fake code:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unsigned char offset = last_byte_of(input_code); // Get the input</span><br><span class="line"></span><br><span class="line">init(array);									// Init the code</span><br><span class="line"></span><br><span class="line">for (char i = 0; i&lt;length(array); i++) &#123;</span><br><span class="line">    array[i] = array[i] xor array[i+offset];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Store-the-Decryped-Code"><a href="#Store-the-Decryped-Code" class="headerlink" title="Store the Decryped Code"></a>Store the Decryped Code</h3><p>The screenshot shows all necessary information:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1imhjl4j4j30ik0870ss.jpg" alt=""></p>
+<p>The decrypted code are stored in the <code>D:\kp</code>. (Though I changed it because I don’t have no drive with label D).</p>
+<h2 id="Assignments-and-Answers"><a href="#Assignments-and-Answers" class="headerlink" title="Assignments and Answers"></a>Assignments and Answers</h2><h3 id="What’s-the-Calling-Convention-of-this-executable"><a href="#What’s-the-Calling-Convention-of-this-executable" class="headerlink" title="What’s the Calling Convention of this executable ?"></a>What’s the Calling Convention of this executable ?</h3><p>As you can see, there are no steps of clearing stack right behind the <code>CALL</code>. According to the description in the <strong>X86 Calling Conventions</strong> section. It uses <code>stdcall</code>. Registers play no part in passing parameters to callee.</p>
+<h3 id="What-API-does-the-program-calls-during-storing-the-decrypted-data"><a href="#What-API-does-the-program-calls-during-storing-the-decrypted-data" class="headerlink" title="What API does the program calls during storing the decrypted data ?"></a>What API does the program calls during storing the decrypted data ?</h3><p>Obviously according to the image: <code>KERNEL32.CreateFileA</code>, <code>KERNEL32.WriteFile</code> and <code>KERNEL32.CloseHandle</code>.</p>
+<h3 id="Where-is-the-main-entry-and-how-is-the-code-decrypted"><a href="#Where-is-the-main-entry-and-how-is-the-code-decrypted" class="headerlink" title="Where is the main entry and how is the code decrypted ?"></a>Where is the <code>main</code> entry and how is the code decrypted ?</h3><p>Both described concisely in the post.</p>
+<h3 id="Write-a-PE-header-scanner"><a href="#Write-a-PE-header-scanner" class="headerlink" title="Write a PE header scanner ?"></a>Write a PE header scanner ?</h3><p>There are references all around the web. My solution will be like <a href="https://github.com/Arvanaghi/PE-Parser" target="_blank" rel="noopener">this one</a>.</p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+        var dateUpdate = Date.parse("2019-03-28");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-03-28T06:36:33.000Z" itemprop="datePublished">2019-03-28</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+
+<a class="post-tags-list-item" href="/tags/reverse/">#&nbsp;reverse</a>
+
+<a class="post-tags-list-item" href="/tags/crack/">#&nbsp;crack</a>
+
+<a class="post-tags-list-item" href="/tags/win32/">#&nbsp;win32</a>
+
+<a class="post-tags-list-item" href="/tags/pe/">#&nbsp;pe</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                
+<div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/03/20/ubuntu-nextcloud-configuration/">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Ubuntu 18.04 NextCloud Installation Guide</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                        <div class="card-footer post-comment">
+                            <div id="disqus_thread"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqus.js"></script>
+
+<script>
+var dsqjs = new DisqusJS({
+    shortname: 'leegenux',
+    
+    identifier: 'http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/',
+    url: 'http://Leegenux.github.io/2019/03/28/win32-reverse-engineering-basics/',
+    api: 'https://disqus.skk.moe/disqus/',
+    apikey: '60KKUCrM7Sv1Qk5YkbjKRC7o4H6ZtO9bDCvt3dZX1D6fZAm6r9Y5AtNzajqGOInF',
+    
+    
+});
+</script>
+
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
+
+
+
+        
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="noopener">Suka</a>
+    </p>
+</footer>
+
+        
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+</script>
+
+<!-- vanilla-lazyload -->
+
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+<!-- Offset -->
+
+
+
+
+
+
+
+<!-- gallery.js -->
+
+
+<!-- Comment -->
+
+    
+        <!-- No need for DisqusJS -->
+    
+
+
+<!-- ### Custom Footer ### -->
+
+
+    </body>
+
+</html>
