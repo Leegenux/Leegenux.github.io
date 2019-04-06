@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.2
+    -->
+    <script>
+window.lsVersion = "1.3.2",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
+
+
+
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters. | Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="shortcut icon" type="image/ico" href="/img/suka-favicon.ico">
+
+
+
+
+
+
+<!-- Android Chrome Color -->
+
+
+
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However ...">
+
+<!-- Keywords -->
+<meta name="keywords" content=", algorithm">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
+
+
+
+    
+        <!-- Import DisqusJS Default Theme -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqusjs.css">
+
+    
+
+
+
+    <!-- prism.css -->
+    
+    <!-- prism.line_number -->
+    
+        
+            <link rel="stylesheet" href="/lib/prism/prism-line-numbers.min.css">
+        
+    
+    <!-- prism.theme -->
+    
+        <link rel="stylesheet" href="/lib/prism/prism-default.min.css">
+    
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    
+        <link rel="stylesheet" href="/css/highlight/github.min.css">
+    
+
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters. | Leegenux Blog">
+<meta property="og:site_name" content="Leegenux Blog">
+
+<meta property="og:locale" content="en">
+
+<meta property="og:url" content="http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However ...">
+
+<meta name="twitter:card" content="summary">
+
+
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2019-04-06T16:28:30.000Z">
+    <meta property="article:modified_time" content="2019-04-06T16:28:30.000Z">
+    <meta property="article:author" content="Leegenux">
+    <meta property="og:article:tag" content=", algorithm"> 
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/">
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/",
+    "@type": "BlogPosting",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/"
+    },
+    "headline": "Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters. | Leegenux Blog",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    
+    "datePublished": "2019-04-06T16:28:30.000Z",
+    "dateModified": "2019-04-06T16:28:30.896Z",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "No man is an island"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": ", algorithm",
+    "description": "This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However ..."
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+
+
+</head>
+
+    <body>
+        
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                No man is an island
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search/" class="navbar-link">Search</a>
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
+
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters." target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters." target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAAAAABQV18IAAAB3ElEQVR42u3aQW7EIBBEUd//0sk2iaCqmplIdM/3ZhTJhhcJ46bg+brwekCBAgVqgXrE9feeXw0s/k7akPeAGoNaDrpNpw7gflU/oGahXOO7+1edrJ51/YD6LFQFnrwAoEDtBm0yyf7r2wfqatTuQ5ngTorCl6oEUNejXinaKr9vW82AuhplQ4cD5KrDt6YuoK5GqYHogElxWGof1BjU7sakMFM49RG2RR6otqhkwlQLTtepKgxLMzqoNihX4FUCf7VATf4hULNQSfi1G8C7gC0N3UDNQ7kGq5uLNsjYBSOgRqEcMhm4KkCLNqNAjUNVFwg7jAv/oyIPVFuUWjxUAo40cJOLClAjUOniwIWq6QJWviygxqAqwWlSrDlQPKODao9KA7DdxOo+2KWAA1RrlArmywezCgEHqPmoyuJUfWjTw19RkQeqJSrp4GSAK+iyfVCjUO7BSuDqCr54oINqjUoHerKATTYI4nAfVDtUJTxTIYc7xJMsIEDNQJ1sNCYBSHpotXSCA1QblBrg6WHT5NnSQAfVHpUMTLWJ5ArFoyoB1FhUEoQlm452kgb1MSgV9CcDPN3QBDUL5RYMKkRzm+QpDNQclPtouk1GF9q6MATULNRNFyhQoED9uL4BCaTR0Y80QxQAAAAASUVORK5CYII=" alr="QRCode">
+        </li>
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    
+    
+
+
+<div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</h1>
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <span>2019-04-07</span>
+        
+        
+            <!-- Busuanzi Post Views -->
+<span id="busuanzi_container_page_pv" hidden>
+    <span class="suka-devide-dot"></span>
+    <span></span>
+    <span id="busuanzi_value_page_pv"></span>
+    <span>Views</span>
+</span>
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.&url=http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+    <li class="menu-item">
+        <a href="https://twitter.com/intent/tweet?text=Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.&url=http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+    </li>
+    
+
+    <!-- Share Facebook -->
+    
+    <li class="menu-item">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+    </li>
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+    <li class="menu-item">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/&title=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+    </li>
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Leegenux Blog&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/&text=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+    <li class="menu-item">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAAAAABQV18IAAAB3ElEQVR42u3aQW7EIBBEUd//0sk2iaCqmplIdM/3ZhTJhhcJ46bg+brwekCBAgVqgXrE9feeXw0s/k7akPeAGoNaDrpNpw7gflU/oGahXOO7+1edrJ51/YD6LFQFnrwAoEDtBm0yyf7r2wfqatTuQ5ngTorCl6oEUNejXinaKr9vW82AuhplQ4cD5KrDt6YuoK5GqYHogElxWGof1BjU7sakMFM49RG2RR6otqhkwlQLTtepKgxLMzqoNihX4FUCf7VATf4hULNQSfi1G8C7gC0N3UDNQ7kGq5uLNsjYBSOgRqEcMhm4KkCLNqNAjUNVFwg7jAv/oyIPVFuUWjxUAo40cJOLClAjUOniwIWq6QJWviygxqAqwWlSrDlQPKODao9KA7DdxOo+2KWAA1RrlArmywezCgEHqPmoyuJUfWjTw19RkQeqJSrp4GSAK+iyfVCjUO7BSuDqCr54oINqjUoHerKATTYI4nAfVDtUJTxTIYc7xJMsIEDNQJ1sNCYBSHpotXSCA1QblBrg6WHT5NnSQAfVHpUMTLWJ5ArFoyoB1FhUEoQlm452kgb1MSgV9CcDPN3QBDUL5RYMKkRzm+QpDNQclPtouk1GF9q6MATULNRNFyhQoED9uL4BCaTR0Y80QxQAAAAASUVORK5CYII=" alt="QRCode">
+    </li>
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                            <div id="post-toc">
+                                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Problem-Description"><span class="post-toc-number">1.</span> <span class="post-toc-text">Problem Description</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Solution-1-Brute-Force"><span class="post-toc-number">2.</span> <span class="post-toc-text">Solution 1: Brute Force</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Algorithm-Complexity-of-Solution-1"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Algorithm Complexity of Solution 1</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Solution-2-Sliding-Window"><span class="post-toc-number">3.</span> <span class="post-toc-text">Solution 2: Sliding Window</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Algorithm-Complexity-of-Solution-2"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Algorithm Complexity of Solution 2</span></a></li></ol></li></ol>
+                            </div>
+                        
+                    
+                    <article id="post-content">
+                        <p>This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However you will find the <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">reference link</a> useful.</p>
+<h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Given a ascii string, please find out the length of longest substring that contains no repetitive characters.</p>
+<h2 id="Solution-1-Brute-Force"><a href="#Solution-1-Brute-Force" class="headerlink" title="Solution 1: Brute Force"></a>Solution 1: Brute Force</h2><p>Start and ending charaters together indicate a substring, and we can iterate over all the start-ending pairs to go over all substrings. </p>
+<p>There should be 3 loops. The first is letting <code>i</code> goes through all the characters. Then for every <code>i</code> value, <code>j</code> grows from <code>i + 1</code> to the end of whole string. Then we determine whether there are repetitives or not for each substring.</p>
+<p>Code is as follows:<br><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="keyword">char</span>* s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> maxLength = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>, k=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> strLen = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; strLen - maxLength; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = i+<span class="number">1</span>; (j &lt; strLen) &amp;&amp; s[j] != s[i]; j++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (k = i+<span class="number">1</span>; (k &lt; j) &amp;&amp; (s[k] != s[j]); k++);</span><br><span class="line">			<span class="keyword">if</span> (k != j) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        maxLength = (j-i)&gt;maxLength ? (j-i) : maxLength;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Algorithm-Complexity-of-Solution-1"><a href="#Algorithm-Complexity-of-Solution-1" class="headerlink" title="Algorithm Complexity of Solution 1"></a>Algorithm Complexity of Solution 1</h3><p>For third loop, the time complexity of the third loop is $O(j-i)​$ because we only need to at most compare the character from index <code>i</code> to <code>j - 1</code> with the <code>j</code>th character. Thus, the second loop has a time complexity of $O(\sum_{j=i+1}^{n}(j-i)) = O(\frac{(n - i)(i + 1 + n)}{2})​$. So the total time complexity is $O(\sum_{i=0}^{n-1}{\frac{(n-i)(i+1+n)}{2}})​$, which equals to $O(n^3)​$</p>
+<h2 id="Solution-2-Sliding-Window"><a href="#Solution-2-Sliding-Window" class="headerlink" title="Solution 2: Sliding Window"></a>Solution 2: Sliding Window</h2><p>In previous solution, we spend much time checking whether there are repetitive characters of same string over and over again. But have you thought of keeping previous comparison results?</p>
+<p>Here comes an greatly improved solution:<br><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="keyword">char</span>* s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">int</span> strLen = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">int</span> maxLength = (strLen==<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">int</span> characterCountArray[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>, j=<span class="number">1</span>, characterCountArray[s[i]]=<span class="number">1</span>; i &lt; strLen-maxLength &amp;&amp; j &lt; strLen; ) &#123;</span><br><span class="line">        <span class="keyword">if</span> (characterCountArray[s[j]]) &#123;</span><br><span class="line">            characterCountArray[s[i++]] = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            characterCountArray[s[j++]] = <span class="number">1</span>;</span><br><span class="line">            maxLength = (j-i) &gt; maxLength ? (j-i) : maxLength;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>There are 3 points that you need to look closer at:</p>
+<ul>
+<li>The big loop breaks when <code>i &gt;= strLen - maxLength</code></li>
+<li>The comparison results are kept in the sliding window.</li>
+<li>Only after <code>j++</code> does <code>maxLength</code> need updates.</li>
+</ul>
+<h3 id="Algorithm-Complexity-of-Solution-2"><a href="#Algorithm-Complexity-of-Solution-2" class="headerlink" title="Algorithm Complexity of Solution 2"></a>Algorithm Complexity of Solution 2</h3><p>In worst condition, all elements of the string will be access twice by <code>i</code> and <code>j</code>. So the time complexity is $O(n)$.</p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+        var dateUpdate = Date.parse("2019-04-07");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-04-06T16:28:30.000Z" itemprop="datePublished">2019-04-07</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+
+<a class="post-tags-list-item" href="/tags/algorithm/">#&nbsp;algorithm</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                
+<div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/03/28/win32-reverse-engineering-basics/">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Win32 Reverse Engineering Basics</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                        <div class="card-footer post-comment">
+                            <div id="disqus_thread"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqus.js"></script>
+
+<script>
+var dsqjs = new DisqusJS({
+    shortname: 'leegenux',
+    
+    identifier: 'http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/',
+    url: 'http://Leegenux.github.io/2019/04/07/lengthOfLongestSubstring/',
+    api: 'https://disqus.skk.moe/disqus/',
+    apikey: '60KKUCrM7Sv1Qk5YkbjKRC7o4H6ZtO9bDCvt3dZX1D6fZAm6r9Y5AtNzajqGOInF',
+    
+    
+});
+</script>
+
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
+
+
+
+        
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="noopener">Suka</a>
+    </p>
+</footer>
+
+        
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+</script>
+
+<!-- vanilla-lazyload -->
+
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+<!-- Offset -->
+
+
+
+
+
+
+
+<!-- gallery.js -->
+
+
+<!-- Comment -->
+
+    
+        <!-- No need for DisqusJS -->
+    
+
+
+<!-- ### Custom Footer ### -->
+
+
+    </body>
+
+</html>
