@@ -41,7 +41,6 @@ int lengthOfLongestSubstring(char* s) {
 
 For third loop, the time complexity of the third loop is $O(j-i)​$ because we only need to at most compare the character from index `i` to `j - 1` with the `j`th character. Thus, the second loop has a time complexity of $O(\sum_{j=i+1}^{n}(j-i)) = O(\frac{(n - i)(i + 1 + n)}{2})​$. So the total time complexity is $O(\sum_{i=0}^{n-1}{\frac{(n-i)(i+1+n)}{2}})​$, which equals to $O(n^3)​$
 
-
 ## Solution 2: Sliding Window
 
 In previous solution, we spend much time checking whether there are repetitive characters of same string over and over again. But have you thought of keeping previous comparison results?
