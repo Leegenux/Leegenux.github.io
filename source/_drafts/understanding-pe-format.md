@@ -167,3 +167,10 @@ https://blog.kowalczyk.info/articles/pefileformat.html
 
 https://www.toutiao.com/i6469404407048962573/
 
+
+
+## ESI and EDI
+
+寄存器*ESI*、*EDI*、*SI*和*DI*称为变址寄存器*(Index Register)*，它们主要用于存放存储单元在段内的偏移量，用它们可实现多种存储器操作数的寻址方式，为以不同的地址形式访问存储单元提供方便。变址寄存器不可分割成*8*位寄存器。作为通用寄存器，也可存储算术逻辑运算的操作数和运算结果。 它们可作一般的存储器指针使用。在字符串操作指令的执行过程中，对它们有特定的要求，而且还具有特殊的功能。
+
+Source and Destination
