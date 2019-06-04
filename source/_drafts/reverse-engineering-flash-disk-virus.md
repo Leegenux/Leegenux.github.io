@@ -55,9 +55,11 @@ Jump when CF = 1
 
 
 
-
-
 ## Part of the code analysis
+
+http://www.drdobbs.com/configuring-vc-multithreaded-memory-mana/184416249
+
+It's from a really old blog post.
 
 Whenever a VC++ application starts up, the C runtime library is initialized. One of the first actions is to determine which heap manager to use. The VC++ v6 runtime library is capable of using either its own internal set of heap-management routines, using heap-management routines compatible with the previous version of the compiler, or just calling the operating-system heap-management routines (**HeapAlloc()** and friends) directly. Internally, **__heap_select()** does the following three steps:
 
@@ -66,3 +68,25 @@ Whenever a VC++ application starts up, the C runtime library is initialized. One
 2. Look for the environment variable **__MSVCRT_HEAP_SELECT**. If present, it influences which heap is to be used. If the value is **__GLOBAL_HEAP_SELECTED**, the behavior for all programs is changed. When a full path to an executable is found, the code checks if it’s the actual application by calling **GetModuleFileName()**. Which heap type is selected depends on a value appended after a separating colon: 1 to use **HeapAlloc()**, 2 to use the VC++ v5 heap, and 3 to use the VC++ v6 heap.
 
 3. Evaluate the linker build flags in the executable. If the application was built with VC++ v6 or later, the version 6 heap is used; all others use version 5.
+
+
+
+## Win32 Heap
+
+https://blog.csdn.net/playboy1/article/details/6940213
+
+一个保留区域, 在堆上分配了内存之后, 系统才将区域提交到物理内存当中.1
+
+
+
+
+
+## GetStdHandle
+
+https://docs.microsoft.com/en-us/windows/console/getstdhandle
+
+
+
+## stosd Instruction
+
+http://www.hgy413.com/hgydocs/IA32/instruct32_hh/vc304.htm
