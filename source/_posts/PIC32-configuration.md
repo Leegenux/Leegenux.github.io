@@ -1,7 +1,7 @@
 ---
 title: PIC32MX Basics --- Basic Configuration
 date: 2019-07-06 10:59:25
-tags:[embeded, PIC32, PIC32MX]
+tags: [embeded, PIC32, PIC32MX]
 ---
 
 Before we start, there are something you should know about the tutorial.
