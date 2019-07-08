@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.2
+    -->
+    <script>
+window.lsVersion = "1.3.2",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
+
+
+
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>PIC32MX Basics --- Basic Configuration | Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="shortcut icon" type="image/ico" href="/img/suka-favicon.ico">
+
+
+
+
+
+
+<!-- Android Chrome Color -->
+
+
+
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="Before we start, there are something you should know about the tutorial.
+This series of tutorial will show ...">
+
+<!-- Keywords -->
+<meta name="keywords" content=", embeded, PIC32, PIC32MX">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
+
+
+
+    
+        <!-- Import DisqusJS Default Theme -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqusjs.css">
+
+    
+
+
+
+    <!-- prism.css -->
+    
+    <!-- prism.line_number -->
+    
+        
+            <link rel="stylesheet" href="/lib/prism/prism-line-numbers.min.css">
+        
+    
+    <!-- prism.theme -->
+    
+        <link rel="stylesheet" href="/lib/prism/prism-default.min.css">
+    
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    
+        <link rel="stylesheet" href="/css/highlight/github.min.css">
+    
+
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="PIC32MX Basics --- Basic Configuration | Leegenux Blog">
+<meta property="og:site_name" content="Leegenux Blog">
+
+<meta property="og:locale" content="en">
+
+<meta property="og:url" content="http://Leegenux.github.io/2019/07/06/PIC32-configuration/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="Before we start, there are something you should know about the tutorial.
+This series of tutorial will show ...">
+
+<meta name="twitter:card" content="summary">
+
+
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2019-07-06T02:59:25.000Z">
+    <meta property="article:modified_time" content="2019-07-06T02:59:25.000Z">
+    <meta property="article:author" content="Leegenux">
+    <meta property="og:article:tag" content=", embeded, PIC32, PIC32MX"> 
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/2019/07/06/PIC32-configuration/">
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://Leegenux.github.io/2019/07/06/PIC32-configuration/",
+    "@type": "BlogPosting",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io/2019/07/06/PIC32-configuration/"
+    },
+    "headline": "PIC32MX Basics --- Basic Configuration | Leegenux Blog",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    
+    "datePublished": "2019-07-06T02:59:25.000Z",
+    "dateModified": "2019-07-08T02:20:36.253Z",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "No man is an island"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": ", embeded, PIC32, PIC32MX",
+    "description": "Before we start, there are something you should know about the tutorial.
+This series of tutorial will show ..."
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+
+
+</head>
+
+    <body>
+        
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                No man is an island
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search/" class="navbar-link">Search</a>
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
+
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=PIC32MX Basics --- Basic Configuration" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=PIC32MX Basics --- Basic Configuration&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=PIC32MX Basics --- Basic Configuration" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAAAAABQV18IAAAB20lEQVR42u3a0W7DIAxG4bz/S2+3VQf+D1EmgXNyU6nNwheJgbF9/Wx4XaJEiRI1QF3F9XnPnwd8fff9d6NnxHFEtUENJ91g0NE9s/tmn9U4onqhRhN1NmHJ9+R3Ue9F0Um98pKi3o2abbbku3/97xO1NWq2UVYTfbQxjxbOx6MEUdujqoD+yc/HTjOitkbFpMPi4FWg91jWRdTWqGoiJigNDunzRfVCxQCsSKJVQR/ZwEX1Qs1uStiUrKXJtOmKLupY1GzSkqT9nSTureS+qKNQZPGrEvs0oUEmu6g+qFRoTBvzSvGyLBCIaolKG3OVVF0pei9NdFHHoUgigjRULBWxVyJPUUehVoqQNJF/98AhqgcqJU5R8TAUBqqXEdUXRRa3tEGvFB3Rii7qWBQ9NJLkf2oMQ8l9US1Q6dCZBlpKuM5eSFQLFD18kqaH1BgfF2xRbVHpsLnaVEEaokX1Q1UFI5KsTQcEUe9FkeIjeYm02KKsi6gjUekihUmy8aaEiag+KBKs0UIQeQncgCPqaBQN2shgdxO7ovqhqoLRHQTZkEW9F5WKS2lQHPCJehUqNQuS58WGDFGtULTYeKfATZt0RPVBpU0zBW80mEvNqaJ6oHa6RIkSJerj+gWNy5AvsstFjAAAAABJRU5ErkJggg==" alr="QRCode">
+        </li>
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    
+    
+
+
+<div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">PIC32MX Basics --- Basic Configuration</h1>
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <span>2019-07-06</span>
+        
+        
+            <!-- Busuanzi Post Views -->
+<span id="busuanzi_container_page_pv" hidden>
+    <span class="suka-devide-dot"></span>
+    <span></span>
+    <span id="busuanzi_value_page_pv"></span>
+    <span>Views</span>
+</span>
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=PIC32MX Basics --- Basic Configuration&url=http://Leegenux.github.io/2019/07/06/PIC32-configuration/&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+    <li class="menu-item">
+        <a href="https://twitter.com/intent/tweet?text=PIC32MX Basics --- Basic Configuration&url=http://Leegenux.github.io/2019/07/06/PIC32-configuration/&via=Leegenux" target="_blank" rel="noopener noreferrer nofollow">Share to Twitter</a>
+    </li>
+    
+
+    <!-- Share Facebook -->
+    
+    <li class="menu-item">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io/2019/07/06/PIC32-configuration/" target="_blank" rel="noopener noreferrer nofollow">Share to Facebook</a>
+    </li>
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://Leegenux.github.io/2019/07/06/PIC32-configuration/" target="_blank" rel="noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+    <li class="menu-item">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io/2019/07/06/PIC32-configuration/&title=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to LinkedIn</a>
+    </li>
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Leegenux Blog&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io/2019/07/06/PIC32-configuration/" target="_blank" rel="noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://Leegenux.github.io/2019/07/06/PIC32-configuration/&text=Leegenux Blog" target="_blank" rel="noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+    <li class="menu-item">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAAAAABQV18IAAAB20lEQVR42u3a0W7DIAxG4bz/S2+3VQf+D1EmgXNyU6nNwheJgbF9/Wx4XaJEiRI1QF3F9XnPnwd8fff9d6NnxHFEtUENJ91g0NE9s/tmn9U4onqhRhN1NmHJ9+R3Ue9F0Um98pKi3o2abbbku3/97xO1NWq2UVYTfbQxjxbOx6MEUdujqoD+yc/HTjOitkbFpMPi4FWg91jWRdTWqGoiJigNDunzRfVCxQCsSKJVQR/ZwEX1Qs1uStiUrKXJtOmKLupY1GzSkqT9nSTureS+qKNQZPGrEvs0oUEmu6g+qFRoTBvzSvGyLBCIaolKG3OVVF0pei9NdFHHoUgigjRULBWxVyJPUUehVoqQNJF/98AhqgcqJU5R8TAUBqqXEdUXRRa3tEGvFB3Rii7qWBQ9NJLkf2oMQ8l9US1Q6dCZBlpKuM5eSFQLFD18kqaH1BgfF2xRbVHpsLnaVEEaokX1Q1UFI5KsTQcEUe9FkeIjeYm02KKsi6gjUekihUmy8aaEiag+KBKs0UIQeQncgCPqaBQN2shgdxO7ovqhqoLRHQTZkEW9F5WKS2lQHPCJehUqNQuS58WGDFGtULTYeKfATZt0RPVBpU0zBW80mEvNqaJ6oHa6RIkSJerj+gWNy5AvsstFjAAAAABJRU5ErkJggg==" alt="QRCode">
+    </li>
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                            <div id="post-toc">
+                                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Option-of-Reference"><span class="post-toc-number">1.</span> <span class="post-toc-text">Option of Reference</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Config-Bits"><span class="post-toc-number">2.</span> <span class="post-toc-text">Config Bits</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Watchdog-Timer"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Watchdog Timer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#System-Clock"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">System Clock</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Secondary-Oscillator"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Secondary Oscillator</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#JTAG"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">JTAG</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ICSP-In-Circuit-Serial-Programming"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">ICSP (In-Circuit Serial Programming)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Configuration-Optimization"><span class="post-toc-number">3.</span> <span class="post-toc-text">Configuration Optimization</span></a></li></ol>
+                            </div>
+                        
+                    
+                    <article id="post-content">
+                        <p>Before we start, there are something you should know about the tutorial.</p>
+<p>This series of tutorial will show you how to get PIC32 functioning based on a <strong>PIC32MX220F032B</strong> chip and a <strong>PICKit 3</strong> programmer. The tutorial mostly applies to Microchip PIC32MX1xx/2xx series because they are alike, and not that many differences exist between PIC32MX1xx/2xx and other chip version.</p>
+<p>This post will discuss the basic configurations of the PIC32MX220F032B including watchdog, sysclk, secondary oscillator, JTAG, ICSP and other.</p>
+<p>The device pinout is provided here as reference:</p>
+<p><img src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g4q7o9hxsaj30ng08pabb.jpg"></p>
+<h2 id="Option-of-Reference"><a href="#Option-of-Reference" class="headerlink" title="Option of Reference"></a>Option of Reference</h2><p>Basically, what I am gonna talk about are based on the official help document:  <a href="http://www.mrc.uidaho.edu/mrc/people/jff/340/341/ECE341_Reference_Materials/Microchip%20XC32%20C%20Compiler%20and%20Libraries/PIC32ConfigSet.pdf" target="_blank" rel="noopener">PIC32 Configuration Settings</a></p>
+<h2 id="Config-Bits"><a href="#Config-Bits" class="headerlink" title="Config Bits"></a>Config Bits</h2><p>The PIC32 configuration bits are a set of non-volatile options defining some certain behaviors of the MCU. They are different from the program written in C or assembly in that they are stored in boot flash memory rather than program flash memory.</p>
+<p>You should use #pragma directive to define the config bits.</p>
+<h3 id="Watchdog-Timer"><a href="#Watchdog-Timer" class="headerlink" title="Watchdog Timer"></a>Watchdog Timer</h3><p>A watchdog timer (WDT) is a hardware timer that automatically resets the computer system if the main controller neglects to periodically clear its bit.</p>
+<p>It’s widely adopted by complex embedded device for temporarily recovering from hardware fault or not responding. However, it’s kind of a hassle to small scale projects sometimes.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma config FWDTEN = off    // Disable the watchdog timer</span><br></pre></td></tr></table></figure>
+<h3 id="System-Clock"><a href="#System-Clock" class="headerlink" title="System Clock"></a>System Clock</h3><p>There are two PIC32 internal oscillators. For PIC32MX220F032B, one is the 8MHz FRC (Fast Resistor Capacitor) oscillator and the other is the 3.15 MHz LPRC (Low Power Resistor Capacitor) oscillator. </p>
+<p>The FRC and external oscillators can be frequency scaled by in-circuit <a href="https://en.wikipedia.org/wiki/Phase-locked_loop" target="_blank" rel="noopener">PLL</a>. For the sake of special structure of PLL, the input frequency must be between certain range. To my PIC32MX220F032B, the range is constrained to 4-5MHz. Also for each MCU, there is a recommended maximum frequency for the CPU in it. So, there are frequency dividers before and after the PLL.</p>
+<p>Look at the example below for getting the maximum frequency of 40MHz with internal oscillator:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma config FNOSC = FRCPLL   // Use fast resistor capacitor oscillator</span><br><span class="line">#pragma config FPLLIDIV = DIV_2 // PLL input divider</span><br><span class="line">#pragma config FPLLMUL = MUL_20 // PLL multipler</span><br><span class="line">#pragma config FPLLODIV = DIV_2 // PLL output divider</span><br></pre></td></tr></table></figure>
+<h3 id="Secondary-Oscillator"><a href="#Secondary-Oscillator" class="headerlink" title="Secondary Oscillator"></a>Secondary Oscillator</h3><p>The Secondary Oscillator (SOSC) is intended for low-power operation with an external 32 to 100 KHz oscillator. When enabled, the external crystal should be connected to the SOSCO and SOSCI device pins.</p>
+<p>The code below demonstrates how to enable the secondary oscillator and set it as system clock:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma config FSOSCEN = ON  // Enable secondary oscillator </span><br><span class="line">#pragma config FNOSC = SOSC  // Make the secondary oscillator the system clock</span><br></pre></td></tr></table></figure>
+<p>In tutorials later, we adopt the internal oscillator solution.</p>
+<h3 id="JTAG"><a href="#JTAG" class="headerlink" title="JTAG"></a>JTAG</h3><p>JTAG (Joint Test Action Group) is one of the common standards designed for a debugging and programming interface. Since we are using PICKit3 instead, we should properly disable JTAG. JTAG occupies certain pins when enabled, and if you know a bit about the inner implementation of PPS (Peripheral Pin Selections), you will come to the conclusion that the data of the JTAG pins are two-way.</p>
+<p>TMS, TDO, TCK and TDI are four pins required by JTAG standard. To disable it and free these pins for other I/O usages, put code below in your source.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma config JTAGEN = OFF</span><br></pre></td></tr></table></figure>
+<h3 id="ICSP-In-Circuit-Serial-Programming"><a href="#ICSP-In-Circuit-Serial-Programming" class="headerlink" title="ICSP (In-Circuit Serial Programming)"></a>ICSP (In-Circuit Serial Programming)</h3><p>The PGEC (clock) and PGED (data) respectively transmit programming clock and data. There are 3 pairs of PGEX pins on <strong>PIC32MX220F032B</strong>. If you want PGEC2 and PGED2, use the following config bits:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma config ICESEL = ICS PGx2</span><br></pre></td></tr></table></figure>
+<h2 id="Configuration-Optimization"><a href="#Configuration-Optimization" class="headerlink" title="Configuration Optimization"></a>Configuration Optimization</h2><p>The MCU can adjust its behavior according to the SYSCLK for best optimized performance. In  addition to the complex manual code modification approach, the hardware vendor has already provided us a useful tool to achieve this —— SYSTEMConfigPerformance(int sysclk);</p>
+<p>It takes as input argument the system clock frequency, and then enables data and instruction caches , optimizes the access time to the flash memory and caches. So always include invoke of this particular function.</p>
+<p>For example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#define SYSCLK 40000000L</span><br><span class="line">int main(void)&#123;</span><br><span class="line">	SYSTEMConfigPerformance(SYSCLK);</span><br><span class="line">	// Code your application below</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+        var dateUpdate = Date.parse("2019-07-08");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-07-06T02:59:25.000Z" itemprop="datePublished">2019-07-06</time>
+
+    , Updated at&nbsp;<time datetime="2019-07-08T02:20:36.253Z" itemprop="dateModified">2019-07-08</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+
+<a class="post-tags-list-item" href="/tags/embeded/">#&nbsp;embeded</a>
+
+<a class="post-tags-list-item" href="/tags/PIC32/">#&nbsp;PIC32</a>
+
+<a class="post-tags-list-item" href="/tags/PIC32MX/">#&nbsp;PIC32MX</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                
+<div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/04/07/lengthOfLongestSubstring/">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                        <div class="card-footer post-comment">
+                            <div id="disqus_thread"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.0.6/dist/disqus.js"></script>
+
+<script>
+var dsqjs = new DisqusJS({
+    shortname: 'leegenux',
+    
+    identifier: 'http://Leegenux.github.io/2019/07/06/PIC32-configuration/',
+    url: 'http://Leegenux.github.io/2019/07/06/PIC32-configuration/',
+    api: 'https://disqus.skk.moe/disqus/',
+    apikey: '60KKUCrM7Sv1Qk5YkbjKRC7o4H6ZtO9bDCvt3dZX1D6fZAm6r9Y5AtNzajqGOInF',
+    
+    
+});
+</script>
+
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
+
+
+
+        
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="noopener">Suka</a>
+    </p>
+</footer>
+
+        
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.2 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+</script>
+
+<!-- vanilla-lazyload -->
+
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+<!-- Offset -->
+
+
+
+
+
+
+
+<!-- gallery.js -->
+
+
+<!-- Comment -->
+
+    
+        <!-- No need for DisqusJS -->
+    
+
+
+<!-- ### Custom Footer ### -->
+
+
+    </body>
+
+</html>
