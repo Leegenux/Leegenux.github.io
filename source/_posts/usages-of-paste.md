@@ -2,6 +2,7 @@
 title: Usages of paste
 date: 2019-03-12 00:04:20
 tags: [linux, paste, shell]
+thumbnail: https://www.computerhope.com/cdn/linux/paste.gif
 ---
 
 [Command `Paste` Reference](http://www.theunixschool.com/2012/07/10-examples-of-paste-command-usage-in.html)

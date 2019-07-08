@@ -1,5 +1,5 @@
 ---
-title: Problem: Move Zeroes
+title: Problem --- Move Zeroes
 tags:
 ---
 
