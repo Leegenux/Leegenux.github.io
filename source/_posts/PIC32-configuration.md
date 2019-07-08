@@ -1,6 +1,7 @@
 ---
 title: PIC32MX Basics --- Basic Configuration
 date: 2019-07-06 10:59:25
+thumbnail: http://pub9j4x8t.bkt.clouddn.com/pic32mx_bt_audio_pim.jpg
 tags: [embeded, PIC32, PIC32MX]
 ---
 
@@ -12,7 +13,7 @@ This post will discuss the basic configurations of the PIC32MX220F032B including
 
 The device pinout is provided here as reference:
 
-<img src="https://cdn.sinaimg.cn.52ecy.cn/large/005BYqpgly1g4q7o9hxsaj30ng08pabb.jpg"/>
+<img src="http://pub9j4x8t.bkt.clouddn.com/PIC32MXPinout.jpg"/>
 
 ## Option of Reference
 
