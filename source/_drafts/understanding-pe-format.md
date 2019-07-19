@@ -3,17 +3,35 @@ title: Basics of PE Format
 tags: [win32, pe, dll, cracking]
 ---
 
-The post will not show you every detail about the PE format. However, you ought to be given knowledge helpful to crack an PE when you're done reading. By the way, the details of PE format can be found [here](https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format "click for more")
+The post will not show you every detail about the PE format. However, you ought to be given some knowledge helpful to crack an PE when you're done reading. By the way, the details of PE format can be found [here](https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format "click for more"), if you want some precise insights from me, please keep reading.
+
+
+
+
+
+Each PE file has a header, and you can dig out much crucial information from this tiny part.
+
+
+
+## Byte Order
+
+Before we cut into the theme, let's prepare ourselves for correctly reading the byte stream. As known to us all, the Intel CPUs all comply to the little endian byte order, whose standard has a great influence on the PC market. So bear in mind that the byte sections I'm gonna show to you are all little endian. That's for every data unit as the offset grows, the bit gets less and less significant. Hopefully the illustration above will help you get over some confusion later.
+
+
 
 First of all, there are **DOS header**
 
+
+
 ## DOS Header
 
-The structure representing the DOS header is `_IMAGE_DOS_HEADER`, which takes up 64 bytes storage. What we really care about is the last `DWORD` (4 bytes).
+The structure representing the DOS header is `_IMAGE_DOS_HEADER`, which takes up 64 bytes of storage. There are dozens of fields in this structure but what we really care about is the last `DWORD` (4 bytes).
 
-It's declaration is `DWORD e_lfanew;` . Its job is to point out the offset of **PE header**. 
+It's declaration is `DWORD e_lfanew;` . Its job is to point out the offset of **PE header**.
 
-Note that most content of the PE file's header is intended for program loader of the operating system.
+Note that most content of the PE file's header is designed for program loader of the operating system to work flawlessly.
+
+
 
 ## PE Header
 
@@ -28,6 +46,8 @@ struct _IMAGE_NT_HEADERS{
     _IMAGE_OPTIONAL_HEADER OptionalHeader;
 };
 ```
+
+
 
 ### `_IMAGE_FILE_HEADER`
 
@@ -45,18 +65,19 @@ struct _IMAGE_FILE_HEADER{
 };
 ```
 
-The member mostly referred to is the `Characteristic` and meaning of each bit can be found in [this official web page](https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_image_file_header)
+The member mostly referred to is the `Characteristic` and meaning of its each bit can be found in [this official web page](https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_image_file_header)
+
+
 
 ### `_IMAGE_OPTIONAL_HEADER`
 
-This structure is placed adjacent to the former and is much larger in size ------ 224 bytes.
+This structure is placed adjacent to the former one and is much larger in size ------ 224 bytes.
 
 The declaration is the following:
 
 ```C
-
 struct _IMAGE_OPTIONAL_HEADER{
-    WORD Magic;                    //0x0107:ROM image,0x010B:32位PE，0X020B:64位PE 
+    WORD Magic;                    //0x0107:ROM image, 0x010B:32bit PE, 0X020B:64bit PE 
     BYTE MajorLinkerVersion; 
     BYTE MinorLinkerVersion; 
     DWORD SizeOfCode;             
@@ -79,7 +100,7 @@ struct _IMAGE_OPTIONAL_HEADER{
     DWORD SizeOfHeaders;           // Total size of the DOS header plus PE Header.
     DWORD CheckSum;           
     WORD Subsystem;          
-    DWORD DllCharacteristics;  // Always 0
+    DWORD DllCharacteristics;  	// Always 0
     DWORD SizeOfStackReserve;  // Default reserved stack size
     DWORD SizeOfStackCommit;   // Commited stack size
     DWORD SizeOfHeapReserve;   // Default reserved heap size
@@ -90,7 +111,7 @@ struct _IMAGE_OPTIONAL_HEADER{
 };
 ```
 
-All commented lines are especially instrumental. Please note that all size related stuff referred above obeys the alignment mechanism. 
+All commented lines are especially instrumental. Please note that all size related stuff referred above obeys the memory alignment mechanism. 
 
 #### FileBuffer and ImageBuffer
 
@@ -111,6 +132,8 @@ The section table can be found at the offset `_IMAGE_DOS_HEADER.e_lfanew + IMAGE
 Each section as well as directory has a RVA and PointerToRawData.
 
 VirtualAddress is relative to ImageBase just like what RVA do. They are actually just a tag marking start of one section.
+
+
 
 ## IAT
 
