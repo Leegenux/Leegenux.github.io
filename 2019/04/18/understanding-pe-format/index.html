@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+        Version: 1.3.3
+    -->
+    <script>
+window.lsVersion = "1.3.3",
+window.oldVersion = [
+    
+        
+            "0.2.0","0.0.1","0.1.0","1.0.0","1.0.1","1.1.0","1.1.1","1.2.0","1.3.0"
+        
+    
+]
+</script>
+
+    <!-- ### DNS Prefetch ### -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+<!-- busuanzi -->
+
+    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+
+    <!-- ### Preload ### -->
+    
+    <!-- Busuanzi -->
+    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" as="script">
+
+
+
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Title -->
+<title>Basics of PE Format(1) | Leegenux Blog</title>
+
+<!-- favicon -->
+<!-- Favicons -->
+
+    <link rel="icon" type="image/ico" href="/img/suka-favicon.ico">
+
+
+
+
+
+
+<!-- Android Chrome Color -->
+
+
+
+<meta name="format-detection" content="telephone=no">
+
+<!-- Description -->
+<meta name="description" content="The post will not show you every detail about the PE format. However, you ought to be given some knowledge helpful...">
+
+<!-- Keywords -->
+<meta name="keywords" content=", dll, win32, pe, cracking">
+
+<!-- Disable Fucking Bloody Baidu Tranformation -->
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <!-- ### Import File ### -->
+    
+        <!-- spectre.css -->
+
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css">
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style>
+
+<!-- style.css -->
+
+    <link rel="stylesheet" href="/css/style.min.css">
+
+
+
+    
+        <!-- Import DisqusJS Default Theme -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.2.5/dist/disqusjs.css">
+
+    
+
+
+
+    <!-- prism.css -->
+    
+    <!-- prism.line_number -->
+    
+        
+            <link rel="stylesheet" href="/lib/prism/prism-line-numbers.min.css">
+        
+    
+    <!-- prism.theme -->
+    
+        <link rel="stylesheet" href="/lib/prism/prism-default.min.css">
+    
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    
+        <link rel="stylesheet" href="/css/highlight/github.min.css">
+    
+
+
+
+    
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <!-- ### RSS ### -->
+    
+
+    <!-- ### WebApp ### -->
+    <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Leegenux Blog">
+<meta name="msapplication-starturl" content="http://Leegenux.github.io">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leegenux Blog">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Manifest Import -->
+
+<!-- Open Search -->
+
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="Basics of PE Format(1) | Leegenux Blog">
+<meta property="og:site_name" content="Leegenux Blog">
+
+<meta property="og:locale" content="en">
+
+<meta property="og:url" content="http://Leegenux.github.io/2019/04/18/understanding-pe-format/">
+<meta property="og:image" content="http://Leegenux.github.io/img/suka-favicon.ico">
+
+<meta property="og:description" content="The post will not show you every detail about the PE format. However, you ought to be given some knowledge helpful...">
+
+<meta name="twitter:card" content="summary">
+
+
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2019-04-18T12:43:11.812Z">
+    <meta property="article:modified_time" content="2019-04-18T12:43:11.812Z">
+    <meta property="article:author" content="Leegenux">
+    <meta property="og:article:tag" content=", dll, win32, pe, cracking"> 
+
+
+
+
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://Leegenux.github.io/2019/04/18/understanding-pe-format/">
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://Leegenux.github.io/2019/04/18/understanding-pe-format/",
+    "@type": "BlogPosting",
+    "logo": "http://Leegenux.github.io/img/suka-favicon.ico",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://Leegenux.github.io/2019/04/18/understanding-pe-format/"
+    },
+    "headline": "Basics of PE Format(1) | Leegenux Blog",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+    },
+    
+    "datePublished": "2019-04-18T12:43:11.812Z",
+    "dateModified": "2019-07-20T10:22:36.223Z",
+    "author": {
+        "@type": "Person",
+        "name": "Leegenux",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/default_avatar.png"
+        },
+        "description": "No man is an island"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Leegenux Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://Leegenux.github.io/img/suka-favicon.ico"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://Leegenux.github.io/search/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": ", dll, win32, pe, cracking",
+    "description": "The post will not show you every detail about the PE format. However, you ought to be given some knowledge helpful..."
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+
+
+</head>
+
+    <body>
+        
+
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">Leegenux Blog</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                No man is an island
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+        <a href="/search/" class="navbar-link">Search</a>
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=Leegenux Blog&url=http://Leegenux.github.io&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+        <li class="menu-item">
+            <a href="https://twitter.com/intent/tweet?text=Leegenux Blog&url=http://Leegenux.github.io&via=Leegenux" target="_blank" rel="external noopener noreferrer nofollow">Share to Twitter</a>
+        </li>
+        
+
+        <!-- Share Facebook -->
+        
+        <li class="menu-item">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io" target="_blank" rel="external noopener noreferrer nofollow">Share to Facebook</a>
+        </li>
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://Leegenux.github.io" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+        <li class="menu-item">
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io&title=Basics of PE Format(1)" target="_blank" rel="external noopener noreferrer nofollow">Share to LinkedIn</a>
+        </li>
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Basics of PE Format(1)&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://Leegenux.github.io&text=Basics of PE Format(1)" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+        <li class="menu-item">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAAAAABQV18IAAAB30lEQVR42u3aSVLEMBBEUd//0rDtIFSVmcYQUvl70wzd1jMhJNVwfW14XaBAgQK1QF3Ntfxg8Xt1D2ccUHNQ1eCrQVcDVO/7vI8zDqhZqJ+DOK+rgbqJ3o0D6l2oblJXQOd+oN6LujvB//W/D9R2qGqjvDPRu4d75JQAantUd6B/8vWxaAbU1iiZdFgEDHIRbILZR7IuoLZGdRMxgd2Z6KDmopJJ6STM1H2tQx6oo1Eq2ZVM1uXhzTz0gZqDqiaeSuy7SdwuGAU1D9UNWH3tLJhpcgPUHFSVtPhNcbFaQOWCDWoMSm243c27ICMtTIKag3IChXSBdIIHefIEdTSqm8Aqid8GA02izQpGQR2HcgqMqqHLLUKqIhSoOaikCGltrMZhzwpGQR2LSjdO5yHUYgpqLqoLFpIikkrEWn8AUGNQzmEvKUQqWDkeqFGoJGhQP3ODjSgRC+pIlEpcqIWwW4CdIAXULJRqdkgaT1XgYVccQB2Jchtu1GbrvE8VuEHNQDmNxklg6RTEowYcUEeikoRFktDvHk5OdFDHo9zGZLdQ/WenBFAjUEkjl/N9+XCgXoNyGiiSJouoWQLUsagkOe8EGW6SDdRMlLtpRgc2ZwNW3YugjkTtdIECBQrUx/UNIQQQr2kQ9C8AAAAASUVORK5CYII=" alr="QRCode">
+        </li>
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    
+    
+
+
+<div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">Basics of PE Format(1)</h1>
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/default_avatar.png" alt="Leegenux's Avatar">
+        <span>2019-04-18</span>
+        
+        
+            <!-- Busuanzi Post Views -->
+<span id="busuanzi_container_page_pv" hidden>
+    <span class="suka-devide-dot"></span>
+    <span></span>
+    <span id="busuanzi_value_page_pv"></span>
+    <span>Views</span>
+</span>
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=Basics of PE Format(1)&url=http://Leegenux.github.io/2019/04/18/understanding-pe-format/&pic=http://Leegenux.github.io/img/suka-favicon.ico&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+    <li class="menu-item">
+        <a href="https://twitter.com/intent/tweet?text=Basics of PE Format(1)&url=http://Leegenux.github.io/2019/04/18/understanding-pe-format/&via=Leegenux" target="_blank" rel="external noopener noreferrer nofollow">Share to Twitter</a>
+    </li>
+    
+
+    <!-- Share Facebook -->
+    
+    <li class="menu-item">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://Leegenux.github.io/2019/04/18/understanding-pe-format/" target="_blank" rel="external noopener noreferrer nofollow">Share to Facebook</a>
+    </li>
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://Leegenux.github.io/2019/04/18/understanding-pe-format/" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+    <li class="menu-item">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://Leegenux.github.io/2019/04/18/understanding-pe-format/&title=Leegenux Blog" target="_blank" rel="external noopener noreferrer nofollow">Share to LinkedIn</a>
+    </li>
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=Leegenux Blog&title=Leegenux Blog&summary=A site about geek stuff.&pics=http://Leegenux.github.io/img/suka-favicon.ico&url=http://Leegenux.github.io/2019/04/18/understanding-pe-format/" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://Leegenux.github.io/2019/04/18/understanding-pe-format/&text=Leegenux Blog" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+    <li class="menu-item">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAAAAABQV18IAAAB30lEQVR42u3aSVLEMBBEUd//0rDtIFSVmcYQUvl70wzd1jMhJNVwfW14XaBAgQK1QF3Ntfxg8Xt1D2ccUHNQ1eCrQVcDVO/7vI8zDqhZqJ+DOK+rgbqJ3o0D6l2oblJXQOd+oN6LujvB//W/D9R2qGqjvDPRu4d75JQAantUd6B/8vWxaAbU1iiZdFgEDHIRbILZR7IuoLZGdRMxgd2Z6KDmopJJ6STM1H2tQx6oo1Eq2ZVM1uXhzTz0gZqDqiaeSuy7SdwuGAU1D9UNWH3tLJhpcgPUHFSVtPhNcbFaQOWCDWoMSm243c27ICMtTIKag3IChXSBdIIHefIEdTSqm8Aqid8GA02izQpGQR2HcgqMqqHLLUKqIhSoOaikCGltrMZhzwpGQR2LSjdO5yHUYgpqLqoLFpIikkrEWn8AUGNQzmEvKUQqWDkeqFGoJGhQP3ODjSgRC+pIlEpcqIWwW4CdIAXULJRqdkgaT1XgYVccQB2Jchtu1GbrvE8VuEHNQDmNxklg6RTEowYcUEeikoRFktDvHk5OdFDHo9zGZLdQ/WenBFAjUEkjl/N9+XCgXoNyGiiSJouoWQLUsagkOe8EGW6SDdRMlLtpRgc2ZwNW3YugjkTtdIECBQrUx/UNIQQQr2kQ9C8AAAAASUVORK5CYII=" alt="QRCode">
+    </li>
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                            <div id="post-toc">
+                                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Byte-Order"><span class="post-toc-number">1.</span> <span class="post-toc-text">Byte Order</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DOS-Header"><span class="post-toc-number">2.</span> <span class="post-toc-text">DOS Header</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NT-Header"><span class="post-toc-number">3.</span> <span class="post-toc-text">NT Header</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IMAGE-FILE-HEADER"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">_IMAGE_FILE_HEADER</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IMAGE-OPTIONAL-HEADER"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">_IMAGE_OPTIONAL_HEADER</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FileBuffer-and-ImageBuffer"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">FileBuffer and ImageBuffer</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Sections-Table"><span class="post-toc-number">4.</span> <span class="post-toc-text">Sections Table</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Section-Header"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">Section Header</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RVA-and-RAW"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">RVA and RAW</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">5.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
+                            </div>
+                        
+                    
+                    <article id="post-content">
+                        <p>The post will not show you every detail about the PE format. However, you ought to be given some knowledge helpful to crack an PE when you’re done reading. By the way, the details of PE format can be found <a href="https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format" title="click for more" target="_blank" rel="noopener">here</a>, if you want some precise insights from me, please keep reading.</p>
+<h2 id="Byte-Order"><a href="#Byte-Order" class="headerlink" title="Byte Order"></a>Byte Order</h2><p>Before we cut into the theme, let’s prepare ourselves for correctly reading the byte stream. As known to us all, the Intel CPUs all comply to the little endian byte order, whose standard has a great influence on the PC market. So bear in mind that the byte sections I’m gonna show to you are all little endian ordering. That’s for every data unit, as the offset grows, the byte gets less and less significant. Hopefully the illustration above will help you get over some confusion later.</p>
+<p>Each PE file has a header, and you can dig out much crucial information from this tiny part. The definitions of the headers serve as references when needed, so there is no need to memorize them all.</p>
+<p>First of all, there are <strong>DOS header</strong></p>
+<h2 id="DOS-Header"><a href="#DOS-Header" class="headerlink" title="DOS Header"></a>DOS Header</h2><p>The structure representing the DOS header is <code>_IMAGE_DOS_HEADER</code>, which takes up 64 bytes of space. There are dozens of fields in this structure but what we really care about is the last <code>DWORD</code> (4 bytes).</p>
+<p>It’s declaration is <code>DWORD e_lfanew;</code> . Its job is to point out the offset of <strong>PE header</strong>.</p>
+<p>Note that most content of the PE file’s header is designed for program loader of the operating system to work flawlessly.</p>
+<p>Here is its definition:<br><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span> &#123;</span>      <span class="comment">// DOS .EXE header</span></span><br><span class="line">    WORD   e_magic;                     <span class="comment">// Magic number</span></span><br><span class="line">    WORD   e_cblp;                      <span class="comment">// Bytes on last page of file</span></span><br><span class="line">    WORD   e_cp;                        <span class="comment">// Pages in file</span></span><br><span class="line">    WORD   e_crlc;                      <span class="comment">// Relocations</span></span><br><span class="line">    WORD   e_cparhdr;                   <span class="comment">// Size of header in paragraphs</span></span><br><span class="line">    WORD   e_minalloc;                  <span class="comment">// Minimum extra paragraphs needed</span></span><br><span class="line">    WORD   e_maxalloc;                  <span class="comment">// Maximum extra paragraphs needed</span></span><br><span class="line">    WORD   e_ss;                        <span class="comment">// Initial (relative) SS value</span></span><br><span class="line">    WORD   e_sp;                        <span class="comment">// Initial SP value</span></span><br><span class="line">    WORD   e_csum;                      <span class="comment">// Checksum</span></span><br><span class="line">    WORD   e_ip;                        <span class="comment">// Initial IP value</span></span><br><span class="line">    WORD   e_cs;                        <span class="comment">// Initial (relative) CS value</span></span><br><span class="line">    WORD   e_lfarlc;                    <span class="comment">// File address of relocation table</span></span><br><span class="line">    WORD   e_ovno;                      <span class="comment">// Overlay number</span></span><br><span class="line">    WORD   e_res[<span class="number">4</span>];                    <span class="comment">// Reserved words</span></span><br><span class="line">    WORD   e_oemid;                     <span class="comment">// OEM identifier (for e_oeminfo)</span></span><br><span class="line">    WORD   e_oeminfo;                   <span class="comment">// OEM information; e_oemid specific</span></span><br><span class="line">    WORD   e_res2[<span class="number">10</span>];                  <span class="comment">// Reserved words</span></span><br><span class="line">    LONG   e_lfanew;                    <span class="comment">// File address of new exe header</span></span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="NT-Header"><a href="#NT-Header" class="headerlink" title="NT Header"></a>NT Header</h2><p>It consists of <strong>Standard NT Header</strong> (AKA FileHeader below) and <strong>Optional NT Header</strong>, both of which are members of C structure <code>_IMAGE_NT_HEADERS</code>.</p>
+<p>The declaration shows the layout:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span>&#123;</span></span><br><span class="line">    DWORD Signature;   <span class="comment">//"PE\0\0" if valid</span></span><br><span class="line">    _IMAGE_FILE_HEADER FileHeader;</span><br><span class="line">    _IMAGE_OPTIONAL_HEADER OptionalHeader;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="IMAGE-FILE-HEADER"><a href="#IMAGE-FILE-HEADER" class="headerlink" title="_IMAGE_FILE_HEADER"></a><code>_IMAGE_FILE_HEADER</code></h3><p>This structure occupies 20 bytes.</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_FILE_HEADER</span>&#123;</span></span><br><span class="line">    WORD Machine;			<span class="comment">// 0x0: All platform; 0x14C: Intel i386 and later;</span></span><br><span class="line">    WORD NumberOfSections;</span><br><span class="line">	DWORD TimeDateStamp;    <span class="comment">// Set on finishing linking</span></span><br><span class="line">	DWORD PointerToSymbolTable; </span><br><span class="line">	DWORD NumberOfSymbols; </span><br><span class="line">	WORD SizeOfOptionalHeader;</span><br><span class="line">	WORD Characteristics;   <span class="comment">// Each bit represents a different property</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>The member mostly referred to is the <code>Characteristic</code> and meaning of its each bit can be found in <a href="https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_image_file_header" target="_blank" rel="noopener">official page.</a></p>
+<h3 id="IMAGE-OPTIONAL-HEADER"><a href="#IMAGE-OPTIONAL-HEADER" class="headerlink" title="_IMAGE_OPTIONAL_HEADER"></a><code>_IMAGE_OPTIONAL_HEADER</code></h3><p>This structure is placed adjacent to the former one (<code>_IMAGE_FILE_HEADER</code>) and is much larger — 224 bytes which peaks among the list of PE headers in size. (Since the array <code>DataDirectory</code> might actually have more or less than 16 elements, the size of Optional Header varies.)</p>
+<p>The declaration is the following:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_OPTIONAL_HEADER</span>&#123;</span></span><br><span class="line">    WORD Magic;                    <span class="comment">//0x0107:ROM image, 0x010B:32bit PE, 0X020B:64bit PE </span></span><br><span class="line">    BYTE MajorLinkerVersion; </span><br><span class="line">    BYTE MinorLinkerVersion; </span><br><span class="line">    DWORD SizeOfCode;             </span><br><span class="line">    DWORD SizeOfInitializedData;</span><br><span class="line">    DWORD SizeOfUninitializedData; </span><br><span class="line">    DWORD AddressOfEntryPoint;     <span class="comment">// A relative virtual address of Program Entry Point</span></span><br><span class="line">    DWORD BaseOfCode;              <span class="comment">// Base address of code</span></span><br><span class="line">    DWORD BaseOfData;              <span class="comment">// Base address of data</span></span><br><span class="line">    DWORD ImageBase;               <span class="comment">// The base address in memory</span></span><br><span class="line">    DWORD SectionAlignment;  	   <span class="comment">// Decides the alignment size</span></span><br><span class="line">    DWORD FileAlignment;           <span class="comment">// Mostly 1000H</span></span><br><span class="line">    WORD MajorOperatingSystemVersion;</span><br><span class="line">    WORD MinorOperatingSystemVersion;  </span><br><span class="line">    WORD MajorImageVersion;           </span><br><span class="line">    WORD MinorImageVersion;             </span><br><span class="line">    WORD MajorSubsystemVersion;    </span><br><span class="line">    WORD MinorSubsystemVersion; </span><br><span class="line">    DWORD Win32VersionValue;       <span class="comment">// Always 0</span></span><br><span class="line">    DWORD SizeOfImage;             <span class="comment">// Size of memory occupied after loading into memory</span></span><br><span class="line">    DWORD SizeOfHeaders;           <span class="comment">// Total size of the DOS header plus PE Header.</span></span><br><span class="line">    DWORD CheckSum;           </span><br><span class="line">    WORD Subsystem;          </span><br><span class="line">    DWORD DllCharacteristics;  	<span class="comment">// Always 0</span></span><br><span class="line">    DWORD SizeOfStackReserve;  <span class="comment">// Default reserved stack size</span></span><br><span class="line">    DWORD SizeOfStackCommit;   <span class="comment">// Commited stack size</span></span><br><span class="line">    DWORD SizeOfHeapReserve;   <span class="comment">// Default reserved heap size</span></span><br><span class="line">    DWORD SizeOfHeapCommit;    <span class="comment">// Commited heap size</span></span><br><span class="line">    DWORD LoaderFlags;         <span class="comment">// Always 0</span></span><br><span class="line">    DWORD NumberOfRvaAndSizes; <span class="comment">// Number of members in the next array</span></span><br><span class="line">    _IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];<span class="comment">// #define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>All members with comments are instrumental. Note that all size related stuff referred above obeys the memory alignment mechanism. </p>
+<p>For each 32bit program there are virtual memory space from <code>0x0</code> to <code>0xFFFFFFFF</code>. And the <code>ImageBase</code> specifies the default offset the PE should be loaded to.</p>
+<h3 id="FileBuffer-and-ImageBuffer"><a href="#FileBuffer-and-ImageBuffer" class="headerlink" title="FileBuffer and ImageBuffer"></a>FileBuffer and ImageBuffer</h3><p>FileBuffer is the way how PE lives in the hard drive. However, execution of a PE requires an ImageBuffer in memory storing all the machine code and other data. The ImageBuffer is a copy of stretched version FileBuffer and the stretching process is done by the <strong>PE Loader</strong>  of the OS.</p>
+<p>The <code>ImageBase</code> address is not <a href="#rva-and-raw">RVA</a>. After the FileBuffer is loaded, the PE Loader sets <code>EIP</code> register to <code>ImageBase</code> + <code>AddressOfEntryPoint</code>, which is to make the program start from its entry point.</p>
+<p>Note that the value of Alignment specifies the minimal storage unit of the subject. For instance, <code>SectionAlignment</code> specifies the unit for sections in ImageBuffer, the <code>FileAlignment</code> in FileBuffer. These two values might not be the same sometimes.</p>
+<h2 id="Sections-Table"><a href="#Sections-Table" class="headerlink" title="Sections Table"></a>Sections Table</h2><p>For better organization, higher efficiency and other benifits, PE format has exploited the Section mechanism. The resource such as code, data are grouped according to their attributes and placed together respectively.</p>
+<p>One of those benifits the Section mechanism brings is security. We avoid puting code and data together so we get away from accidently overwriting our code or run the data in some extent.</p>
+<p>At the beginning of each Section, there is a Section Header containing the locations, access privileges, attributes and so on.</p>
+<p>The section table can be found at the offset <code>_IMAGE_DOS_HEADER.e_lfanew</code> + <code>IMAGE_SIZEOF_SIGNATURE + IMAGE_SIZEOF_FILE_HEADER</code> + <code>_IMAGE_FILE_HEADER.SizeOfOptionalHeader</code> relative to the beginning of the binary file (For FileBuffer) or <code>ImageBase</code> (For ImageBuffer). That’s to say, the Section Table is put right next to the Optional NT header.</p>
+<blockquote>
+<p>Both <code>IMAGE_SIZEOF_SIGNATURE</code> and <code>IMAGE_SIZEOF_FILE_HEADER</code> are predefined macros.</p>
+<p>From the formula above we also manage to know the alignment of all the headers I have mentioned above. Try drawing a graph for them on the paper yourself.</p>
+</blockquote>
+<p>Note that there is no such structure corresponding to Section Table in code, this term just helps me to put thing easier.</p>
+<h3 id="Section-Header"><a href="#Section-Header" class="headerlink" title="Section Header"></a>Section Header</h3><p>Inside of the Section Table are Section Headers placed consequently.</p>
+<p>The definition of Section Header looks like this:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IMAGE_SIZEOF_SHORT_NAME 8</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_SECTION_HEADER</span> &#123;</span></span><br><span class="line">    UCHAR   Name[IMAGE_SIZEOF_SHORT_NAME];</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">            ULONG   PhysicalAddress;</span><br><span class="line">            ULONG   VirtualSize;</span><br><span class="line">    &#125; Misc;</span><br><span class="line">    ULONG   VirtualAddress;</span><br><span class="line">    ULONG   SizeOfRawData;</span><br><span class="line">    ULONG   PointerToRawData;</span><br><span class="line">    ULONG   PointerToRelocations;</span><br><span class="line">    ULONG   PointerToLinenumbers;</span><br><span class="line">    USHORT  NumberOfRelocations;</span><br><span class="line">    USHORT  NumberOfLinenumbers;</span><br><span class="line">    ULONG   Characteristics;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The five fields : <code>VirtualAddress</code>, <code>VirtualSize</code>, <code>PointerToRawData</code>, <code>SizeOfRawData</code> and <code>Characteristic</code> are especially important for us hackers. You should read the next section <a href="#rva-and-raw">RVA and RAW</a>, where four of the fields are explained.</p>
+<h3 id="RVA-and-RAW"><a href="#RVA-and-RAW" class="headerlink" title="RVA and RAW"></a>RVA and RAW</h3><p>This two terms are crucial for you to understand how PE FileBuffer is mapped to the ImageBuffer.</p>
+<p>RVA is the bias between specified address and ImageBase. RAW is the bias between file offset and the beginning of the file. The <code>VirtualAddress</code> field of the <code>_IMAGE_SECTION_HEADER</code> is also an RVA.</p>
+<p>So, look at the definition of <code>_IMAGE_SECTION_HEADER</code>. The <code>VirtualAddress</code> field is the RVA of the Section in ImageBuffer. The <code>PointerToRawData</code> is RAW of the Section in FileBuffer. <code>PointerToRawData</code> and <code>VirtualSize</code> are then both self-evident.</p>
+<p>Though the section-wise layout always changes after transformation between the FileBuffer and ImageBuffer. The inner layout of each section is not likely to change. So we come to a formula: <strong>RAW - <code>PointerToRawData</code> = RVA - <code>VirtualAddress</code></strong>.</p>
+<p>For example, say we have an <code>ImageBase</code> of value <code>0x01000000</code>, a .text section in ImageBuffer at <code>0x01001000</code> (which is to say the <code>VirtualAddress</code> = <code>0x00001000</code> - <code>0x0100000</code> = <code>0x00001000</code>). The corresponding .text section’s <code>PointerToRawData</code> is <code>0x00000400</code> Now there is a structure at <code>0x00001124</code> in this .text section in FileBuffer. How do you find out its location in the ImageBuffer ? </p>
+<p>Easy! Apply that equation to this problem : RVA = RAW(<code>0x00001124</code>) - <code>PointerToRawData</code>(<code>0x00000400</code>) + <code>VirtualAddress</code>(<code>0x00001000</code>) = <code>0x00001d24</code>. And according to the RVA, we get its VA = RVA(<code>0x00001d24</code>) + <code>ImageBase</code>(<code>0x01000000</code>) = <code>0x01001d24</code>. Now we’ve derived all location information with the help of that simple equation.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We have played a little bit around part of the PE header. We have learnt about DOS header(<code>_IMAGE_DOS_HEADER</code>), NT header(<code>_IMAGE_NT_HEADERS</code>) and Sections(<code>_IMAGE_SECTION_HEADER</code>). Hopefully two formulas introduced in <a href="#section-table">Section Table</a> and <a href="#rva-and-raw">RVA and RAW</a> can help you draw a schematic diagram for part of the FileBuffer and its corresponding ImageBuffer.</p>
+<p>In next post, I will talk about the <strong>IAT</strong>, <strong>EAT</strong> and <strong>DLL</strong>.</p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+        var dateUpdate = Date.parse("2019-07-20");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-04-18T12:43:11.812Z" itemprop="datePublished">2019-04-18</time>
+
+    , Updated at&nbsp;<time datetime="2019-07-20T10:22:36.223Z" itemprop="dateModified">2019-07-20</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+
+<a class="post-tags-list-item" href="/tags/dll/" rel="tag">#&nbsp;dll</a>
+
+<a class="post-tags-list-item" href="/tags/win32/" rel="tag">#&nbsp;win32</a>
+
+<a class="post-tags-list-item" href="/tags/pe/" rel="tag">#&nbsp;pe</a>
+
+<a class="post-tags-list-item" href="/tags/cracking/" rel="tag">#&nbsp;cracking</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                
+<div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2019/07/06/PIC32-configuration/" rel="prev">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">PIC32MX Basics --- Basic Configuration</div>
+            </a>
+        </li>
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/04/07/lengthOfLongestSubstring/" rel="next">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                        <div class="card-footer post-comment">
+                            <div id="disqus_thread"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.2.5/dist/disqus.js"></script>
+
+<script>
+window.addEventListener("load", function () {
+    var dsqjs = new DisqusJS({
+        shortname: 'leegenux',
+        
+        identifier: 'http://Leegenux.github.io/2019/04/18/understanding-pe-format/',
+        url: 'http://Leegenux.github.io/2019/04/18/understanding-pe-format/',
+        api: 'https://disqus.skk.moe/disqus/',
+        apikey: '60KKUCrM7Sv1Qk5YkbjKRC7o4H6ZtO9bDCvt3dZX1D6fZAm6r9Y5AtNzajqGOInF',
+        
+        
+    });
+});
+</script>
+
+                        </div>
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span data-year=""></span>
+        <a class="footer-copyright-a" href="http://Leegenux.github.io">Leegenux Blog</a>
+    </p>
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+            
+    <!-- Busuanzi User Views -->
+    <span id="busuanzi_container_site_uv" hidden>
+        <span></span>
+        <span id="busuanzi_value_site_uv"></span>
+        <span>Viewers</span>
+        
+            <span>|</span>
+        
+    </span>
+
+
+
+        
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="external nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="external noopener">Suka</a>
+    </p>
+</footer>
+
+        
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+
+
+    /* Copyright */
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.querySelector('span[data-year]')
+    
+        copyrightSince = 2018;
+        if (copyrightSince === copyrightNow) {
+            copyrightContent.textContent = copyrightNow
+        } else {
+            copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow
+        }
+    
+
+
+
+/* Cnosole Log */
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.3 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+</script>
+
+<!-- vanilla-lazyload -->
+
+    <script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+    <!-- Busuanzi -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+<!-- Offset -->
+
+
+
+
+
+
+
+<!-- gallery.js -->
+
+
+<!-- Comment -->
+
+    
+        <!-- No need for DisqusJS -->
+    
+
+
+<!-- ### Custom Footer ### -->
+
+
+    </body>
+
+</html>
