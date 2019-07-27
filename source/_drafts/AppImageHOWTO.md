@@ -13,7 +13,7 @@ make install DETDIR=$AppDir bindir=$AppDir/bin sysconfdir=$AppDir/etc datarootdi
 
 # How to find all the relative libraries
 
-ldd
+`cp $(ldd AppDir/usr/bin/my_app | grep -o ‘\W/[^ ]*’) AppDir/usr/lib`
 
 `readelf -d usr/bin/mentohust | grep NEEDED`
 

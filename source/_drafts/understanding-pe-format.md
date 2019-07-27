@@ -1,5 +1,5 @@
 ---
-title: Basics of PE Format
+title: Basics of PE Format(1)
 tags: [win32, pe, dll, cracking]
 ---
 
@@ -7,17 +7,23 @@ The post will not show you every detail about the PE format. However, you ought 
 
 
 
-
-
-Each PE file has a header, and you can dig out much crucial information from this tiny part.
-
-
-
 ## Byte Order
 
-Before we cut into the theme, let's prepare ourselves for correctly reading the byte stream. As known to us all, the Intel CPUs all comply to the little endian byte order, whose standard has a great influence on the PC market. So bear in mind that the byte sections I'm gonna show to you are all little endian. That's for every data unit as the offset grows, the bit gets less and less significant. Hopefully the illustration above will help you get over some confusion later.
+Before we cut into the theme, let's prepare ourselves for correctly reading the byte stream. As known to us all, the Intel CPUs all comply to the little endian byte order, whose standard has a great influence on the PC market. So bear in mind that the byte sections I'm gonna show to you are all little endian ordering. That's for every data unit, as the offset grows, the byte gets less and less significant. Hopefully the illustration above will help you get over some confusion later.
 
 
+
+
+
+
+
+
+
+
+
+
+
+Each PE file has a header, and you can dig out much crucial information from this tiny part. The definitions of the headers serve as references when needed, so there is no need to memorize them all.
 
 First of all, there are **DOS header**
 
@@ -25,17 +31,42 @@ First of all, there are **DOS header**
 
 ## DOS Header
 
-The structure representing the DOS header is `_IMAGE_DOS_HEADER`, which takes up 64 bytes of storage. There are dozens of fields in this structure but what we really care about is the last `DWORD` (4 bytes).
+The structure representing the DOS header is `_IMAGE_DOS_HEADER`, which takes up 64 bytes of space. There are dozens of fields in this structure but what we really care about is the last `DWORD` (4 bytes).
 
-It's declaration is `DWORD e_lfanew;` . Its job is to point out the offset of **PE header**.
+It's declaration is `DWORD e_lfanew;` . Its job is to point out the offset of **NT header**.
 
 Note that most content of the PE file's header is designed for program loader of the operating system to work flawlessly.
 
+Here is its definition:
+```C
+struct _IMAGE_DOS_HEADER {      // DOS .EXE header
+    WORD   e_magic;                     // Magic number
+    WORD   e_cblp;                      // Bytes on last page of file
+    WORD   e_cp;                        // Pages in file
+    WORD   e_crlc;                      // Relocations
+    WORD   e_cparhdr;                   // Size of header in paragraphs
+    WORD   e_minalloc;                  // Minimum extra paragraphs needed
+    WORD   e_maxalloc;                  // Maximum extra paragraphs needed
+    WORD   e_ss;                        // Initial (relative) SS value
+    WORD   e_sp;                        // Initial SP value
+    WORD   e_csum;                      // Checksum
+    WORD   e_ip;                        // Initial IP value
+    WORD   e_cs;                        // Initial (relative) CS value
+    WORD   e_lfarlc;                    // File address of relocation table
+    WORD   e_ovno;                      // Overlay number
+    WORD   e_res[4];                    // Reserved words
+    WORD   e_oemid;                     // OEM identifier (for e_oeminfo)
+    WORD   e_oeminfo;                   // OEM information; e_oemid specific
+    WORD   e_res2[10];                  // Reserved words
+    LONG   e_lfanew;                    // File address of new exe header
+  };
+```
 
 
-## PE Header
 
-It consists of **Standard PE Header** and **Optional PE Header**, both of which are members of C structure `_IMAGE_NT_HEADERS`.
+## NT Header
+
+It consists of **Standard NT Header** (AKA FileHeader below) and **Optional NT Header**, both of which are members of C structure `_IMAGE_NT_HEADERS`.
 
 The declaration shows the layout:
 
@@ -55,9 +86,9 @@ This structure occupies 20 bytes.
 
 ```C
 struct _IMAGE_FILE_HEADER{
-    WORD Machine;			//0x0: All platform; 0x14C: Intel i386 and later;
+    WORD Machine;			// 0x0: All platform; 0x14C: Intel i386 and later;
     WORD NumberOfSections;
-	DWORD TimeDateStamp;    //Set on finishing linking
+	DWORD TimeDateStamp;    // Set on finishing linking
 	DWORD PointerToSymbolTable; 
 	DWORD NumberOfSymbols; 
 	WORD SizeOfOptionalHeader;
@@ -65,13 +96,13 @@ struct _IMAGE_FILE_HEADER{
 };
 ```
 
-The member mostly referred to is the `Characteristic` and meaning of its each bit can be found in [this official web page](https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_image_file_header)
+The member mostly referred to is the `Characteristic` and meaning of its each bit can be found in [official page.](https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_image_file_header)
 
 
 
 ### `_IMAGE_OPTIONAL_HEADER`
 
-This structure is placed adjacent to the former one and is much larger in size ------ 224 bytes.
+This structure is placed adjacent to the former one (`_IMAGE_FILE_HEADER`) and is much larger --- 224 bytes which peaks among the list of PE headers in size. (Since the array `DataDirectory` might actually have more or less than 16 elements, the size of Optional Header varies.)
 
 The declaration is the following:
 
@@ -83,7 +114,7 @@ struct _IMAGE_OPTIONAL_HEADER{
     DWORD SizeOfCode;             
     DWORD SizeOfInitializedData;
     DWORD SizeOfUninitializedData; 
-    DWORD AddressOfEntryPoint;     // A relative virtual address
+    DWORD AddressOfEntryPoint;     // A relative virtual address of Program Entry Point
     DWORD BaseOfCode;              // Base address of code
     DWORD BaseOfData;              // Base address of data
     DWORD ImageBase;               // The base address in memory
@@ -106,94 +137,92 @@ struct _IMAGE_OPTIONAL_HEADER{
     DWORD SizeOfHeapReserve;   // Default reserved heap size
     DWORD SizeOfHeapCommit;    // Commited heap size
     DWORD LoaderFlags;         // Always 0
-    DWORD NumberOfRvaAndSizes; // Self-evident
+    DWORD NumberOfRvaAndSizes; // Number of members in the next array
     _IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];// #define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16
 };
 ```
 
-All commented lines are especially instrumental. Please note that all size related stuff referred above obeys the memory alignment mechanism. 
+All members with comments are instrumental. Note that all size related stuff referred above obeys the memory alignment mechanism. 
 
-#### FileBuffer and ImageBuffer
-
-The execution of an `.exe` file requires ImageBuffer in memory. The ImageBuffer is a copy of stretched FileBuffer and the stretching process is operated by the **PE Loader**.
-
-The `ImageBase` address is not RVA. After the FileBuffer is loaded, the PE Loader sets `EIP` register to `ImageBase + AddressOfEntryPoint`.
+For each 32bit program there are virtual memory space from `0x0` to `0xFFFFFFFF`. And the `ImageBase` specifies the default offset the PE should be loaded to.
 
 
 
-## Section Table
+### FileBuffer and ImageBuffer
 
-The section table can be found at the offset `_IMAGE_DOS_HEADER.e_lfanew + IMAGE_SIZEOF_SIGNATURE + IMAGE_SIZEOF_FILE_HEADER + _IMAGE_FILE_HEADER.SizeOfOptionalHeader` relative to the binary file or ImageBase.
+FileBuffer is the way how PE lives in the hard drive. However, execution of a PE requires an ImageBuffer in memory storing all the machine code and other data. The ImageBuffer is a copy of stretched version FileBuffer and the stretching process is done by the **PE Loader**  of the OS.
 
+The `ImageBase` address is not [RVA](#rva-and-raw). After the FileBuffer is loaded, the PE Loader sets `EIP` register to `ImageBase` + `AddressOfEntryPoint`, which is to make the program start from its entry point.
 
-
-## RVA and RAW
-
-Each section as well as directory has a RVA and PointerToRawData.
-
-VirtualAddress is relative to ImageBase just like what RVA do. They are actually just a tag marking start of one section.
+Note that the value of Alignment specifies the minimal storage unit of the subject. For instance, `SectionAlignment` specifies the unit for sections in ImageBuffer, the `FileAlignment` in FileBuffer. These two values might not be the same sometimes.
 
 
 
-## IAT
+## Sections Table
+
+For better organization, higher efficiency and other benifits, PE format has exploited the Section mechanism. The resource such as code, data are grouped according to their attributes and placed together respectively.
+
+One of those benifits the Section mechanism brings is security. We avoid puting code and data together so we get away from accidently overwriting our code or run the data in some extent.
+
+At the beginning of each Section, there is a Section Header containing the locations, access privileges, attributes and so on.
+
+The section table can be found at the offset **`_IMAGE_DOS_HEADER.e_lfanew` + `IMAGE_SIZEOF_SIGNATURE + IMAGE_SIZEOF_FILE_HEADER` + `_IMAGE_FILE_HEADER.SizeOfOptionalHeader` **relative to the beginning of the binary file (For FileBuffer) or `ImageBase` (For ImageBuffer). That's to say, the Section Table is put right next to the Optional NT header.
+
+> Both `IMAGE_SIZEOF_SIGNATURE` and `IMAGE_SIZEOF_FILE_HEADER` are predefined macros.
+>
+> From the formula above we also manage to know the alignment of all the headers I have mentioned above. Try drawing a graph for them on the paper yourself.
+
+Note that there is no such structure corresponding to Section Table in code, this term just helps me to put thing easier.
+
+
+
+### Section Header
+
+Inside of the Section Table are Section Headers placed consequently.
+
+The definition of Section Header looks like this:
 
 ```C
-typedef struct _IMAGE_IMPORT_DESCRIPTOR { // Represents the library to be imported
+#define IMAGE_SIZEOF_SHORT_NAME 8
+struct _IMAGE_SECTION_HEADER {
+    UCHAR   Name[IMAGE_SIZEOF_SHORT_NAME];
     union {
-        DWORD  Characteristics;
-        DWORD  OriginalFirstThunk;   // Import Name Table
-    }
-    DWORD  TimeDateStamp;
-    DWORD  ForwarderChain;
-    DWORD  Name;					// Library name, each library contains multiple functions
-    DWORD  FirstThunk;				// Import Address Table
-} IMAGE_IMPORT_DESCRIPTOR;
-
-typedef struct _IMAGE_IMPORT_BY_NAME {
-    WORD Hint;						// Ordinal
-    BYTE Name[1];					// Function name
-} IMAGE_IMPORT_BY_NAME, *PIMAGE_IMPORT_BY_NAME;
-```
-
-There should always be a `IMAGE_IMPORT_DESCRIPTOR` for each library to import, and they end with `NULL` structure.
-
-Here, the `OriginalFirstThunk` is a pointer to one of the instances of `IMAGE_IMPORT_BY_NAME` array.
-
-The `IAT` works together with  `INT`, which also provides information about function entries of library. They both end with a `DWORD` `NULL`.
-
-
-
-## EAT
-
-```C
-typedef struct _IMAGE_EXPORT_DIRECTORY {
-    DWORD Characteristics;
-    DWORD TimeDateStamp;
-    WORD  MajorVersion;
-    WORD  MinorVersion;
-    DWORD Name;					 // Address of library file name
-    DWORD Base;					 // Ordinal Base
-    DWORD NumberOfFunctions;
-    DWORD NumberOfNames;
-    DWORD AddressOfFunctions;    //
-    DWORD AddressOfNames;		 //
-    DWORD AddressOfNameOrdinals; //
+            ULONG   PhysicalAddress;
+            ULONG   VirtualSize;
+    } Misc;
+    ULONG   VirtualAddress;
+    ULONG   SizeOfRawData;
+    ULONG   PointerToRawData;
+    ULONG   PointerToRelocations;
+    ULONG   PointerToLinenumbers;
+    USHORT  NumberOfRelocations;
+    USHORT  NumberOfLinenumbers;
+    ULONG   Characteristics;
 }
 ```
 
-Typical process of getting exported function address starts with obtaining the *name_index* from `AddressOfNames`, after that, get the *ordinal* with the *name_index* as key out of `AddressOfNameOrdinals`. Finally, the address of funtion is simply `AddressOfFunctions[ordinal]`.
-
-
-https://blog.csdn.net/Apollon_krj/article/details/77427729
-
-https://blog.kowalczyk.info/articles/pefileformat.html
-
-https://www.toutiao.com/i6469404407048962573/
+The five fields : `VirtualAddress`, `VirtualSize`, `PointerToRawData`, `SizeOfRawData` and `Characteristic` are especially important for us hackers. You should read the next section [RVA and RAW](#rva-and-raw), where four of the fields are explained.
 
 
 
-## ESI and EDI
+### RVA and RAW
 
-寄存器*ESI*、*EDI*、*SI*和*DI*称为变址寄存器*(Index Register)*，它们主要用于存放存储单元在段内的偏移量，用它们可实现多种存储器操作数的寻址方式，为以不同的地址形式访问存储单元提供方便。变址寄存器不可分割成*8*位寄存器。作为通用寄存器，也可存储算术逻辑运算的操作数和运算结果。 它们可作一般的存储器指针使用。在字符串操作指令的执行过程中，对它们有特定的要求，而且还具有特殊的功能。
+This two terms are crucial for you to understand how PE FileBuffer is mapped to the ImageBuffer.
 
-Source and Destination
+RVA is the bias between specified address and ImageBase. RAW is the bias between file offset and the beginning of the file. The `VirtualAddress` field of the `_IMAGE_SECTION_HEADER` is also an RVA.
+
+So, look at the definition of `_IMAGE_SECTION_HEADER`. The `VirtualAddress` field is the RVA of the Section in ImageBuffer. The `PointerToRawData` is RAW of the Section in FileBuffer. `PointerToRawData` and `VirtualSize` are then both self-evident.
+
+Though the section-wise layout always changes after transformation between the FileBuffer and ImageBuffer. The inner layout of each section is not likely to change. So we come to a formula: **RAW - `PointerToRawData` = RVA - `VirtualAddress`**.
+
+For example, say we have an `ImageBase` of value `0x01000000`, a .text section in ImageBuffer at `0x01001000` (which is to say the `VirtualAddress` = `0x00001000` - `0x0100000` = `0x00001000`). The corresponding .text section's `PointerToRawData` is `0x00000400` Now there is a structure at `0x00001124` in this .text section in FileBuffer. How do you find out its location in the ImageBuffer ? 
+
+Easy! Apply that equation to this problem : RVA = RAW(`0x00001124`) - `PointerToRawData`(`0x00000400`) + `VirtualAddress`(`0x00001000`) = `0x00001d24`. And according to the RVA, we get its VA = RVA(`0x00001d24`) + `ImageBase`(`0x01000000`) = `0x01001d24`. Now we've derived all location information with the help of that simple equation.
+
+
+
+## Conclusion
+
+We have played a little bit around part of the PE header. We have learnt about DOS header(`_IMAGE_DOS_HEADER`), NT header(`_IMAGE_NT_HEADERS`) and Sections(`_IMAGE_SECTION_HEADER`). Hopefully two formulas introduced in [Section Table](#section-table) and [RVA and RAW](#rva-and-raw) can help you draw a schematic diagram for part of the FileBuffer and its corresponding ImageBuffer.
+
+In next post, I will talk about the **IAT**, **EAT** and **DLL**.
