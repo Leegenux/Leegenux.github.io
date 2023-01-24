@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Usages of uniq | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="uniq is just an abbreviation of word unique. It’s capable of performing actions about finding unique or duplicated elements. It usually works with sort command because it  does not detect repeated lin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Usages of uniq">
+<meta property="og:url" content="http://example.com/2019/03/03/usages-of-uniq/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="uniq is just an abbreviation of word unique. It’s capable of performing actions about finding unique or duplicated elements. It usually works with sort command because it  does not detect repeated lin">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-03T15:56:27.000Z">
+<meta property="article:modified_time" content="2023-01-24T01:37:34.709Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="uniq">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-usages-of-uniq" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/03/usages-of-uniq/" class="article-date">
+  <time class="dt-published" datetime="2019-03-03T15:56:27.000Z" itemprop="datePublished">2019-03-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Usages of uniq
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><code>uniq</code> is just an abbreviation of word unique. It’s capable of performing actions about finding unique or duplicated elements. It usually works with <code>sort</code> command because it  <strong>does not detect repeated lines unless they are adjacent.</strong></p>
+<h2 id="Important-Options"><a href="#Important-Options" class="headerlink" title="Important Options"></a>Important Options</h2><p>Some important options are listed below:</p>
+<ul>
+<li><code>-i</code>: Do case-insensitive comparisons</li>
+<li><code>-c</code>: Count the occurrences of lines</li>
+<li><code>-u</code> and <code>-d</code> : With <code>-u</code> you get only unique lines and <code>-d</code> duplicated ones.</li>
+</ul>
+<h2 id="Other-Possible-Options"><a href="#Other-Possible-Options" class="headerlink" title="Other Possible Options"></a>Other Possible Options</h2><ol>
+<li>To limit comparison between lines to only the first N characters, use <code>-w</code></li>
+<li>Avoid comparing the first N characters with <code>-s</code> option</li>
+<li>Avoid comparing first N fields with option <code>-f</code></li>
+<li>More on <a href="www.google.com">Google</a></li>
+</ol>
+<h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h2><p>With a simple example you can figure out how it works, say I have a <strong>sorted</strong> text file <code>colors.txt</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Green  is the favorite of David.</span><br><span class="line">Green  is the favorite of Thomas.</span><br><span class="line">Purple is the favorite of Daniel.</span><br><span class="line">Red    is the favorate of James.</span><br><span class="line">Red    is the favorite of Christopher.</span><br><span class="line">Yello  is the favorite of Joseph.</span><br></pre></td></tr></table></figure>
+
+<p>To count the occurrences of colors, you can try this: <code>uniq -c -w 5 colors.txt</code>. Here comes the console printout:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 Green  is the favorite of David.</span><br><span class="line">1 Purple is the favorite of Daniel.</span><br><span class="line">2 Red    is the favorate of James.</span><br><span class="line">1 Yello  is the favorite of Joseph.</span><br></pre></td></tr></table></figure>
+
+<p>The digit before each line denotes the times of occurrences.</p>
+<p>When the amount of the lines is great, <code>uniq</code> command can refine some important statistic features. </p>
+<blockquote>
+<p>Note that the part of line avoided is not directly removed, but you can still use other tools to achieve this goal.</p>
+</blockquote>
+<p>And to get unique lines or duplicated ones, use <code>-u</code> or <code>-d</code> respectively. Here are the results:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ uniq -d -w5 colors.txt</span><br><span class="line">Green  is the favorite of David.</span><br><span class="line">Red    is the favorate of James.</span><br><span class="line"></span><br><span class="line">$ uniq -u -w5 colors.txt</span><br><span class="line">Purple is the favorite of Daniel.</span><br><span class="line">Yello  is the favorite of Joseph.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>In the example above, <code>-w</code> cannot be cut out when focusing on colors. But in daily uses, <code>uniq</code> often targets better preprocessed lines, where <code>-w</code> is not so necessary.</p>
+<p>Can you get the number of colors appearing in <code>more_colors.txt</code> the text file below? Try <code>uniq</code> yourself.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">more_colors.txt </span><br><span class="line">---------------</span><br><span class="line">Green  is the favorite of David.</span><br><span class="line">Green  is the favorite of Thomas.</span><br><span class="line">Purple is the favorite of Daniel.</span><br><span class="line">Red    is the favorate of James.</span><br><span class="line">Red    is the favorite of Christopher.</span><br><span class="line">Yello  is the favorite of Joseph.</span><br><span class="line">yello  is the favorite of Paul.</span><br><span class="line">pink   is my favorite.</span><br><span class="line">Blue   is Harry&#x27;s favorite.</span><br><span class="line">Black  is the favorite of nobody.</span><br><span class="line">Grey   is the favorite of Kyle.</span><br><span class="line">yello  is the favorite of Stan.</span><br><span class="line">Orange is the favorite of Kenny.</span><br><span class="line">Red    is the favorite of Eric.</span><br><span class="line">Pink   is the favorite of Butters.</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/03/usages-of-uniq/" data-id="cld9kj0c5001b7swkbupcgd4j" data-title="Usages of uniq" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/12/usages-of-paste/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Usages of paste
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/01/usages-of-sort/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Usages of sort</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/awk/" rel="tag">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crack/" rel="tag">crack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cracking/" rel="tag">cracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cut/" rel="tag">cut</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dll/" rel="tag">dll</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paste/" rel="tag">paste</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tr/" rel="tag">tr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/PIC32/" style="font-size: 10px;">PIC32</a> <a href="/tags/PIC32MX/" style="font-size: 10px;">PIC32MX</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/awk/" style="font-size: 10px;">awk</a> <a href="/tags/bash/" style="font-size: 15px;">bash</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/cracking/" style="font-size: 10px;">cracking</a> <a href="/tags/cut/" style="font-size: 10px;">cut</a> <a href="/tags/dll/" style="font-size: 10px;">dll</a> <a href="/tags/embeded/" style="font-size: 10px;">embeded</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/paste/" style="font-size: 10px;">paste</a> <a href="/tags/pe/" style="font-size: 12.5px;">pe</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/shell/" style="font-size: 17.5px;">shell</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/tr/" style="font-size: 10px;">tr</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/uniq/" style="font-size: 10px;">uniq</a> <a href="/tags/win32/" style="font-size: 12.5px;">win32</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/24/understanding-pe-format/">Basics of PE Format(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/24/usage%20of%20derper%20and%20certbot/">Configuration of Tailscale Derper and Certbot</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/06/PIC32-configuration/">PIC32MX Basics --- Basic Configuration</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/lengthOfLongestSubstring/">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

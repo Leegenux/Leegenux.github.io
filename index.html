@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-understanding-pe-format" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/24/understanding-pe-format/" class="article-date">
+  <time class="dt-published" datetime="2023-01-24T01:37:34.705Z" itemprop="datePublished">2023-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/24/understanding-pe-format/">Basics of PE Format(1)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>The post will not show you every detail about the PE format. However, you ought to be given some knowledge helpful to crack an PE when you’re done reading. By the way, the details of PE format can be found <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format" title="click for more">here</a>, if you want some precise insights from me, please keep reading.</p>
+<h2 id="Byte-Order"><a href="#Byte-Order" class="headerlink" title="Byte Order"></a>Byte Order</h2><p>Before we cut into the theme, let’s prepare ourselves for correctly reading the byte stream. As known to us all, the Intel CPUs all comply to the little endian byte order, whose standard has a great influence on the PC market. So bear in mind that the byte sections I’m gonna show to you are all little endian ordering. That’s for every data unit, as the offset grows, the byte gets less and less significant. Hopefully the illustration above will help you get over some confusion later.</p>
+<p>Each PE file has a header, and you can dig out much crucial information from this tiny part. The definitions of the headers serve as references when needed, so there is no need to memorize them all.</p>
+<p>First of all, there are <strong>DOS header</strong></p>
+<h2 id="DOS-Header"><a href="#DOS-Header" class="headerlink" title="DOS Header"></a>DOS Header</h2><p>The structure representing the DOS header is <code>_IMAGE_DOS_HEADER</code>, which takes up 64 bytes of space. There are dozens of fields in this structure but what we really care about is the last <code>DWORD</code> (4 bytes).</p>
+<p>It’s declaration is <code>DWORD e_lfanew;</code> . Its job is to point out the offset of <strong>PE header</strong>.</p>
+<p>Note that most content of the PE file’s header is designed for program loader of the operating system to work flawlessly.</p>
+<p>Here is its definition:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span> &#123;</span>      <span class="comment">// DOS .EXE header</span></span><br><span class="line">    WORD   e_magic;                     <span class="comment">// Magic number</span></span><br><span class="line">    WORD   e_cblp;                      <span class="comment">// Bytes on last page of file</span></span><br><span class="line">    WORD   e_cp;                        <span class="comment">// Pages in file</span></span><br><span class="line">    WORD   e_crlc;                      <span class="comment">// Relocations</span></span><br><span class="line">    WORD   e_cparhdr;                   <span class="comment">// Size of header in paragraphs</span></span><br><span class="line">    WORD   e_minalloc;                  <span class="comment">// Minimum extra paragraphs needed</span></span><br><span class="line">    WORD   e_maxalloc;                  <span class="comment">// Maximum extra paragraphs needed</span></span><br><span class="line">    WORD   e_ss;                        <span class="comment">// Initial (relative) SS value</span></span><br><span class="line">    WORD   e_sp;                        <span class="comment">// Initial SP value</span></span><br><span class="line">    WORD   e_csum;                      <span class="comment">// Checksum</span></span><br><span class="line">    WORD   e_ip;                        <span class="comment">// Initial IP value</span></span><br><span class="line">    WORD   e_cs;                        <span class="comment">// Initial (relative) CS value</span></span><br><span class="line">    WORD   e_lfarlc;                    <span class="comment">// File address of relocation table</span></span><br><span class="line">    WORD   e_ovno;                      <span class="comment">// Overlay number</span></span><br><span class="line">    WORD   e_res[<span class="number">4</span>];                    <span class="comment">// Reserved words</span></span><br><span class="line">    WORD   e_oemid;                     <span class="comment">// OEM identifier (for e_oeminfo)</span></span><br><span class="line">    WORD   e_oeminfo;                   <span class="comment">// OEM information; e_oemid specific</span></span><br><span class="line">    WORD   e_res2[<span class="number">10</span>];                  <span class="comment">// Reserved words</span></span><br><span class="line">    LONG   e_lfanew;                    <span class="comment">// File address of new exe header</span></span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="NT-Header"><a href="#NT-Header" class="headerlink" title="NT Header"></a>NT Header</h2><p>It consists of <strong>Standard NT Header</strong> (AKA FileHeader below) and <strong>Optional NT Header</strong>, both of which are members of C structure <code>_IMAGE_NT_HEADERS</code>.</p>
+<p>The declaration shows the layout:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span>&#123;</span></span><br><span class="line">    DWORD Signature;   <span class="comment">//&quot;PE\0\0&quot; if valid</span></span><br><span class="line">    _IMAGE_FILE_HEADER FileHeader;</span><br><span class="line">    _IMAGE_OPTIONAL_HEADER OptionalHeader;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="IMAGE-FILE-HEADER"><a href="#IMAGE-FILE-HEADER" class="headerlink" title="_IMAGE_FILE_HEADER"></a><code>_IMAGE_FILE_HEADER</code></h3><p>This structure occupies 20 bytes.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_FILE_HEADER</span>&#123;</span></span><br><span class="line">    WORD Machine;			<span class="comment">// 0x0: All platform; 0x14C: Intel i386 and later;</span></span><br><span class="line">    WORD NumberOfSections;</span><br><span class="line">	DWORD TimeDateStamp;    <span class="comment">// Set on finishing linking</span></span><br><span class="line">	DWORD PointerToSymbolTable; </span><br><span class="line">	DWORD NumberOfSymbols; </span><br><span class="line">	WORD SizeOfOptionalHeader;</span><br><span class="line">	WORD Characteristics;   <span class="comment">// Each bit represents a different property</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>The member mostly referred to is the <code>Characteristic</code> and meaning of its each bit can be found in <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_image_file_header">official page.</a></p>
+<h3 id="IMAGE-OPTIONAL-HEADER"><a href="#IMAGE-OPTIONAL-HEADER" class="headerlink" title="_IMAGE_OPTIONAL_HEADER"></a><code>_IMAGE_OPTIONAL_HEADER</code></h3><p>This structure is placed adjacent to the former one (<code>_IMAGE_FILE_HEADER</code>) and is much larger — 224 bytes which peaks among the list of PE headers in size. (Since the array <code>DataDirectory</code> might actually have more or less than 16 elements, the size of Optional Header varies.)</p>
+<p>The declaration is the following:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_OPTIONAL_HEADER</span>&#123;</span></span><br><span class="line">    WORD Magic;                    <span class="comment">//0x0107:ROM image, 0x010B:32bit PE, 0X020B:64bit PE </span></span><br><span class="line">    BYTE MajorLinkerVersion; </span><br><span class="line">    BYTE MinorLinkerVersion; </span><br><span class="line">    DWORD SizeOfCode;             </span><br><span class="line">    DWORD SizeOfInitializedData;</span><br><span class="line">    DWORD SizeOfUninitializedData; </span><br><span class="line">    DWORD AddressOfEntryPoint;     <span class="comment">// A relative virtual address of Program Entry Point</span></span><br><span class="line">    DWORD BaseOfCode;              <span class="comment">// Base address of code</span></span><br><span class="line">    DWORD BaseOfData;              <span class="comment">// Base address of data</span></span><br><span class="line">    DWORD ImageBase;               <span class="comment">// The base address in memory</span></span><br><span class="line">    DWORD SectionAlignment;  	   <span class="comment">// Decides the alignment size</span></span><br><span class="line">    DWORD FileAlignment;           <span class="comment">// Mostly 1000H</span></span><br><span class="line">    WORD MajorOperatingSystemVersion;</span><br><span class="line">    WORD MinorOperatingSystemVersion;  </span><br><span class="line">    WORD MajorImageVersion;           </span><br><span class="line">    WORD MinorImageVersion;             </span><br><span class="line">    WORD MajorSubsystemVersion;    </span><br><span class="line">    WORD MinorSubsystemVersion; </span><br><span class="line">    DWORD Win32VersionValue;       <span class="comment">// Always 0</span></span><br><span class="line">    DWORD SizeOfImage;             <span class="comment">// Size of memory occupied after loading into memory</span></span><br><span class="line">    DWORD SizeOfHeaders;           <span class="comment">// Total size of the DOS header plus PE Header.</span></span><br><span class="line">    DWORD CheckSum;           </span><br><span class="line">    WORD Subsystem;          </span><br><span class="line">    DWORD DllCharacteristics;  	<span class="comment">// Always 0</span></span><br><span class="line">    DWORD SizeOfStackReserve;  <span class="comment">// Default reserved stack size</span></span><br><span class="line">    DWORD SizeOfStackCommit;   <span class="comment">// Commited stack size</span></span><br><span class="line">    DWORD SizeOfHeapReserve;   <span class="comment">// Default reserved heap size</span></span><br><span class="line">    DWORD SizeOfHeapCommit;    <span class="comment">// Commited heap size</span></span><br><span class="line">    DWORD LoaderFlags;         <span class="comment">// Always 0</span></span><br><span class="line">    DWORD NumberOfRvaAndSizes; <span class="comment">// Number of members in the next array</span></span><br><span class="line">    _IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];<span class="comment">// #define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>All members with comments are instrumental. Note that all size related stuff referred above obeys the memory alignment mechanism. </p>
+<p>For each 32bit program there are virtual memory space from <code>0x0</code> to <code>0xFFFFFFFF</code>. And the <code>ImageBase</code> specifies the default offset the PE should be loaded to.</p>
+<h3 id="FileBuffer-and-ImageBuffer"><a href="#FileBuffer-and-ImageBuffer" class="headerlink" title="FileBuffer and ImageBuffer"></a>FileBuffer and ImageBuffer</h3><p>FileBuffer is the way how PE lives in the hard drive. However, execution of a PE requires an ImageBuffer in memory storing all the machine code and other data. The ImageBuffer is a copy of stretched version FileBuffer and the stretching process is done by the <strong>PE Loader</strong>  of the OS.</p>
+<p>The <code>ImageBase</code> address is not <a href="#rva-and-raw">RVA</a>. After the FileBuffer is loaded, the PE Loader sets <code>EIP</code> register to <code>ImageBase</code> + <code>AddressOfEntryPoint</code>, which is to make the program start from its entry point.</p>
+<p>Note that the value of Alignment specifies the minimal storage unit of the subject. For instance, <code>SectionAlignment</code> specifies the unit for sections in ImageBuffer, the <code>FileAlignment</code> in FileBuffer. These two values might not be the same sometimes.</p>
+<h2 id="Sections-Table"><a href="#Sections-Table" class="headerlink" title="Sections Table"></a>Sections Table</h2><p>For better organization, higher efficiency and other benifits, PE format has exploited the Section mechanism. The resource such as code, data are grouped according to their attributes and placed together respectively.</p>
+<p>One of those benifits the Section mechanism brings is security. We avoid puting code and data together so we get away from accidently overwriting our code or run the data in some extent.</p>
+<p>At the beginning of each Section, there is a Section Header containing the locations, access privileges, attributes and so on.</p>
+<p>The section table can be found at the offset <code>_IMAGE_DOS_HEADER.e_lfanew</code> + <code>IMAGE_SIZEOF_SIGNATURE + IMAGE_SIZEOF_FILE_HEADER</code> + <code>_IMAGE_FILE_HEADER.SizeOfOptionalHeader</code> relative to the beginning of the binary file (For FileBuffer) or <code>ImageBase</code> (For ImageBuffer). That’s to say, the Section Table is put right next to the Optional NT header.</p>
+<blockquote>
+<p>Both <code>IMAGE_SIZEOF_SIGNATURE</code> and <code>IMAGE_SIZEOF_FILE_HEADER</code> are predefined macros.</p>
+<p>From the formula above we also manage to know the alignment of all the headers I have mentioned above. Try drawing a graph for them on the paper yourself.</p>
+</blockquote>
+<p>Note that there is no such structure corresponding to Section Table in code, this term just helps me to put thing easier.</p>
+<h3 id="Section-Header"><a href="#Section-Header" class="headerlink" title="Section Header"></a>Section Header</h3><p>Inside of the Section Table are Section Headers placed consequently.</p>
+<p>The definition of Section Header looks like this:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> IMAGE_SIZEOF_SHORT_NAME 8</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_SECTION_HEADER</span> &#123;</span></span><br><span class="line">    UCHAR   Name[IMAGE_SIZEOF_SHORT_NAME];</span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">            ULONG   PhysicalAddress;</span><br><span class="line">            ULONG   VirtualSize;</span><br><span class="line">    &#125; Misc;</span><br><span class="line">    ULONG   VirtualAddress;</span><br><span class="line">    ULONG   SizeOfRawData;</span><br><span class="line">    ULONG   PointerToRawData;</span><br><span class="line">    ULONG   PointerToRelocations;</span><br><span class="line">    ULONG   PointerToLinenumbers;</span><br><span class="line">    USHORT  NumberOfRelocations;</span><br><span class="line">    USHORT  NumberOfLinenumbers;</span><br><span class="line">    ULONG   Characteristics;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The five fields : <code>VirtualAddress</code>, <code>VirtualSize</code>, <code>PointerToRawData</code>, <code>SizeOfRawData</code> and <code>Characteristic</code> are especially important for us hackers. You should read the next section <a href="#rva-and-raw">RVA and RAW</a>, where four of the fields are explained.</p>
+<h3 id="RVA-and-RAW"><a href="#RVA-and-RAW" class="headerlink" title="RVA and RAW"></a>RVA and RAW</h3><p>This two terms are crucial for you to understand how PE FileBuffer is mapped to the ImageBuffer.</p>
+<p>RVA is the bias between specified address and ImageBase. RAW is the bias between file offset and the beginning of the file. The <code>VirtualAddress</code> field of the <code>_IMAGE_SECTION_HEADER</code> is also an RVA.</p>
+<p>So, look at the definition of <code>_IMAGE_SECTION_HEADER</code>. The <code>VirtualAddress</code> field is the RVA of the Section in ImageBuffer. The <code>PointerToRawData</code> is RAW of the Section in FileBuffer. <code>PointerToRawData</code> and <code>VirtualSize</code> are then both self-evident.</p>
+<p>Though the section-wise layout always changes after transformation between the FileBuffer and ImageBuffer. The inner layout of each section is not likely to change. So we come to a formula: <strong>RAW - <code>PointerToRawData</code> &#x3D; RVA - <code>VirtualAddress</code></strong>.</p>
+<p>For example, say we have an <code>ImageBase</code> of value <code>0x01000000</code>, a .text section in ImageBuffer at <code>0x01001000</code> (which is to say the <code>VirtualAddress</code> &#x3D; <code>0x00001000</code> - <code>0x0100000</code> &#x3D; <code>0x00001000</code>). The corresponding .text section’s <code>PointerToRawData</code> is <code>0x00000400</code> Now there is a structure at <code>0x00001124</code> in this .text section in FileBuffer. How do you find out its location in the ImageBuffer ? </p>
+<p>Easy! Apply that equation to this problem : RVA &#x3D; RAW(<code>0x00001124</code>) - <code>PointerToRawData</code>(<code>0x00000400</code>) + <code>VirtualAddress</code>(<code>0x00001000</code>) &#x3D; <code>0x00001d24</code>. And according to the RVA, we get its VA &#x3D; RVA(<code>0x00001d24</code>) + <code>ImageBase</code>(<code>0x01000000</code>) &#x3D; <code>0x01001d24</code>. Now we’ve derived all location information with the help of that simple equation.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We have played a little bit around part of the PE header. We have learnt about DOS header(<code>_IMAGE_DOS_HEADER</code>), NT header(<code>_IMAGE_NT_HEADERS</code>) and Sections(<code>_IMAGE_SECTION_HEADER</code>). Hopefully two formulas introduced in <a href="#section-table">Section Table</a> and <a href="#rva-and-raw">RVA and RAW</a> can help you draw a schematic diagram for part of the FileBuffer and its corresponding ImageBuffer.</p>
+<p>In next post, I will talk about the <strong>IAT</strong>, <strong>EAT</strong> and <strong>DLL</strong>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/24/understanding-pe-format/" data-id="cld9kj0br000y7swk2cqi3ii7" data-title="Basics of PE Format(1)" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cracking/" rel="tag">cracking</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dll/" rel="tag">dll</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-usage of derper and certbot" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/24/usage%20of%20derper%20and%20certbot/" class="article-date">
+  <time class="dt-published" datetime="2023-01-24T01:37:34.705Z" itemprop="datePublished">2023-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/24/usage%20of%20derper%20and%20certbot/">Configuration of Tailscale Derper and Certbot</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Tailscale is a useful utility to connect all your devices together with a virtual LAN. It’s based on Wireguard and supports Windows, Linux, macOS, Android and iOS operating system.</p>
+<p>Derpers are relay nodes in the tailscale network. Since all the tailscale Derpers are deployed outside of China, a private derper is necessary for fast connection. For offcial documentation, please refer to <a target="_blank" rel="noopener" href="https://tailscale.com/kb/1118/custom-derp-servers/">Custom DERP Servers - Tailscale</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/24/usage%20of%20derper%20and%20certbot/" data-id="cld9kj0bs000z7swkaune07bo" data-title="Configuration of Tailscale Derper and Certbot" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/01/23/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2023-01-23T13:42:47.713Z" itemprop="datePublished">2023-01-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/01/23/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/01/23/hello-world/" data-id="cld9k7xzd00006twkgu1gfsi9" data-title="Hello World" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PIC32-configuration" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/07/06/PIC32-configuration/" class="article-date">
+  <time class="dt-published" datetime="2019-07-06T02:59:25.000Z" itemprop="datePublished">2019-07-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/07/06/PIC32-configuration/">PIC32MX Basics --- Basic Configuration</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Before we start, there are something you should know about the tutorial.</p>
+<p>This series of tutorial will show you how to get PIC32 functioning based on a <strong>PIC32MX220F032B</strong> chip and a <strong>PICKit 3</strong> programmer. The tutorial mostly applies to Microchip PIC32MX1xx&#x2F;2xx series because they are alike, and not that many differences exist between PIC32MX1xx&#x2F;2xx and other chip version.</p>
+<p>This post will discuss the basic configurations of the PIC32MX220F032B including watchdog, sysclk, secondary oscillator, JTAG, ICSP and other.</p>
+<p>The device pinout is provided here as reference:</p>
+<img src="http://pub9j4x8t.bkt.clouddn.com/PIC32MXPinout.jpg"/>
+
+<h2 id="Option-of-Reference"><a href="#Option-of-Reference" class="headerlink" title="Option of Reference"></a>Option of Reference</h2><p>Basically, what I am gonna talk about are based on the official help document:  <a target="_blank" rel="noopener" href="http://www.mrc.uidaho.edu/mrc/people/jff/340/341/ECE341_Reference_Materials/Microchip%20XC32%20C%20Compiler%20and%20Libraries/PIC32ConfigSet.pdf">PIC32 Configuration Settings</a></p>
+<h2 id="Config-Bits"><a href="#Config-Bits" class="headerlink" title="Config Bits"></a>Config Bits</h2><p>The PIC32 configuration bits are a set of non-volatile options defining some certain behaviors of the MCU. They are different from the program written in C or assembly in that they are stored in boot flash memory rather than program flash memory.</p>
+<p>You should use #pragma directive to define the config bits.</p>
+<h3 id="Watchdog-Timer"><a href="#Watchdog-Timer" class="headerlink" title="Watchdog Timer"></a>Watchdog Timer</h3><p>A watchdog timer (WDT) is a hardware timer that automatically resets the computer system if the main controller neglects to periodically clear its bit.</p>
+<p>It’s widely adopted by complex embedded device for temporarily recovering from hardware fault or not responding. However, it’s kind of a hassle to small scale projects sometimes.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma config FWDTEN = off    // Disable the watchdog timer</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="System-Clock"><a href="#System-Clock" class="headerlink" title="System Clock"></a>System Clock</h3><p>There are two PIC32 internal oscillators. For PIC32MX220F032B, one is the 8MHz FRC (Fast Resistor Capacitor) oscillator and the other is the 3.15 MHz LPRC (Low Power Resistor Capacitor) oscillator. </p>
+<p>The FRC and external oscillators can be frequency scaled by in-circuit <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Phase-locked_loop">PLL</a>. For the sake of special structure of PLL, the input frequency must be between certain range. To my PIC32MX220F032B, the range is constrained to 4-5MHz. Also for each MCU, there is a recommended maximum frequency for the CPU in it. So, there are frequency dividers before and after the PLL.</p>
+<p>Look at the example below for getting the maximum frequency of 40MHz with internal oscillator:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#pragma config FNOSC = FRCPLL   // Use fast resistor capacitor oscillator</span><br><span class="line">#pragma config FPLLIDIV = DIV_2 // PLL input divider</span><br><span class="line">#pragma config FPLLMUL = MUL_20 // PLL multipler</span><br><span class="line">#pragma config FPLLODIV = DIV_2 // PLL output divider</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Secondary-Oscillator"><a href="#Secondary-Oscillator" class="headerlink" title="Secondary Oscillator"></a>Secondary Oscillator</h3><p>The Secondary Oscillator (SOSC) is intended for low-power operation with an external 32 to 100 KHz oscillator. When enabled, the external crystal should be connected to the SOSCO and SOSCI device pins.</p>
+<p>The code below demonstrates how to enable the secondary oscillator and set it as system clock:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#pragma config FSOSCEN = ON  // Enable secondary oscillator </span><br><span class="line">#pragma config FNOSC = SOSC  // Make the secondary oscillator the system clock</span><br></pre></td></tr></table></figure>
+
+<p>In tutorials later, we adopt the internal oscillator solution.</p>
+<h3 id="JTAG"><a href="#JTAG" class="headerlink" title="JTAG"></a>JTAG</h3><p>JTAG (Joint Test Action Group) is one of the common standards designed for a debugging and programming interface. Since we are using PICKit3 instead, we should properly disable JTAG. JTAG occupies certain pins when enabled, and if you know a bit about the inner implementation of PPS (Peripheral Pin Selections), you will come to the conclusion that the data of the JTAG pins are two-way.</p>
+<p>TMS, TDO, TCK and TDI are four pins required by JTAG standard. To disable it and free these pins for other I&#x2F;O usages, put code below in your source.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma config JTAGEN = OFF</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ICSP-In-Circuit-Serial-Programming"><a href="#ICSP-In-Circuit-Serial-Programming" class="headerlink" title="ICSP (In-Circuit Serial Programming)"></a>ICSP (In-Circuit Serial Programming)</h3><p>The PGEC (clock) and PGED (data) respectively transmit programming clock and data. There are 3 pairs of PGEX pins on <strong>PIC32MX220F032B</strong>. If you want PGEC2 and PGED2, use the following config bits:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma config ICESEL = ICS PGx2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Configuration-Optimization"><a href="#Configuration-Optimization" class="headerlink" title="Configuration Optimization"></a>Configuration Optimization</h2><p>The MCU can adjust its behavior according to the SYSCLK for best optimized performance. In  addition to the complex manual code modification approach, the hardware vendor has already provided us a useful tool to achieve this —— SYSTEMConfigPerformance(int sysclk);</p>
+<p>It takes as input argument the system clock frequency, and then enables data and instruction caches , optimizes the access time to the flash memory and caches. So always include invoke of this particular function.</p>
+<p>For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define SYSCLK 40000000L</span><br><span class="line">int main(void)&#123;</span><br><span class="line">	SYSTEMConfigPerformance(SYSCLK);</span><br><span class="line">	// Code your application below</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/07/06/PIC32-configuration/" data-id="cld9kj0b5000m7swk66ya1uty" data-title="PIC32MX Basics --- Basic Configuration" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-lengthOfLongestSubstring" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/07/lengthOfLongestSubstring/" class="article-date">
+  <time class="dt-published" datetime="2019-04-06T16:28:30.000Z" itemprop="datePublished">2019-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/07/lengthOfLongestSubstring/">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However you will find the <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">reference link</a> useful.</p>
+<h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Given a ascii string, please find out the length of longest substring that contains no repetitive characters.</p>
+<h2 id="Solution-1-Brute-Force"><a href="#Solution-1-Brute-Force" class="headerlink" title="Solution 1: Brute Force"></a>Solution 1: Brute Force</h2><p>Start and ending charaters together indicate a substring, and we can iterate over all the start-ending pairs to go over all substrings. </p>
+<p>There should be 3 loops. The first is letting <code>i</code> goes through all the characters. Then for every <code>i</code> value, <code>j</code> grows from <code>i + 1</code> to the end of whole string. Then we determine whether there are repetitives or not for each substring.</p>
+<p>Code is as follows:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(<span class="type">char</span>* s)</span> &#123;</span><br><span class="line">    <span class="type">int</span> maxLength = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>, k=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> strLen = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; strLen - maxLength; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = i+<span class="number">1</span>; (j &lt; strLen) &amp;&amp; s[j] != s[i]; j++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (k = i+<span class="number">1</span>; (k &lt; j) &amp;&amp; (s[k] != s[j]); k++);</span><br><span class="line">			<span class="keyword">if</span> (k != j) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        maxLength = (j-i)&gt;maxLength ? (j-i) : maxLength;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Algorithm-Complexity-of-Solution-1"><a href="#Algorithm-Complexity-of-Solution-1" class="headerlink" title="Algorithm Complexity of Solution 1"></a>Algorithm Complexity of Solution 1</h3><p>For third loop, the time complexity of the third loop is $O(j-i)​$ because we only need to at most compare the character from index <code>i</code> to <code>j - 1</code> with the <code>j</code>th character. Thus, the second loop has a time complexity of $O(\sum_{j&#x3D;i+1}^{n}(j-i)) &#x3D; O(\frac{(n - i)(i + 1 + n)}{2})​$. So the total time complexity is $O(\sum_{i&#x3D;0}^{n-1}{\frac{(n-i)(i+1+n)}{2}})​$, which equals to $O(n^3)​$</p>
+<h2 id="Solution-2-Sliding-Window"><a href="#Solution-2-Sliding-Window" class="headerlink" title="Solution 2: Sliding Window"></a>Solution 2: Sliding Window</h2><p>In previous solution, we spend much time checking whether there are repetitive characters of same string over and over again. But have you thought of keeping previous comparison results?</p>
+<p>Here comes an greatly improved solution:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(<span class="type">char</span>* s)</span> &#123;</span><br><span class="line">    <span class="type">int</span> i, j;</span><br><span class="line">    <span class="type">int</span> strLen = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="type">int</span> maxLength = (strLen==<span class="number">1</span>);</span><br><span class="line">    <span class="type">int</span> characterCountArray[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>, j=<span class="number">1</span>, characterCountArray[s[i]]=<span class="number">1</span>; i &lt; strLen-maxLength &amp;&amp; j &lt; strLen; ) &#123;</span><br><span class="line">        <span class="keyword">if</span> (characterCountArray[s[j]]) &#123;</span><br><span class="line">            characterCountArray[s[i++]] = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            characterCountArray[s[j++]] = <span class="number">1</span>;</span><br><span class="line">            maxLength = (j-i) &gt; maxLength ? (j-i) : maxLength;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>There are 3 points that you need to look closer at:</p>
+<ul>
+<li>The big loop breaks when <code>i &gt;= strLen - maxLength</code></li>
+<li>The comparison results are kept in the sliding window.</li>
+<li>Only after <code>j++</code> does <code>maxLength</code> need updates.</li>
+</ul>
+<h3 id="Algorithm-Complexity-of-Solution-2"><a href="#Algorithm-Complexity-of-Solution-2" class="headerlink" title="Algorithm Complexity of Solution 2"></a>Algorithm Complexity of Solution 2</h3><p>In worst condition, all elements of the string will be access twice by <code>i</code> and <code>j</code>. So the time complexity is $O(n)$.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/07/lengthOfLongestSubstring/" data-id="cld9kj0bp000t7swk16uq774z" data-title="Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters." class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-win32-reverse-engineering-basics" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/28/win32-reverse-engineering-basics/" class="article-date">
+  <time class="dt-published" datetime="2019-03-28T06:36:33.000Z" itemprop="datePublished">2019-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/28/win32-reverse-engineering-basics/">Win32 Reverse Engineering Basics</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>This post consists of my learning notes, insights, my experience of cracking a executable as well as answers to the assignments.<br>We are using OllyDbg to crack.</p>
+<h2 id="Primary-Usages-of-OllyDbg"><a href="#Primary-Usages-of-OllyDbg" class="headerlink" title="Primary Usages of OllyDbg"></a>Primary Usages of OllyDbg</h2><h3 id="Keyboard-Shortcuts"><a href="#Keyboard-Shortcuts" class="headerlink" title="Keyboard Shortcuts"></a>Keyboard Shortcuts</h3><p>With these 4 shortcuts, we are able to do some reverse engineering on easy crackmes like one that I’m gonna show you.</p>
+<ul>
+<li><strong>Restart</strong>			  <code>Ctrl</code> + <code>F2</code></li>
+<li><strong>Step Into</strong> 		 <code>F7</code></li>
+<li><strong>Step Over</strong> 		  <code>F8</code></li>
+<li><strong>Execute till Return</strong> 	 <code>Ctrl </code>+ <code>F9</code></li>
+</ul>
+<h3 id="Ways-to-Modify-Strings-in-Binaries"><a href="#Ways-to-Modify-Strings-in-Binaries" class="headerlink" title="Ways to Modify Strings in Binaries"></a>Ways to Modify Strings in Binaries</h3><ul>
+<li>Direct modification : That’s directly making changes in the <strong>Disassembler Window</strong>.</li>
+<li>Create a new string somewhere else and make it work instead of the original one.</li>
+</ul>
+<blockquote>
+<p>To know more details about the user interface. Refer to <a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/practical-malware-analysis/9781593272906/ch10s02.html">here</a></p>
+</blockquote>
+<p>Two points above reveals two fundamental approaches of patching a binary. The patch mentioned are both intuitively achievable in terms of OllyDbg’s software operations. </p>
+<p>What need to be emphasized is that we shouldn’t forget to save our changes to the binary.</p>
+<h2 id="IA32-Registers"><a href="#IA32-Registers" class="headerlink" title="IA32 Registers"></a>IA32 Registers</h2><h3 id="Register-Types"><a href="#Register-Types" class="headerlink" title="Register Types"></a>Register Types</h3><ul>
+<li>General purpose registers</li>
+<li>Segment registers</li>
+<li>Program status and control registers</li>
+<li>Instruction pointer registers</li>
+</ul>
+<h2 id="Stack-Establishment-and-Destruction"><a href="#Stack-Establishment-and-Destruction" class="headerlink" title="Stack Establishment and Destruction"></a>Stack Establishment and Destruction</h2><p>The routine of conventional Win32 programs regarding stack’s establishment and destruction can be elaborated in a simple way:</p>
+<ol>
+<li>push EBP to store the old stack base value</li>
+<li>mov EBP, ESP to create a brand new stack for subprogram</li>
+</ol>
+<p>And the destruction is quite the opposite.</p>
+<h2 id="Important-Information-About-Cracking-VB-Binaries"><a href="#Important-Information-About-Cracking-VB-Binaries" class="headerlink" title="Important Information About Cracking VB Binaries"></a>Important Information About Cracking VB Binaries</h2><ul>
+<li>VB program can be compiled into P code(<strong>Pseudo Code</strong>) or N code(<strong>Native code</strong>)</li>
+<li>VB program operates in an event-driven manner, in which Windows mainly works.</li>
+<li>VB program’s fundamental information resides in the executables in the form of structures.</li>
+</ul>
+<h2 id="X86-Calling-Conventions"><a href="#X86-Calling-Conventions" class="headerlink" title="X86 Calling Conventions"></a>X86 Calling Conventions</h2><ul>
+<li><strong>cdecl</strong> </li>
+<li><strong>stdcall</strong></li>
+<li><strong>fastcall</strong></li>
+</ul>
+<p>The <code>cdecl</code> features callers’ responsibility to clean up the callee’s stack which makes calling with mutable amount of parameters possible. And <code>stdcall</code> works differently. The callee clears the stack so that the program have better compatibility against other languages. So Win32 development chooses the latter convention. There are also <code>fastcall</code> which makes use of registers for faster calling (However things don’t always act as expected).</p>
+<h2 id="PE-File-Format"><a href="#PE-File-Format" class="headerlink" title="PE File Format"></a>PE File Format</h2><p>Portable Executables are known as PE file. There are essential information across different aspects including memory location, compatibility code, CPU family etc stored in the header part of the PE file. You can check them out by clicking <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format">here</a>. Also I will upload a post containing the important points later.</p>
+<h2 id="Hands-on-Cracking"><a href="#Hands-on-Cracking" class="headerlink" title="Hands-on Cracking"></a>Hands-on Cracking</h2><p>The test executable can be downloaded <a href="">here</a></p>
+<h3 id="Find-the-Main-Function"><a href="#Find-the-Main-Function" class="headerlink" title="Find the Main Function"></a>Find the Main Function</h3><p>Before debugging, you should first take a glance at what this file is about. It turns out that a password is required or you are blocked. Then load the file with debugger. Do stepping over until you see the prompt: <code>What&#39;s your password?</code>. You are already in the <code>main</code> function. Trace back and at some point you see this: <img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1ilhjin0aj30iy0bvgls.jpg"></p>
+<p>The <code>CALL</code> statement jumps to the “ask for password” section. Around it there are <code>MSVCR120.__winitenv</code> and <code>MSVCR120.exit</code> API calls. So we can assure that this is the <code>main</code> function entry.</p>
+<h3 id="Crack-the-Password-Section"><a href="#Crack-the-Password-Section" class="headerlink" title="Crack the Password Section"></a>Crack the Password Section</h3><p>After the password <code>scanf</code> related code. There are lines</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TEST EAX, EAX</span><br><span class="line">JE SHORT Test1.011C419</span><br></pre></td></tr></table></figure>
+
+<p>implementing the logic that when two string matches, jump to <code>Test1.011C419</code>. Here <code>EAX</code> is set to 0 when function <code>strcmp</code> finds two strings match.</p>
+<p><code>TEST</code> sets the zero flag, <code>ZF</code>, when the result of the <code>AND</code> operation is 0. So only if <code>EAX</code> is 0 will <code>JE</code> statement do the jump.</p>
+<p>To bypass the password, try changing them into this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMP EAX, EAX</span><br><span class="line">JE SHORT Test1.011C419</span><br></pre></td></tr></table></figure>
+
+<p>This modification makes the <code>JE</code> statement directly jumps to the <code>string matches</code> logic branch. Save and rerun, you now get to the next stage.</p>
+<h3 id="Reveal-the-Encryption"><a href="#Reveal-the-Encryption" class="headerlink" title="Reveal the Encryption"></a>Reveal the Encryption</h3><p>The second input in the format of <code>%d</code> is stored on the <code>SS:[EBP-48]</code> and a least significant byte in the <code>EAX</code> as what this screenshot tells us:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1im1uk8lrj30im0brwer.jpg"></p>
+<p>Execution of <code>CALL Test1.011C11A4</code> leads us to the initiation of an array:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1im4pztg2j30im0bz74p.jpg"></p>
+<p>After that there is a loop where the encryption goes:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1im87ylenj30iv03v0sp.jpg"></p>
+<p>Procedures above can be translated into fake code:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">unsigned char offset = last_byte_of(input_code); 	// Get the input</span><br><span class="line"></span><br><span class="line">init(array);     // Init the code</span><br><span class="line"></span><br><span class="line">for (char i = 0; i&lt;length(array); i++) &#123;</span><br><span class="line">    array[i] = array[i] xor array[i+offset];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Store-the-Decryped-Code"><a href="#Store-the-Decryped-Code" class="headerlink" title="Store the Decryped Code"></a>Store the Decryped Code</h3><p>The screenshot shows all necessary information:</p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g1imhjl4j4j30ik0870ss.jpg"></p>
+<p>The decrypted code are stored in the <code>D:\kp</code>. (Though I changed it because I don’t have no drive with label D).</p>
+<h2 id="Assignments-and-Answers"><a href="#Assignments-and-Answers" class="headerlink" title="Assignments and Answers"></a>Assignments and Answers</h2><h3 id="What’s-the-Calling-Convention-of-this-executable"><a href="#What’s-the-Calling-Convention-of-this-executable" class="headerlink" title="What’s the Calling Convention of this executable ?"></a>What’s the Calling Convention of this executable ?</h3><p>As you can see, there are no steps of clearing stack right behind the <code>CALL</code>. According to the description in the <strong>X86 Calling Conventions</strong> section several paragraphs away above . It uses <code>stdcall</code>. Registers play no part in passing parameters to callee.</p>
+<h3 id="What-API-does-the-program-calls-when-storing-the-decrypted-data"><a href="#What-API-does-the-program-calls-when-storing-the-decrypted-data" class="headerlink" title="What API does the program calls when storing the decrypted data ?"></a>What API does the program calls when storing the decrypted data ?</h3><p>Obviously according to the image: <code>KERNEL32.CreateFileA</code>, <code>KERNEL32.WriteFile</code> and <code>KERNEL32.CloseHandle</code> are used.</p>
+<h3 id="Where-is-the-main-entry-and-how-is-the-code-decrypted"><a href="#Where-is-the-main-entry-and-how-is-the-code-decrypted" class="headerlink" title="Where is the main entry and how is the code decrypted ?"></a>Where is the <code>main</code> entry and how is the code decrypted ?</h3><p>Both described concisely in the post.</p>
+<h3 id="Write-a-PE-header-scanner"><a href="#Write-a-PE-header-scanner" class="headerlink" title="Write a PE header scanner ?"></a>Write a PE header scanner ?</h3><p>There are references all around the web. My solution will be like <a target="_blank" rel="noopener" href="https://github.com/Arvanaghi/PE-Parser">this one</a>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/28/win32-reverse-engineering-basics/" data-id="cld9kj0c8001g7swk75cs3iqx" data-title="Win32 Reverse Engineering Basics" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/crack/" rel="tag">crack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-ubuntu-nextcloud-configuration" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/20/ubuntu-nextcloud-configuration/" class="article-date">
+  <time class="dt-published" datetime="2019-03-20T00:10:00.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/20/ubuntu-nextcloud-configuration/">Ubuntu 18.04 NextCloud Installation Guide</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>This article breaks the installation and configuration of the NextCloud into 4 parts, and shows you the path to your own private cloud storage. These 4 parts are:</p>
+<ul>
+<li>PHP</li>
+<li>NextCloud tarball installation</li>
+<li>DB server</li>
+<li>Apache &#x2F; Nginx server</li>
+</ul>
+<p>Though this guide is Ubuntu-titled, all is applicable to other Linux distributions but the package management with <code>apt</code> part.</p>
+<h2 id="PHP-installation"><a href="#PHP-installation" class="headerlink" title="PHP installation"></a>PHP installation</h2><p>According to the official document, for Ubuntu server user, we can type the commands below to fetch and install the PHP modules supporting the core NextCloud server hosting.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt-get install apache2 mariadb-server libapache2-mod-php7.2</span></span><br><span class="line"><span class="comment"># apt-get install php7.2-gd php7.2-json php7.2-mysql php7.2-curl php7.2-mbstring</span></span><br><span class="line"><span class="comment"># apt-get install php7.2-intl php-imagick php7.2-xml php7.2-zip</span></span><br></pre></td></tr></table></figure>
+
+<p>And if you need some PHP extensions, you should also install the <code>libapache2-mod-php7.2</code>. For more information, please refer to <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/15/admin_manual/installation/source_installation.html#prerequisites-label">here</a>.</p>
+<h2 id="NextCloud-Tarball-Installation"><a href="#NextCloud-Tarball-Installation" class="headerlink" title="NextCloud Tarball Installation"></a>NextCloud Tarball Installation</h2><p>Up to the day the note is finished, the latest tarball available can be downloaded through this <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/15/admin_manual/installation/source_installation.html#prerequisites-label">link</a>.</p>
+<p>After validations, unzip it and move it to the document root of your web server. For example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># unzip nextcloud-15.0.5.1.zip -d nextCloudInstall</span></span><br><span class="line"><span class="comment"># cp nextCloudInstall /var/www/nextcloud</span></span><br><span class="line"><span class="comment"># chown -R www-data:www-data /var/www/nextCloud</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="DB-server"><a href="#DB-server" class="headerlink" title="DB server"></a>DB server</h2><p>Let take mariaDB for an example.</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><p>Its installation is quite straightforward:</p>
+<ol>
+<li><p>Add the MariaDB signing key:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Download and execute the script to set up the mariadb apt repository:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Update your sources list:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Install MariaDB:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install mariadb-server</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>On finishing the installation, a prompt of setting the primary password is supposed to pop up. But under some special circumstances, it won’t. So you are not able to login into the server. To solve this, you can try either reinstalling the <code>mariadb-server</code> or solution below:</p>
+<ol>
+<li>Restart the service in <code>nopass</code> mode:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl restart mariadb &amp;&amp; mysql_safe --skip-grant-tables &amp;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Update your password</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">update user set authentication_string=PASSWORD(&quot;&quot;) where User=&#x27;root&#x27;;</span><br><span class="line">update user set plugin=&quot;mysql_native_password&quot; where User=&#x27;root&#x27;;  # THIS LINE</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line">quit;</span><br></pre></td></tr></table></figure>
+
+<p>or if you encounter non-updatable warning, try followings:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span><br><span class="line">USE mysql;</span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;&#x27;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<p>Then you can log in with password <code>&#39;&#39;</code> now. It’s recommended that you reset a stronger password rather than <code>&#39;&#39;</code>.</p>
+<h3 id="DB-Configurations-For-NextCloud"><a href="#DB-Configurations-For-NextCloud" class="headerlink" title="DB Configurations For NextCloud"></a>DB Configurations For NextCloud</h3><p>Make sure that you can log into the mysql as root before doing followings.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#x27;nextcloud&#x27;@&#x27;localhost&#x27; identified by &#x27;StrongPassword&#x27;;</span><br><span class="line">CREATE DATABASE nextcloud;</span><br><span class="line">GRANT ALL PRIVILEGES ON nextcloud.* TO &#x27;nextcloud&#x27;@&#x27;localhost&#x27;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<p>After that, set the transcation isolation level to avoid problems. Also it’s recommended to set the <code>binlog_format</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">transaction_isolation = READ-COMMITTED</span><br><span class="line">binlog_format = ROW</span><br></pre></td></tr></table></figure>
+
+<p>(If not present, you can just create the file and add these lines.)</p>
+<p>Since I am using mariadb, which is an fork of mysqldb, there are other configurations necessary under <code>/etc/php/7.2/apache2/conf.d/mysql.ini</code>. Configuration below activates the connection between mariadb and apache, where option <code>extension</code>  and <code>mysql.default_socket</code> are crucial : </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># configuration for PHP MySQL module</span></span><br><span class="line">extension=pdo_mysql.so</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">mysql.allow_local_infile=On</span><br><span class="line">mysql.allow_persistent=On</span><br><span class="line">mysql.cache_size=<span class="number">2000</span></span><br><span class="line">mysql.max_persistent=-<span class="number">1</span></span><br><span class="line">mysql.max_links=-<span class="number">1</span></span><br><span class="line">mysql.default_port=</span><br><span class="line">mysql.default_socket=/<span class="keyword">var</span>/lib/mysql/mysql.sock  <span class="comment"># Debian squeeze: /var/run/mysqld/mysqld.sock</span></span><br><span class="line">mysql.default_host=</span><br><span class="line">mysql.default_user=</span><br><span class="line">mysql.default_password=</span><br><span class="line">mysql.connect_timeout=<span class="number">60</span></span><br><span class="line">mysql.trace_mode=Off</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Apache-Server-Installation-and-Configurations"><a href="#Apache-Server-Installation-and-Configurations" class="headerlink" title="Apache Server Installation and Configurations"></a>Apache Server Installation and Configurations</h2><p>On Debian, Ubuntu, and their derivatives, Apache installs with a useful configuration so all you have to do is create a <code>/etc/apache2/sites-available/nextcloud.conf</code> file with these lines in it, replacing the Directory and other filepaths with your own filepaths:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Alias</span> /nextcloud <span class="string">&quot;/var/www/nextcloud/&quot;</span></span><br><span class="line"></span><br><span class="line">&lt;Directory /var/www/nextcloud/&gt;</span><br><span class="line">  Options +FollowSymlinks</span><br><span class="line">  AllowOverride All</span><br><span class="line">  Satisfy Any</span><br><span class="line"></span><br><span class="line"> &lt;IfModule mod_dav.c&gt;</span><br><span class="line">  Dav <span class="literal">off</span></span><br><span class="line"> &lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line"> SetEnv HOME /var/www/nextcloud</span><br><span class="line"> SetEnv HTTP_HOME /var/www/nextcloud</span><br><span class="line"></span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Then enable the newly created site: <code># a2ensite nextcloud.conf</code>.</p>
+<p>Also, you should enable the module <code>mod_rewrite</code>: <code># a2enmod rewrite</code></p>
+<p>Other recommended modules are:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a2enmod headers</span></span><br><span class="line"><span class="comment"># a2enmod env</span></span><br><span class="line"><span class="comment"># a2enmod dir</span></span><br><span class="line"><span class="comment"># a2enmod mime</span></span><br></pre></td></tr></table></figure>
+
+<p>You must disable any server-configured authentication for Nextcloud, as it uses Basic authenticationi internally for DAV services. Following the above example configuration file, add the following line in the <Directory> section of in <code>nextcloud.conf</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Satisfy Any</span><br></pre></td></tr></table></figure>
+
+<p>After all above, renable the apache server:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a2enmod rewrite dir mime env headers</span></span><br><span class="line"><span class="comment"># systemctl restart apache2</span></span><br></pre></td></tr></table></figure>
+
+<p>Now your site is reachable. Note that the firewall might block outer connections.</p>
+<h2 id="Trouble-Shooting-Tips"><a href="#Trouble-Shooting-Tips" class="headerlink" title="Trouble Shooting Tips"></a>Trouble Shooting Tips</h2><p>If you get Internal Server Error at your first access to the site. Find some  information from <code>/var/log/apache2/error.log</code> and <code>/var/log/php*</code>. </p>
+<p>For example, if you found <code>chmod()</code> related error. You may solve it with</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chown -R www-data:www-data /var/www/html &amp;&amp; chown -R www-data:www-data /var/www/nextcloud</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/20/ubuntu-nextcloud-configuration/" data-id="cld9kj0bq000v7swk0vjqgvlb" data-title="Ubuntu 18.04 NextCloud Installation Guide" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-usages-of-paste" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/12/usages-of-paste/" class="article-date">
+  <time class="dt-published" datetime="2019-03-11T16:04:20.000Z" itemprop="datePublished">2019-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/12/usages-of-paste/">Usages of paste</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="http://www.theunixschool.com/2012/07/10-examples-of-paste-command-usage-in.html">Command <code>Paste</code> Reference</a></p>
+<p>Paste is mainly used for processing text files. As all known, <code>stdin</code> can also be treated as a file.</p>
+<h2 id="Paste-Between-Multiple-Files"><a href="#Paste-Between-Multiple-Files" class="headerlink" title="Paste Between Multiple Files"></a>Paste Between Multiple Files</h2><p>The command <code>paste file1 file2</code> will give a result where each line contains corresponding lines of every operand file delimited by a tab. And to designate delimiter of your own, simply use a <code>-d</code> option like this: <code>paste -d&#39;/&#39; file1 file2</code>. </p>
+<p>To do the trick of “paste” multiple files with similar names, apply wildcards like this: <code>paste file*</code></p>
+<p>To better illustrate its function, let’s look at an example:</p>
+<p><code>a.txt</code> the file contains:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<p><code>b.txt</code> is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br></pre></td></tr></table></figure>
+
+<p>And the command <code>paste -d &#39;,&#39; a.txt b.txt</code> gives the result:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1,a</span><br><span class="line">2,b</span><br><span class="line">3,c</span><br><span class="line">4,d</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Paste-For-One-File"><a href="#Paste-For-One-File" class="headerlink" title="Paste For One File"></a>Paste For One File</h2><p>By default, <code>paste</code> operation on one file sees each line as an atom manipulative unit. That is, taking each line as a single file.</p>
+<p>There is also <code>-d</code> option working just like what it is for in multiple-file circumstance. </p>
+<p>And there is special usage under this circumstance. To get it across clearer, let’s look at another example:</p>
+<p>A text file labeled <code>data.txt</code> contains this:</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">China</span><br><span class="line">Chinese</span><br><span class="line">Chile</span><br><span class="line">Unknown</span><br><span class="line">Brazil</span><br><span class="line">DontknowEither</span><br><span class="line">Ameriaca</span><br><span class="line">English</span><br></pre></td></tr></table></figure>
+
+<p>For command <code>paste -d&#39;,&#39; - -  &lt; data.txt</code>, the output is:</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">China,Chinese</span><br><span class="line">Chile,Unknown</span><br><span class="line">Brazil,DontknowEither</span><br><span class="line">America,English</span><br></pre></td></tr></table></figure>
+
+<p>And for <code>paste -d&#39;,&#39; - - - &lt; data.txt</code>, we get this:</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">China,Chinese,Chile</span><br><span class="line">Unknown,Brazil,DontknowEither</span><br><span class="line">America,English</span><br></pre></td></tr></table></figure>
+
+<p>Look at and learn from the differences between these two commands and outputs, which are easily understandable enough.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/12/usages-of-paste/" data-id="cld9kj0bv00137swk1fk1e712" data-title="Usages of paste" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paste/" rel="tag">paste</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-usages-of-uniq" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/03/usages-of-uniq/" class="article-date">
+  <time class="dt-published" datetime="2019-03-03T15:56:27.000Z" itemprop="datePublished">2019-03-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/03/usages-of-uniq/">Usages of uniq</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><code>uniq</code> is just an abbreviation of word unique. It’s capable of performing actions about finding unique or duplicated elements. It usually works with <code>sort</code> command because it  <strong>does not detect repeated lines unless they are adjacent.</strong></p>
+<h2 id="Important-Options"><a href="#Important-Options" class="headerlink" title="Important Options"></a>Important Options</h2><p>Some important options are listed below:</p>
+<ul>
+<li><code>-i</code>: Do case-insensitive comparisons</li>
+<li><code>-c</code>: Count the occurrences of lines</li>
+<li><code>-u</code> and <code>-d</code> : With <code>-u</code> you get only unique lines and <code>-d</code> duplicated ones.</li>
+</ul>
+<h2 id="Other-Possible-Options"><a href="#Other-Possible-Options" class="headerlink" title="Other Possible Options"></a>Other Possible Options</h2><ol>
+<li>To limit comparison between lines to only the first N characters, use <code>-w</code></li>
+<li>Avoid comparing the first N characters with <code>-s</code> option</li>
+<li>Avoid comparing first N fields with option <code>-f</code></li>
+<li>More on <a href="www.google.com">Google</a></li>
+</ol>
+<h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h2><p>With a simple example you can figure out how it works, say I have a <strong>sorted</strong> text file <code>colors.txt</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Green  is the favorite of David.</span><br><span class="line">Green  is the favorite of Thomas.</span><br><span class="line">Purple is the favorite of Daniel.</span><br><span class="line">Red    is the favorate of James.</span><br><span class="line">Red    is the favorite of Christopher.</span><br><span class="line">Yello  is the favorite of Joseph.</span><br></pre></td></tr></table></figure>
+
+<p>To count the occurrences of colors, you can try this: <code>uniq -c -w 5 colors.txt</code>. Here comes the console printout:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 Green  is the favorite of David.</span><br><span class="line">1 Purple is the favorite of Daniel.</span><br><span class="line">2 Red    is the favorate of James.</span><br><span class="line">1 Yello  is the favorite of Joseph.</span><br></pre></td></tr></table></figure>
+
+<p>The digit before each line denotes the times of occurrences.</p>
+<p>When the amount of the lines is great, <code>uniq</code> command can refine some important statistic features. </p>
+<blockquote>
+<p>Note that the part of line avoided is not directly removed, but you can still use other tools to achieve this goal.</p>
+</blockquote>
+<p>And to get unique lines or duplicated ones, use <code>-u</code> or <code>-d</code> respectively. Here are the results:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ uniq -d -w5 colors.txt</span><br><span class="line">Green  is the favorite of David.</span><br><span class="line">Red    is the favorate of James.</span><br><span class="line"></span><br><span class="line">$ uniq -u -w5 colors.txt</span><br><span class="line">Purple is the favorite of Daniel.</span><br><span class="line">Yello  is the favorite of Joseph.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>In the example above, <code>-w</code> cannot be cut out when focusing on colors. But in daily uses, <code>uniq</code> often targets better preprocessed lines, where <code>-w</code> is not so necessary.</p>
+<p>Can you get the number of colors appearing in <code>more_colors.txt</code> the text file below? Try <code>uniq</code> yourself.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">more_colors.txt </span><br><span class="line">---------------</span><br><span class="line">Green  is the favorite of David.</span><br><span class="line">Green  is the favorite of Thomas.</span><br><span class="line">Purple is the favorite of Daniel.</span><br><span class="line">Red    is the favorate of James.</span><br><span class="line">Red    is the favorite of Christopher.</span><br><span class="line">Yello  is the favorite of Joseph.</span><br><span class="line">yello  is the favorite of Paul.</span><br><span class="line">pink   is my favorite.</span><br><span class="line">Blue   is Harry&#x27;s favorite.</span><br><span class="line">Black  is the favorite of nobody.</span><br><span class="line">Grey   is the favorite of Kyle.</span><br><span class="line">yello  is the favorite of Stan.</span><br><span class="line">Orange is the favorite of Kenny.</span><br><span class="line">Red    is the favorite of Eric.</span><br><span class="line">Pink   is the favorite of Butters.</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/03/usages-of-uniq/" data-id="cld9kj0c5001b7swkbupcgd4j" data-title="Usages of uniq" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-usages-of-sort" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/01/usages-of-sort/" class="article-date">
+  <time class="dt-published" datetime="2019-03-01T12:21:12.000Z" itemprop="datePublished">2019-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/01/usages-of-sort/">Usages of sort</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>The command <code>sort</code>‘s job is how it is literally understood.</p>
+<p>Some useful options are listed below. For rarer usages, just go for <a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man1/sort.1.html">manual page</a>.</p>
+<ul>
+<li><code>-t</code>: Specifies the delimiter separating each line into columns</li>
+<li><code>-k</code>: Denotes by which column to sort.<ul>
+<li><code>-n</code>: Enable numeric sorting in place of lexicographical sorting the default behavior.</li>
+</ul>
+</li>
+<li><code>-r</code>: Reverse, that is, do descending sorting.</li>
+</ul>
+<p>Given a csv file <code>test.txt</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">China,5</span><br><span class="line">Chinese,7</span><br><span class="line">Chile,5</span><br><span class="line">Unknown,7</span><br><span class="line">Brazil,6</span><br><span class="line">DontknowEither,14</span><br><span class="line">America,7</span><br><span class="line">English,7</span><br></pre></td></tr></table></figure>
+<p>The first column is the word, the second column is the number of letters the word consists of.</p>
+<p>To sort by the first column descending and lexicographically, use command <code>sort -k 1 -t &#39;,&#39; -r test.txt</code> or <code>sort -r test.txt</code>. Then you’ll get the result:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Unknown,7</span><br><span class="line">English,7</span><br><span class="line">DontknowEither,14</span><br><span class="line">Chinese,7</span><br><span class="line">China,5</span><br><span class="line">Chile,5</span><br><span class="line">Brazil,6</span><br><span class="line">America,7</span><br></pre></td></tr></table></figure>
+
+<p>And to sort by the number of the letters consisting of the word, execute this command: <code>sort -k 2 -n -t &#39;,&#39; test.txt</code>. Then it prints the result:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Chile,5</span><br><span class="line">China,5</span><br><span class="line">Brazil,6</span><br><span class="line">America,7</span><br><span class="line">Chinese,7</span><br><span class="line">English,7</span><br><span class="line">Unknown,7</span><br><span class="line">DontknowEither,14</span><br></pre></td></tr></table></figure>
+
+<p>Application of <code>sort</code> may save you a bunch of time in shell scripting especially when dealing with forms and tables. You have to master it if you script.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/01/usages-of-sort/" data-id="cld9kj0bw00157swkbb97fi1x" data-title="Usages of sort" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sort/" rel="tag">sort</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/awk/" rel="tag">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crack/" rel="tag">crack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cracking/" rel="tag">cracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cut/" rel="tag">cut</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dll/" rel="tag">dll</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paste/" rel="tag">paste</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tr/" rel="tag">tr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/PIC32/" style="font-size: 10px;">PIC32</a> <a href="/tags/PIC32MX/" style="font-size: 10px;">PIC32MX</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/awk/" style="font-size: 10px;">awk</a> <a href="/tags/bash/" style="font-size: 15px;">bash</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/cracking/" style="font-size: 10px;">cracking</a> <a href="/tags/cut/" style="font-size: 10px;">cut</a> <a href="/tags/dll/" style="font-size: 10px;">dll</a> <a href="/tags/embeded/" style="font-size: 10px;">embeded</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/paste/" style="font-size: 10px;">paste</a> <a href="/tags/pe/" style="font-size: 12.5px;">pe</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/shell/" style="font-size: 17.5px;">shell</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/tr/" style="font-size: 10px;">tr</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/uniq/" style="font-size: 10px;">uniq</a> <a href="/tags/win32/" style="font-size: 12.5px;">win32</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/24/understanding-pe-format/">Basics of PE Format(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/24/usage%20of%20derper%20and%20certbot/">Configuration of Tailscale Derper and Certbot</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/06/PIC32-configuration/">PIC32MX Basics --- Basic Configuration</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/lengthOfLongestSubstring/">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

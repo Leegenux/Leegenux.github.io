@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>PIC32MX Basics --- Basic Configuration | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Before we start, there are something you should know about the tutorial. This series of tutorial will show you how to get PIC32 functioning based on a PIC32MX220F032B chip and a PICKit 3 programmer. T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PIC32MX Basics --- Basic Configuration">
+<meta property="og:url" content="http://example.com/2019/07/06/PIC32-configuration/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Before we start, there are something you should know about the tutorial. This series of tutorial will show you how to get PIC32 functioning based on a PIC32MX220F032B chip and a PICKit 3 programmer. T">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pub9j4x8t.bkt.clouddn.com/PIC32MXPinout.jpg">
+<meta property="article:published_time" content="2019-07-06T02:59:25.000Z">
+<meta property="article:modified_time" content="2023-01-24T01:37:34.701Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="embeded">
+<meta property="article:tag" content="PIC32">
+<meta property="article:tag" content="PIC32MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pub9j4x8t.bkt.clouddn.com/PIC32MXPinout.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-PIC32-configuration" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/07/06/PIC32-configuration/" class="article-date">
+  <time class="dt-published" datetime="2019-07-06T02:59:25.000Z" itemprop="datePublished">2019-07-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      PIC32MX Basics --- Basic Configuration
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Before we start, there are something you should know about the tutorial.</p>
+<p>This series of tutorial will show you how to get PIC32 functioning based on a <strong>PIC32MX220F032B</strong> chip and a <strong>PICKit 3</strong> programmer. The tutorial mostly applies to Microchip PIC32MX1xx&#x2F;2xx series because they are alike, and not that many differences exist between PIC32MX1xx&#x2F;2xx and other chip version.</p>
+<p>This post will discuss the basic configurations of the PIC32MX220F032B including watchdog, sysclk, secondary oscillator, JTAG, ICSP and other.</p>
+<p>The device pinout is provided here as reference:</p>
+<img src="http://pub9j4x8t.bkt.clouddn.com/PIC32MXPinout.jpg"/>
+
+<h2 id="Option-of-Reference"><a href="#Option-of-Reference" class="headerlink" title="Option of Reference"></a>Option of Reference</h2><p>Basically, what I am gonna talk about are based on the official help document:  <a target="_blank" rel="noopener" href="http://www.mrc.uidaho.edu/mrc/people/jff/340/341/ECE341_Reference_Materials/Microchip%20XC32%20C%20Compiler%20and%20Libraries/PIC32ConfigSet.pdf">PIC32 Configuration Settings</a></p>
+<h2 id="Config-Bits"><a href="#Config-Bits" class="headerlink" title="Config Bits"></a>Config Bits</h2><p>The PIC32 configuration bits are a set of non-volatile options defining some certain behaviors of the MCU. They are different from the program written in C or assembly in that they are stored in boot flash memory rather than program flash memory.</p>
+<p>You should use #pragma directive to define the config bits.</p>
+<h3 id="Watchdog-Timer"><a href="#Watchdog-Timer" class="headerlink" title="Watchdog Timer"></a>Watchdog Timer</h3><p>A watchdog timer (WDT) is a hardware timer that automatically resets the computer system if the main controller neglects to periodically clear its bit.</p>
+<p>It’s widely adopted by complex embedded device for temporarily recovering from hardware fault or not responding. However, it’s kind of a hassle to small scale projects sometimes.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma config FWDTEN = off    // Disable the watchdog timer</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="System-Clock"><a href="#System-Clock" class="headerlink" title="System Clock"></a>System Clock</h3><p>There are two PIC32 internal oscillators. For PIC32MX220F032B, one is the 8MHz FRC (Fast Resistor Capacitor) oscillator and the other is the 3.15 MHz LPRC (Low Power Resistor Capacitor) oscillator. </p>
+<p>The FRC and external oscillators can be frequency scaled by in-circuit <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Phase-locked_loop">PLL</a>. For the sake of special structure of PLL, the input frequency must be between certain range. To my PIC32MX220F032B, the range is constrained to 4-5MHz. Also for each MCU, there is a recommended maximum frequency for the CPU in it. So, there are frequency dividers before and after the PLL.</p>
+<p>Look at the example below for getting the maximum frequency of 40MHz with internal oscillator:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#pragma config FNOSC = FRCPLL   // Use fast resistor capacitor oscillator</span><br><span class="line">#pragma config FPLLIDIV = DIV_2 // PLL input divider</span><br><span class="line">#pragma config FPLLMUL = MUL_20 // PLL multipler</span><br><span class="line">#pragma config FPLLODIV = DIV_2 // PLL output divider</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Secondary-Oscillator"><a href="#Secondary-Oscillator" class="headerlink" title="Secondary Oscillator"></a>Secondary Oscillator</h3><p>The Secondary Oscillator (SOSC) is intended for low-power operation with an external 32 to 100 KHz oscillator. When enabled, the external crystal should be connected to the SOSCO and SOSCI device pins.</p>
+<p>The code below demonstrates how to enable the secondary oscillator and set it as system clock:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#pragma config FSOSCEN = ON  // Enable secondary oscillator </span><br><span class="line">#pragma config FNOSC = SOSC  // Make the secondary oscillator the system clock</span><br></pre></td></tr></table></figure>
+
+<p>In tutorials later, we adopt the internal oscillator solution.</p>
+<h3 id="JTAG"><a href="#JTAG" class="headerlink" title="JTAG"></a>JTAG</h3><p>JTAG (Joint Test Action Group) is one of the common standards designed for a debugging and programming interface. Since we are using PICKit3 instead, we should properly disable JTAG. JTAG occupies certain pins when enabled, and if you know a bit about the inner implementation of PPS (Peripheral Pin Selections), you will come to the conclusion that the data of the JTAG pins are two-way.</p>
+<p>TMS, TDO, TCK and TDI are four pins required by JTAG standard. To disable it and free these pins for other I&#x2F;O usages, put code below in your source.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma config JTAGEN = OFF</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ICSP-In-Circuit-Serial-Programming"><a href="#ICSP-In-Circuit-Serial-Programming" class="headerlink" title="ICSP (In-Circuit Serial Programming)"></a>ICSP (In-Circuit Serial Programming)</h3><p>The PGEC (clock) and PGED (data) respectively transmit programming clock and data. There are 3 pairs of PGEX pins on <strong>PIC32MX220F032B</strong>. If you want PGEC2 and PGED2, use the following config bits:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma config ICESEL = ICS PGx2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Configuration-Optimization"><a href="#Configuration-Optimization" class="headerlink" title="Configuration Optimization"></a>Configuration Optimization</h2><p>The MCU can adjust its behavior according to the SYSCLK for best optimized performance. In  addition to the complex manual code modification approach, the hardware vendor has already provided us a useful tool to achieve this —— SYSTEMConfigPerformance(int sysclk);</p>
+<p>It takes as input argument the system clock frequency, and then enables data and instruction caches , optimizes the access time to the flash memory and caches. So always include invoke of this particular function.</p>
+<p>For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define SYSCLK 40000000L</span><br><span class="line">int main(void)&#123;</span><br><span class="line">	SYSTEMConfigPerformance(SYSCLK);</span><br><span class="line">	// Code your application below</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/07/06/PIC32-configuration/" data-id="cld9kj0b5000m7swk66ya1uty" data-title="PIC32MX Basics --- Basic Configuration" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/01/23/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/07/lengthOfLongestSubstring/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/awk/" rel="tag">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crack/" rel="tag">crack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cracking/" rel="tag">cracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cut/" rel="tag">cut</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dll/" rel="tag">dll</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paste/" rel="tag">paste</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tr/" rel="tag">tr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/PIC32/" style="font-size: 10px;">PIC32</a> <a href="/tags/PIC32MX/" style="font-size: 10px;">PIC32MX</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/awk/" style="font-size: 10px;">awk</a> <a href="/tags/bash/" style="font-size: 15px;">bash</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/cracking/" style="font-size: 10px;">cracking</a> <a href="/tags/cut/" style="font-size: 10px;">cut</a> <a href="/tags/dll/" style="font-size: 10px;">dll</a> <a href="/tags/embeded/" style="font-size: 10px;">embeded</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/paste/" style="font-size: 10px;">paste</a> <a href="/tags/pe/" style="font-size: 12.5px;">pe</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/shell/" style="font-size: 17.5px;">shell</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/tr/" style="font-size: 10px;">tr</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/uniq/" style="font-size: 10px;">uniq</a> <a href="/tags/win32/" style="font-size: 12.5px;">win32</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/24/understanding-pe-format/">Basics of PE Format(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/24/usage%20of%20derper%20and%20certbot/">Configuration of Tailscale Derper and Certbot</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/06/PIC32-configuration/">PIC32MX Basics --- Basic Configuration</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/lengthOfLongestSubstring/">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

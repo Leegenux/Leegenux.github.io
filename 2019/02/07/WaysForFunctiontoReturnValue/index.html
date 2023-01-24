@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Ways For Function to Return Value | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ways For Function to Return Value">
+<meta property="og:url" content="http://example.com/2019/02/07/WaysForFunctiontoReturnValue/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of. The basic function declaration synta">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-02-07T08:33:05.000Z">
+<meta property="article:modified_time" content="2023-01-24T01:37:34.705Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-WaysForFunctiontoReturnValue" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/02/07/WaysForFunctiontoReturnValue/" class="article-date">
+  <time class="dt-published" datetime="2019-02-07T08:33:05.000Z" itemprop="datePublished">2019-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Ways For Function to Return Value
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Modularization design of code has many advantages. As an essential role regarding to code modularization, exploitation of functions ought to be gotten the hang of.</p>
+<p>The basic function declaration syntax is like this:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">funcIdentifier</span></span>() &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>or this</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">funcIdentifier</span></span> () &#123;</span><br><span class="line">    <span class="comment"># commands</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>After the declaration, you can invoke the function like this</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">funcIdentifier param1 param2</span><br></pre></td></tr></table></figure>
+
+<p>And inside of the function, you can easily get the parameters using <code>$1</code>, <code>$2</code>, <code>$3</code> ,etc. </p>
+<p>But how to get the result value ? There are a few ways to do the trick.</p>
+<ul>
+<li>Using <code>echo</code> inside of function and with the help of command substitution you get the result</li>
+</ul>
+<ul>
+<li><code>eval</code> command’ll be evaluated twice. First is of the contents at both side of equal sign, the second one is the actual value assignment</li>
+<li>Global variables</li>
+</ul>
+<p>In order to get stuffs across intuitively, I provide examples for first two approaches :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> `<span class="built_in">expr</span> <span class="variable">$1</span> + <span class="variable">$2</span>`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">result=$(<span class="built_in">sum</span> 12 13)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">sum</span></span> () &#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="variable">$1</span>=<span class="string">&#x27;`&#x27;</span> <span class="string">&quot;expr <span class="variable">$2</span> + <span class="variable">$3</span>&quot;</span> <span class="string">&#x27;`&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">result=0</span><br><span class="line"><span class="built_in">sum</span> result 12 13</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Understanding these two techniques of returning values from functions will help you understand more about the shell interpreter.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/02/07/WaysForFunctiontoReturnValue/" data-id="cld9kj0b6000o7swkhd6t9k2o" data-title="Ways For Function to Return Value" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/11/usagesOfAWK/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Usages of awk
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/07/arithmetic-operation-in-bash/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Arithmetic Operation In Bash</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/awk/" rel="tag">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crack/" rel="tag">crack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cracking/" rel="tag">cracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cut/" rel="tag">cut</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dll/" rel="tag">dll</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paste/" rel="tag">paste</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tr/" rel="tag">tr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/PIC32/" style="font-size: 10px;">PIC32</a> <a href="/tags/PIC32MX/" style="font-size: 10px;">PIC32MX</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/awk/" style="font-size: 10px;">awk</a> <a href="/tags/bash/" style="font-size: 15px;">bash</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/cracking/" style="font-size: 10px;">cracking</a> <a href="/tags/cut/" style="font-size: 10px;">cut</a> <a href="/tags/dll/" style="font-size: 10px;">dll</a> <a href="/tags/embeded/" style="font-size: 10px;">embeded</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/paste/" style="font-size: 10px;">paste</a> <a href="/tags/pe/" style="font-size: 12.5px;">pe</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/shell/" style="font-size: 17.5px;">shell</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/tr/" style="font-size: 10px;">tr</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/uniq/" style="font-size: 10px;">uniq</a> <a href="/tags/win32/" style="font-size: 12.5px;">win32</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/24/understanding-pe-format/">Basics of PE Format(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/24/usage%20of%20derper%20and%20certbot/">Configuration of Tailscale Derper and Certbot</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/06/PIC32-configuration/">PIC32MX Basics --- Basic Configuration</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/lengthOfLongestSubstring/">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

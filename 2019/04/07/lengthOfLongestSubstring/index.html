@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters. | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However you will find the reference link useful. Problem DescriptionGiven a ascii string, plea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.">
+<meta property="og:url" content="http://example.com/2019/04/07/lengthOfLongestSubstring/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However you will find the reference link useful. Problem DescriptionGiven a ascii string, plea">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-06T16:28:30.000Z">
+<meta property="article:modified_time" content="2023-01-24T01:37:34.705Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-lengthOfLongestSubstring" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/07/lengthOfLongestSubstring/" class="article-date">
+  <time class="dt-published" datetime="2019-04-06T16:28:30.000Z" itemprop="datePublished">2019-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>This post is not meant for readers of this site but for myself. So content might get confusing sometimes. However you will find the <a target="_blank" rel="noopener" href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">reference link</a> useful.</p>
+<h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Given a ascii string, please find out the length of longest substring that contains no repetitive characters.</p>
+<h2 id="Solution-1-Brute-Force"><a href="#Solution-1-Brute-Force" class="headerlink" title="Solution 1: Brute Force"></a>Solution 1: Brute Force</h2><p>Start and ending charaters together indicate a substring, and we can iterate over all the start-ending pairs to go over all substrings. </p>
+<p>There should be 3 loops. The first is letting <code>i</code> goes through all the characters. Then for every <code>i</code> value, <code>j</code> grows from <code>i + 1</code> to the end of whole string. Then we determine whether there are repetitives or not for each substring.</p>
+<p>Code is as follows:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(<span class="type">char</span>* s)</span> &#123;</span><br><span class="line">    <span class="type">int</span> maxLength = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>, k=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> strLen = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; strLen - maxLength; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = i+<span class="number">1</span>; (j &lt; strLen) &amp;&amp; s[j] != s[i]; j++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (k = i+<span class="number">1</span>; (k &lt; j) &amp;&amp; (s[k] != s[j]); k++);</span><br><span class="line">			<span class="keyword">if</span> (k != j) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        maxLength = (j-i)&gt;maxLength ? (j-i) : maxLength;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Algorithm-Complexity-of-Solution-1"><a href="#Algorithm-Complexity-of-Solution-1" class="headerlink" title="Algorithm Complexity of Solution 1"></a>Algorithm Complexity of Solution 1</h3><p>For third loop, the time complexity of the third loop is $O(j-i)​$ because we only need to at most compare the character from index <code>i</code> to <code>j - 1</code> with the <code>j</code>th character. Thus, the second loop has a time complexity of $O(\sum_{j&#x3D;i+1}^{n}(j-i)) &#x3D; O(\frac{(n - i)(i + 1 + n)}{2})​$. So the total time complexity is $O(\sum_{i&#x3D;0}^{n-1}{\frac{(n-i)(i+1+n)}{2}})​$, which equals to $O(n^3)​$</p>
+<h2 id="Solution-2-Sliding-Window"><a href="#Solution-2-Sliding-Window" class="headerlink" title="Solution 2: Sliding Window"></a>Solution 2: Sliding Window</h2><p>In previous solution, we spend much time checking whether there are repetitive characters of same string over and over again. But have you thought of keeping previous comparison results?</p>
+<p>Here comes an greatly improved solution:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(<span class="type">char</span>* s)</span> &#123;</span><br><span class="line">    <span class="type">int</span> i, j;</span><br><span class="line">    <span class="type">int</span> strLen = <span class="built_in">strlen</span>(s);</span><br><span class="line">    <span class="type">int</span> maxLength = (strLen==<span class="number">1</span>);</span><br><span class="line">    <span class="type">int</span> characterCountArray[<span class="number">128</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>, j=<span class="number">1</span>, characterCountArray[s[i]]=<span class="number">1</span>; i &lt; strLen-maxLength &amp;&amp; j &lt; strLen; ) &#123;</span><br><span class="line">        <span class="keyword">if</span> (characterCountArray[s[j]]) &#123;</span><br><span class="line">            characterCountArray[s[i++]] = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            characterCountArray[s[j++]] = <span class="number">1</span>;</span><br><span class="line">            maxLength = (j-i) &gt; maxLength ? (j-i) : maxLength;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>There are 3 points that you need to look closer at:</p>
+<ul>
+<li>The big loop breaks when <code>i &gt;= strLen - maxLength</code></li>
+<li>The comparison results are kept in the sliding window.</li>
+<li>Only after <code>j++</code> does <code>maxLength</code> need updates.</li>
+</ul>
+<h3 id="Algorithm-Complexity-of-Solution-2"><a href="#Algorithm-Complexity-of-Solution-2" class="headerlink" title="Algorithm Complexity of Solution 2"></a>Algorithm Complexity of Solution 2</h3><p>In worst condition, all elements of the string will be access twice by <code>i</code> and <code>j</code>. So the time complexity is $O(n)$.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/04/07/lengthOfLongestSubstring/" data-id="cld9kj0bp000t7swk16uq774z" data-title="Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters." class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/06/PIC32-configuration/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          PIC32MX Basics --- Basic Configuration
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/28/win32-reverse-engineering-basics/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Win32 Reverse Engineering Basics</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/awk/" rel="tag">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crack/" rel="tag">crack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cracking/" rel="tag">cracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cut/" rel="tag">cut</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dll/" rel="tag">dll</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paste/" rel="tag">paste</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tr/" rel="tag">tr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/PIC32/" style="font-size: 10px;">PIC32</a> <a href="/tags/PIC32MX/" style="font-size: 10px;">PIC32MX</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/awk/" style="font-size: 10px;">awk</a> <a href="/tags/bash/" style="font-size: 15px;">bash</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/cracking/" style="font-size: 10px;">cracking</a> <a href="/tags/cut/" style="font-size: 10px;">cut</a> <a href="/tags/dll/" style="font-size: 10px;">dll</a> <a href="/tags/embeded/" style="font-size: 10px;">embeded</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/paste/" style="font-size: 10px;">paste</a> <a href="/tags/pe/" style="font-size: 12.5px;">pe</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/shell/" style="font-size: 17.5px;">shell</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/tr/" style="font-size: 10px;">tr</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/uniq/" style="font-size: 10px;">uniq</a> <a href="/tags/win32/" style="font-size: 12.5px;">win32</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/24/understanding-pe-format/">Basics of PE Format(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/24/usage%20of%20derper%20and%20certbot/">Configuration of Tailscale Derper and Certbot</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/06/PIC32-configuration/">PIC32MX Basics --- Basic Configuration</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/lengthOfLongestSubstring/">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

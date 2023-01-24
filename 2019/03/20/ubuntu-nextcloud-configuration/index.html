@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Ubuntu 18.04 NextCloud Installation Guide | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="This article breaks the installation and configuration of the NextCloud into 4 parts, and shows you the path to your own private cloud storage. These 4 parts are:  PHP NextCloud tarball installation D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 18.04 NextCloud Installation Guide">
+<meta property="og:url" content="http://example.com/2019/03/20/ubuntu-nextcloud-configuration/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="This article breaks the installation and configuration of the NextCloud into 4 parts, and shows you the path to your own private cloud storage. These 4 parts are:  PHP NextCloud tarball installation D">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-20T00:10:00.000Z">
+<meta property="article:modified_time" content="2023-01-24T01:37:34.705Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="nextcloud">
+<meta property="article:tag" content="apache">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ubuntu-nextcloud-configuration" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/20/ubuntu-nextcloud-configuration/" class="article-date">
+  <time class="dt-published" datetime="2019-03-20T00:10:00.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Ubuntu 18.04 NextCloud Installation Guide
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>This article breaks the installation and configuration of the NextCloud into 4 parts, and shows you the path to your own private cloud storage. These 4 parts are:</p>
+<ul>
+<li>PHP</li>
+<li>NextCloud tarball installation</li>
+<li>DB server</li>
+<li>Apache &#x2F; Nginx server</li>
+</ul>
+<p>Though this guide is Ubuntu-titled, all is applicable to other Linux distributions but the package management with <code>apt</code> part.</p>
+<h2 id="PHP-installation"><a href="#PHP-installation" class="headerlink" title="PHP installation"></a>PHP installation</h2><p>According to the official document, for Ubuntu server user, we can type the commands below to fetch and install the PHP modules supporting the core NextCloud server hosting.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt-get install apache2 mariadb-server libapache2-mod-php7.2</span></span><br><span class="line"><span class="comment"># apt-get install php7.2-gd php7.2-json php7.2-mysql php7.2-curl php7.2-mbstring</span></span><br><span class="line"><span class="comment"># apt-get install php7.2-intl php-imagick php7.2-xml php7.2-zip</span></span><br></pre></td></tr></table></figure>
+
+<p>And if you need some PHP extensions, you should also install the <code>libapache2-mod-php7.2</code>. For more information, please refer to <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/15/admin_manual/installation/source_installation.html#prerequisites-label">here</a>.</p>
+<h2 id="NextCloud-Tarball-Installation"><a href="#NextCloud-Tarball-Installation" class="headerlink" title="NextCloud Tarball Installation"></a>NextCloud Tarball Installation</h2><p>Up to the day the note is finished, the latest tarball available can be downloaded through this <a target="_blank" rel="noopener" href="https://docs.nextcloud.com/server/15/admin_manual/installation/source_installation.html#prerequisites-label">link</a>.</p>
+<p>After validations, unzip it and move it to the document root of your web server. For example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># unzip nextcloud-15.0.5.1.zip -d nextCloudInstall</span></span><br><span class="line"><span class="comment"># cp nextCloudInstall /var/www/nextcloud</span></span><br><span class="line"><span class="comment"># chown -R www-data:www-data /var/www/nextCloud</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="DB-server"><a href="#DB-server" class="headerlink" title="DB server"></a>DB server</h2><p>Let take mariaDB for an example.</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><p>Its installation is quite straightforward:</p>
+<ol>
+<li><p>Add the MariaDB signing key:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Download and execute the script to set up the mariadb apt repository:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Update your sources list:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Install MariaDB:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install mariadb-server</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>On finishing the installation, a prompt of setting the primary password is supposed to pop up. But under some special circumstances, it won’t. So you are not able to login into the server. To solve this, you can try either reinstalling the <code>mariadb-server</code> or solution below:</p>
+<ol>
+<li>Restart the service in <code>nopass</code> mode:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl restart mariadb &amp;&amp; mysql_safe --skip-grant-tables &amp;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Update your password</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">update user set authentication_string=PASSWORD(&quot;&quot;) where User=&#x27;root&#x27;;</span><br><span class="line">update user set plugin=&quot;mysql_native_password&quot; where User=&#x27;root&#x27;;  # THIS LINE</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line">quit;</span><br></pre></td></tr></table></figure>
+
+<p>or if you encounter non-updatable warning, try followings:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span><br><span class="line">USE mysql;</span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;&#x27;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<p>Then you can log in with password <code>&#39;&#39;</code> now. It’s recommended that you reset a stronger password rather than <code>&#39;&#39;</code>.</p>
+<h3 id="DB-Configurations-For-NextCloud"><a href="#DB-Configurations-For-NextCloud" class="headerlink" title="DB Configurations For NextCloud"></a>DB Configurations For NextCloud</h3><p>Make sure that you can log into the mysql as root before doing followings.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#x27;nextcloud&#x27;@&#x27;localhost&#x27; identified by &#x27;StrongPassword&#x27;;</span><br><span class="line">CREATE DATABASE nextcloud;</span><br><span class="line">GRANT ALL PRIVILEGES ON nextcloud.* TO &#x27;nextcloud&#x27;@&#x27;localhost&#x27;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<p>After that, set the transcation isolation level to avoid problems. Also it’s recommended to set the <code>binlog_format</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">transaction_isolation = READ-COMMITTED</span><br><span class="line">binlog_format = ROW</span><br></pre></td></tr></table></figure>
+
+<p>(If not present, you can just create the file and add these lines.)</p>
+<p>Since I am using mariadb, which is an fork of mysqldb, there are other configurations necessary under <code>/etc/php/7.2/apache2/conf.d/mysql.ini</code>. Configuration below activates the connection between mariadb and apache, where option <code>extension</code>  and <code>mysql.default_socket</code> are crucial : </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># configuration for PHP MySQL module</span></span><br><span class="line">extension=pdo_mysql.so</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">mysql.allow_local_infile=On</span><br><span class="line">mysql.allow_persistent=On</span><br><span class="line">mysql.cache_size=<span class="number">2000</span></span><br><span class="line">mysql.max_persistent=-<span class="number">1</span></span><br><span class="line">mysql.max_links=-<span class="number">1</span></span><br><span class="line">mysql.default_port=</span><br><span class="line">mysql.default_socket=/<span class="keyword">var</span>/lib/mysql/mysql.sock  <span class="comment"># Debian squeeze: /var/run/mysqld/mysqld.sock</span></span><br><span class="line">mysql.default_host=</span><br><span class="line">mysql.default_user=</span><br><span class="line">mysql.default_password=</span><br><span class="line">mysql.connect_timeout=<span class="number">60</span></span><br><span class="line">mysql.trace_mode=Off</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Apache-Server-Installation-and-Configurations"><a href="#Apache-Server-Installation-and-Configurations" class="headerlink" title="Apache Server Installation and Configurations"></a>Apache Server Installation and Configurations</h2><p>On Debian, Ubuntu, and their derivatives, Apache installs with a useful configuration so all you have to do is create a <code>/etc/apache2/sites-available/nextcloud.conf</code> file with these lines in it, replacing the Directory and other filepaths with your own filepaths:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Alias</span> /nextcloud <span class="string">&quot;/var/www/nextcloud/&quot;</span></span><br><span class="line"></span><br><span class="line">&lt;Directory /var/www/nextcloud/&gt;</span><br><span class="line">  Options +FollowSymlinks</span><br><span class="line">  AllowOverride All</span><br><span class="line">  Satisfy Any</span><br><span class="line"></span><br><span class="line"> &lt;IfModule mod_dav.c&gt;</span><br><span class="line">  Dav <span class="literal">off</span></span><br><span class="line"> &lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line"> SetEnv HOME /var/www/nextcloud</span><br><span class="line"> SetEnv HTTP_HOME /var/www/nextcloud</span><br><span class="line"></span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Then enable the newly created site: <code># a2ensite nextcloud.conf</code>.</p>
+<p>Also, you should enable the module <code>mod_rewrite</code>: <code># a2enmod rewrite</code></p>
+<p>Other recommended modules are:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a2enmod headers</span></span><br><span class="line"><span class="comment"># a2enmod env</span></span><br><span class="line"><span class="comment"># a2enmod dir</span></span><br><span class="line"><span class="comment"># a2enmod mime</span></span><br></pre></td></tr></table></figure>
+
+<p>You must disable any server-configured authentication for Nextcloud, as it uses Basic authenticationi internally for DAV services. Following the above example configuration file, add the following line in the <Directory> section of in <code>nextcloud.conf</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Satisfy Any</span><br></pre></td></tr></table></figure>
+
+<p>After all above, renable the apache server:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a2enmod rewrite dir mime env headers</span></span><br><span class="line"><span class="comment"># systemctl restart apache2</span></span><br></pre></td></tr></table></figure>
+
+<p>Now your site is reachable. Note that the firewall might block outer connections.</p>
+<h2 id="Trouble-Shooting-Tips"><a href="#Trouble-Shooting-Tips" class="headerlink" title="Trouble Shooting Tips"></a>Trouble Shooting Tips</h2><p>If you get Internal Server Error at your first access to the site. Find some  information from <code>/var/log/apache2/error.log</code> and <code>/var/log/php*</code>. </p>
+<p>For example, if you found <code>chmod()</code> related error. You may solve it with</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chown -R www-data:www-data /var/www/html &amp;&amp; chown -R www-data:www-data /var/www/nextcloud</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/03/20/ubuntu-nextcloud-configuration/" data-id="cld9kj0bq000v7swk0vjqgvlb" data-title="Ubuntu 18.04 NextCloud Installation Guide" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/28/win32-reverse-engineering-basics/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Win32 Reverse Engineering Basics
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/12/usages-of-paste/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Usages of paste</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32/" rel="tag">PIC32</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PIC32MX/" rel="tag">PIC32MX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/awk/" rel="tag">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bash/" rel="tag">bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crack/" rel="tag">crack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cracking/" rel="tag">cracking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cut/" rel="tag">cut</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dll/" rel="tag">dll</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/embeded/" rel="tag">embeded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nextcloud/" rel="tag">nextcloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paste/" rel="tag">paste</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pe/" rel="tag">pe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tr/" rel="tag">tr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uniq/" rel="tag">uniq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win32/" rel="tag">win32</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/PIC32/" style="font-size: 10px;">PIC32</a> <a href="/tags/PIC32MX/" style="font-size: 10px;">PIC32MX</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/awk/" style="font-size: 10px;">awk</a> <a href="/tags/bash/" style="font-size: 15px;">bash</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/cracking/" style="font-size: 10px;">cracking</a> <a href="/tags/cut/" style="font-size: 10px;">cut</a> <a href="/tags/dll/" style="font-size: 10px;">dll</a> <a href="/tags/embeded/" style="font-size: 10px;">embeded</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/nextcloud/" style="font-size: 10px;">nextcloud</a> <a href="/tags/paste/" style="font-size: 10px;">paste</a> <a href="/tags/pe/" style="font-size: 12.5px;">pe</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/shell/" style="font-size: 17.5px;">shell</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/tr/" style="font-size: 10px;">tr</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/uniq/" style="font-size: 10px;">uniq</a> <a href="/tags/win32/" style="font-size: 12.5px;">win32</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">January 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/24/understanding-pe-format/">Basics of PE Format(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/24/usage%20of%20derper%20and%20certbot/">Configuration of Tailscale Derper and Certbot</a>
+          </li>
+        
+          <li>
+            <a href="/2023/01/23/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/06/PIC32-configuration/">PIC32MX Basics --- Basic Configuration</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/lengthOfLongestSubstring/">Algorithm Practice --- Length Of Longest Substring Containing No Repetitive Characters.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
