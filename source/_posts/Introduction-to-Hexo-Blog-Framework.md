@@ -4,8 +4,6 @@ date: 2023-01-24 10:10:47
 tags: hexo, blog framework
 ---
 
-# Introduction to Hexo Blog Framework
-
 Before writing your posts, first create a file system of hexo framework by executing
 ```
 hexo init
