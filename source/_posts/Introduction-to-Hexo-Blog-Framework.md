@@ -1,7 +1,7 @@
 ---
 title: Introduction to Hexo Blog Framework
 date: 2023-01-24 10:10:47
-tags: hexo, blog framework
+tags: hexo
 ---
 
 Before writing your posts, first create a file system of hexo framework by executing
@@ -30,4 +30,11 @@ After everything settled, use
 ```
 hexo deploy
 ```
-to deploy all the documents in `public`. The deployer follows the configurations in the section `deploy` of the configuration file `_config.yml`.
+to deploy all the documents in `public`. The deployer follows the configurations in the section `deploy` of the configuration file `_config.yml`. An example of git deployer is given as follows
+```yaml
+deploy:
+  type: 'git'
+  repo: 'git@github.com:Leegenux/Leegenux.github.io.git'
+  branch: production
+```
+To use git deployer, you should install the `hexo-deployer-git` package.
