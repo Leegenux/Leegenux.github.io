@@ -32,11 +32,11 @@ I believe that now you wonder **how to get those SSL certificate and key**.
 
 ## Get the SSL Certificate
 
-You can require a paid one from some [SSL certificate organization](https://www.google.com.hk/search?q=ssl+certificate&oq=SSL+certificate). Nevertheless for us non-commercial users, we can simply generate a free certificate by ourselves, with the help of `certbot`, the official certification helper of the [letsencrypt](https://letsencrypt.org/) organization.
+You can require a paid one from some [SSL certificate organization](https://www.google.com.hk/search?q=ssl+certificate&oq=SSL+certificate). Nevertheless for us non-commercial users, we can simply generate a free certificate by ourselves, with the help of `certbot`, a certification helper that supports the automatic certification APIs provided by [letsencrypt](https://letsencrypt.org/) organization.
 
 To generate one, all you need are the `certbot` installed and a legally owned domain name. The command is as follows
 ```bash
-sudo certbot certonly --standalone -d your_domain
+sudo certbot certonly --standalone -d your_domain_name
 ```
 There are some points to be aware of:
 - You should have ports `443` and `80` unoccupied before running the command.
